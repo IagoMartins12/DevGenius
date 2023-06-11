@@ -9,6 +9,7 @@ interface IParams {
   content?: string;
   featured?: number;
   photo_background?: string;
+  category_id?: number
 }
 
 
@@ -54,6 +55,11 @@ export async function PUT(
     throw new Error('Invalid ID');
   }
 
+
+  if (!params.category_id || typeof params.category_id !== 'string') {
+    throw new Error('Invalid ID');
+  }
+  
   const postUpdated = await prisma.post.updateMany({
     where: {
         id: postId,
@@ -63,7 +69,8 @@ export async function PUT(
         featured: params.featured,
         title: params.title,
         photo_background: params.photo_background,
-        updatedAt: Date()
+        updatedAt: Date(),
+        category_id: params.category_id
     }
   })
 

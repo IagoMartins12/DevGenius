@@ -18,6 +18,7 @@ export async function POST(
     content,
     featured,
     photo_background,
+    category_id
    } = body;
 
   Object.keys(body).forEach((value: any) => {
@@ -34,6 +35,7 @@ export async function POST(
       featured,
       userId: currentUser.id,
       createdAt: Date(),
+      category_id
     }
   });
 

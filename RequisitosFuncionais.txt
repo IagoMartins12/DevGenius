@@ -1,0 +1,25 @@
+RF01: O site deverá ter um sistema de cadastro e login
+RF02: A aplicação exigirá nome de usuario, nome,sobrenome, e-mail e senha para realizar o cadastro
+RF03: O e-mail e nome de usuario deverá ser único
+RF04: O usuário poderá fazer cadastro social, utilizando google e github
+RF05: A aplicação contará com um 'Esqueci minha senha', caso o usuario esqueça sua senha 
+RF06: O usuario poderá alterar todos os dados da sua conta
+RF07: O usuario poderá excluir a sua conta 
+RF08: O usuario poderá permanecer logado por ate 7 dias consecutivos, sem precisar realizar um novo login. 
+RF09: O usuario deverá logar utilizando email/nome de usuario e senha, ou o login social
+RF10: Se o usuario tiver cadastrado pelo google e github, e tentar realizar um novo cadastro com o email vinculado deles,a aplicação deverá mostrar o erro 'Email ja cadastrado'
+RF11: O autor poderá criar, editar e excluir qualquer post que ele criou
+RF12: Os usuarios não poderam criar nenhum post, apenas os autores(Que deveram ser criados manualmente pelo banco de dados) 
+RF13: Os posts deveram conter: titulo, conteúdo, autor, data de publicação, categorias, foto do post e fotos dentro do conteudo e comentarios
+RF14: Para comentar em um post, o usuario tem que estar logado
+RF15: Cada comentario deverá conter: nome do usuario, data de publicação, foto do usuario e o comentario
+RF16: Após fazer o login, o usuario poderá colocar uma foto sua de perfil 
+RF17: O site deverá conter um toogle, que irá alterar entre modo escuro e modo claro
+RF18: O usuario poderá escolher se quer ler o artigo em inglês ou português, sendo o padrão, em PT-BR
+RF19: O usuario poderá compartilhar o link de uma publicação no facebook, instagram ou linkedin. 
+RF20: O Usuario poderá pesquisar artigos com base no titulo, autor ou categorias 
+RF21: O Usuario poderá dar like, deslike e favoritar determinado artigo. 
+RF22: O usuario poderá acessar todos os artigos que deu like, deslike e favoritou e que comentou no seu perfil
+RF23: O usuario poderá ver dados de outros usuarios, assim como o do autor
+RF24: A aplicação deverá conter uma maneira facil de criar posts
+RF25: O autor poderá apagar os comentarios de seu post.
