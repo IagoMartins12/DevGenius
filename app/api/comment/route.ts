@@ -3,8 +3,14 @@ import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 
+interface IParams {
+  postId?: string;
+  userId?: string;
+}
+
 export async function POST(
   request: Request, 
+  { params }: {params: IParams}
 ) {
   const currentUser = await getCurrentUser();
 
@@ -13,29 +19,25 @@ export async function POST(
   }
 
   const body = await request.json();
+
   const { 
-    title,
     content,
-    featured,
-    photo_background,
+    postId
    } = body;
 
-  Object.keys(body).forEach((value: any) => {
-    if (!body[value]) {
-      NextResponse.error();
-    }
-  });
+  if (!postId || typeof postId !== 'string') {
+    return NextResponse.error()
 
-  const post = await prisma.post.create({
+  }
+
+  const comment = await prisma.comment.create({
     data: {
-      title,
+      postId, 
       content,
-      photo_background,
-      featured,
       userId: currentUser.id,
       createdAt: Date(),
     }
   });
 
-  return NextResponse.json(post);
+  return NextResponse.json(comment);
 }
