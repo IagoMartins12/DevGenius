@@ -11,7 +11,7 @@ interface IParams {
   photo_url?: string;
 }
 
-export async function PUT(request: Request, { params }: { params: IParams }) {
+export async function PATCH(request: Request) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
@@ -20,7 +20,7 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
 
   const body = await request.json();
 
-  const { username, first_name, last_name, email, password, photo_url } = body;
+  const { username, first_name, last_name, email, photo_url } = body;
 
   const userUpdated = prisma.user.updateMany({
     where: {
@@ -31,7 +31,6 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
       first_name,
       last_name,
       email,
-      password,
       photo_url,
     },
   });
