@@ -29,11 +29,11 @@ export default async function getPosts(params?: IPosts) {
       },
     });
 
-    const safePosts = post.map(post => ({
-      ...post,
-    }));
+    // const safePosts = post.map(post => ({
+    //   ...post,
+    // }));
 
-    return safePosts;
+    return post;
   } catch (error: any) {
     throw new Error(error);
   }
