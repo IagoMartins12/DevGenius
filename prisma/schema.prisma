@@ -12,12 +12,12 @@ datasource db {
 
 model User {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  first_name String?
-  last_name  String?
-  username   String   @unique
+  name            String?
+  username   String?   @unique
   email      String?  @unique
-  password   String?
-  photo_url  String?
+  emailVerified   DateTime?
+  hashedPassword  String?
+  image           String?
   createdAt  DateTime @default(now())
   role       Int      @default(0)
   bio        String?

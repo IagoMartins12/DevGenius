@@ -1,27 +1,25 @@
 import prisma from '@/app/libs/prismadb';
 
-export interface IListingsParams {
+export interface IPosts {
   title?: string;
   category?: string;
   username?: string;
 }
 
-export default async function getListings(params: IListingsParams) {
+export default async function getPosts(params?: IPosts) {
   try {
-    const { title, category, username } = params;
-
     let query: any = {};
 
-    if (category) {
-      query.category = category;
+    if (params?.category) {
+      query.category = params.category;
     }
 
-    if (title) {
-      query.title = title;
+    if (params?.title) {
+      query.title = params.title;
     }
 
-    if (username) {
-      query.username = username;
+    if (params?.username) {
+      query.username = params.username;
     }
 
     const post = await prisma.post.findMany({
@@ -33,8 +31,6 @@ export default async function getListings(params: IListingsParams) {
 
     const safePosts = post.map(post => ({
       ...post,
-      createdAt: post.createdAt.toISOString(),
-      updatedAt: post.updatedAt.toISOString(),
     }));
 
     return safePosts;
