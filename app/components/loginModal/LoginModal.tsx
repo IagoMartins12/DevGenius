@@ -8,13 +8,11 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 import useLoginModal from '@/app/hooks/useLoginModal';
-import * as C from './style';
 import { useState } from 'react';
-import { error } from 'console';
 import useThemes from '@/app/hooks/useTheme';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
-
+import styles from './style.module.scss';
 export const LoginModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [revealPassword, setRevealPassword] = useState(false);
@@ -67,18 +65,24 @@ export const LoginModal = () => {
   };
 
   return (
-    <C.Container display={isOpen ? 'flex' : 'none'} theme={themes}>
-      <C.Header>
+    <div
+      className={`
+      ${styles.container}
+      ${isOpen ? 'flex' : 'hidden'}
+      ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}
+      `}
+    >
+      <div className='flex w-1/2 items-center justify-between ml-7 my-4'>
         <GrClose
           size={20}
           onClick={() => loginModal.onClose()}
           style={{ cursor: 'pointer' }}
         />
         <h4>Login</h4>
-      </C.Header>
+      </div>
 
-      <C.InputDiv>
-        <C.InputWrapper theme={themes}>
+      <div className='flex flex-col justify-center items-center'>
+        <div className={`${styles.InputWrapper}`}>
           <label htmlFor='Email'>Email</label>
           <input
             type='email'
@@ -87,8 +91,8 @@ export const LoginModal = () => {
             required
             {...register('email', { required: true })}
           />
-        </C.InputWrapper>
-        <C.InputWrapper theme={themes}>
+        </div>
+        <div className={`${styles.InputWrapper}`}>
           <label htmlFor='Email'>Senha</label>
           <input
             type={revealPassword ? 'text' : 'password'}
@@ -121,39 +125,54 @@ export const LoginModal = () => {
               onClick={() => tooglePassword()}
             />
           )}
-        </C.InputWrapper>
-        <C.ButtonDiv>
-          <button onClick={handleSubmit(onSubmit)}> Entrar </button>
-        </C.ButtonDiv>
-      </C.InputDiv>
+        </div>
+        <div className='w-5/6 mt-8 mx-auto'>
+          <button
+            className='my-0 mx-auto w-40 h-12 flex items-center justify-center cursor-pointer rounded-2xl border border-black'
+            onClick={handleSubmit(onSubmit)}
+          >
+            Entrar
+          </button>
+        </div>
+      </div>
       <p style={{ textAlign: 'center', margin: '15px 0' }}>Ou entre com: </p>
-      <C.Social>
-        <C.SocialButton
-          background={'#5383EC'}
+      <div className='flex flex-col justify-between items-center'>
+        <div
+          className={`${styles.SocialBtn}`}
+          style={{
+            backgroundColor: '#5383EC',
+          }}
           onClick={() => {
             signIn('google');
           }}
         >
           <FcGoogle size={28} />
           Google
-        </C.SocialButton>
-        <C.SocialButton
-          background={'gray'}
+        </div>
+        <div
+          className={`${styles.SocialBtn}`}
+          style={{
+            backgroundColor: 'gray',
+          }}
           onClick={() => {
             signIn('github');
           }}
         >
           <AiFillGithub size={28} />
           Github
-        </C.SocialButton>
-      </C.Social>
-      <C.FooterDiv>
-        <p>
-          {' '}
+        </div>
+      </div>
+      <div className='my-4 mx-0 '>
+        <p className='text-center'>
           Não possui conta?{' '}
-          <span onClick={() => openRegisterModal()}>Se cadastre!</span>
+          <span
+            className='underline	cursor-pointer'
+            onClick={() => openRegisterModal()}
+          >
+            Se cadastre!
+          </span>
         </p>
-      </C.FooterDiv>
-    </C.Container>
+      </div>
+    </div>
   );
 };

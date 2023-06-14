@@ -1,7 +1,6 @@
 'use client';
 
 import useThemes from '@/app/hooks/useTheme';
-import * as C from './Style';
 import { AiOutlineSearch, AiOutlineUser } from 'react-icons/ai';
 import { MdLightMode, MdDarkMode } from 'react-icons/md';
 import useLoginModal from '@/app/hooks/useLoginModal';
@@ -33,19 +32,47 @@ export const Header: React.FC<NavbarProps> = ({ currentUser }) => {
   };
 
   let themes: any = theme.theme;
+
   return (
-    <C.Header theme={themes}>
+    <header
+      className={`${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}
+      h-20
+      items-center
+      justify-around
+      gap-10
+      flex
+      `}
+    >
       DevBlog
-      <C.CategoryDiv>
+      <div className='w-1/2 flex gap-10 hidden md:flex pointer cursor-pointer'>
         <p>React</p>
         <p>Nextjs</p>
         <p>Node</p>
-      </C.CategoryDiv>
-      <C.IconsDiv>
-        <C.SearchDiv theme={themes} display={isSearchOpen}>
-          <input type='text' />
+      </div>
+      <div className='flex gap-9 items-center cursor-pointer'>
+        <div className='flex items-center justify-center'>
+          <input
+            type='text'
+            className={`
+              ${isSearchOpen ? 'cursor-text' : 'cursor-auto'}
+              ${isSearchOpen ? 'opacity-100' : 'opacity-0'}
+              transition-opacity duration-500 ease-in-out
+              bg-transparent
+               ${
+                 isSearchOpen && themes === 'light'
+                   ? 'border-none'
+                   : 'input-dark'
+               }
+              ${
+                isSearchOpen && themes === 'dark'
+                  ? 'border-none'
+                  : 'input-white'
+              }
+              outline-none
+            `}
+          />
           <AiOutlineSearch size={28} onClick={() => toggleSearchOpen()} />
-        </C.SearchDiv>
+        </div>
         {currentUser ? (
           <>
             <AiOutlineUser size={28} onClick={() => toggleOpen()} />
@@ -59,7 +86,7 @@ export const Header: React.FC<NavbarProps> = ({ currentUser }) => {
         ) : (
           <MdLightMode size={28} onClick={handleThemeToggle} />
         )}
-      </C.IconsDiv>
-    </C.Header>
+      </div>
+    </header>
   );
 };

@@ -1,10 +1,9 @@
 import './globals.css';
 import { Nunito } from 'next/font/google';
-import useThemes from './hooks/useTheme';
-import { RegisterModal } from './components/registerModal/RegisterModal';
-import { LoginModal } from './components/loginModal/LoginModal';
 import ToasterProvider from './providers/ToasterProvider';
 import ModalsProvider from './providers/ModalsProvider';
+import getCurrentUser from './actions/getCurrentUser';
+import { Header } from './components/header/Header';
 
 const font = Nunito({ subsets: ['latin'] });
 
@@ -14,13 +13,15 @@ export const metadata = {
     'Blog criado para lhe manter atualizado das mais novas tecnologias referente a MERN!',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const currentUser = await getCurrentUser();
+
   return (
-    <html lang='pt-br'>
+    <html lang='en'>
       <body
         className={font.className}
         style={{
@@ -29,6 +30,9 @@ export default function RootLayout({
           boxSizing: 'border-box',
         }}
       >
+        <Header currentUser={currentUser} />
+        <ToasterProvider />
+        <ModalsProvider />
         {children}
       </body>
     </html>

@@ -8,13 +8,13 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 import useLoginModal from '@/app/hooks/useLoginModal';
-import * as C from '../loginModal/style';
 import { useState } from 'react';
 import useThemes from '@/app/hooks/useTheme';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { signup } from './signUp';
 import { zodResolver } from '@hookform/resolvers/zod';
+import styles from '../loginModal/style.module.scss';
 
 export const RegisterModal = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -73,18 +73,24 @@ export const RegisterModal = () => {
   };
 
   return (
-    <C.Container display={isOpen ? 'flex' : 'none'} theme={themes}>
-      <C.Header>
+    <div
+      className={`
+            ${styles.container}
+      ${isOpen ? 'flex' : 'hidden'}
+      ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}
+      `}
+    >
+      <div className='flex w-1/2 items-center justify-between ml-7 my-4'>
         <GrClose
           size={20}
           onClick={() => registerModal.onClose()}
           style={{ cursor: 'pointer' }}
         />
         <h4>Registro</h4>
-      </C.Header>
+      </div>
       <form action=''>
-        <C.InputDiv>
-          <C.InputWrapper theme={themes}>
+        <div className='flex flex-col justify-center items-center'>
+          <div className={`${styles.InputWrapper}`}>
             <label htmlFor='username'>Nome de usuario: </label>
             <input
               type='text'
@@ -99,8 +105,8 @@ export const RegisterModal = () => {
                 O nome deve possuir no minimo 6 caracteres
               </p>
             )}
-          </C.InputWrapper>
-          <C.InputWrapper theme={themes}>
+          </div>
+          <div className={`${styles.InputWrapper}`}>
             <label htmlFor='Email'>Email</label>
             <input
               type='email'
@@ -111,8 +117,8 @@ export const RegisterModal = () => {
               {...register('email')}
             />
             {errors.email && <p className='error'>Insira um email valido</p>}
-          </C.InputWrapper>
-          <C.InputWrapper theme={themes}>
+          </div>
+          <div className={`${styles.InputWrapper}`}>
             <label htmlFor='password'>Senha</label>
             <input
               type={revealPassword ? 'text' : 'password'}
@@ -152,41 +158,57 @@ export const RegisterModal = () => {
                 A senha deve possuir no minimo 6 caracteres
               </p>
             )}
-          </C.InputWrapper>
-          <C.ButtonDiv>
-            <button onClick={handleSubmit(onSubmit)}> Registrar </button>
-          </C.ButtonDiv>
-        </C.InputDiv>
+          </div>
+          <div className='w-5/6 mt-8 mx-auto'>
+            <button
+              className='my-0 mx-auto w-40 h-12 flex items-center justify-center cursor-pointer rounded-2xl border border-black'
+              onClick={handleSubmit(onSubmit)}
+            >
+              Registrar
+            </button>
+          </div>
+        </div>
       </form>
       <p style={{ textAlign: 'center', margin: '20px 0' }}>
         Ou se registre com:{' '}
       </p>
-      <C.Social>
-        <C.SocialButton
-          background={'#5383EC'}
+      <div className='flex flex-col justify-between items-center'>
+        <div
+          className={`${styles.SocialBtn}`}
+          style={{
+            backgroundColor: '#5383EC',
+          }}
           onClick={() => {
             signIn('google');
           }}
         >
           <FcGoogle size={28} />
           Google
-        </C.SocialButton>
-        <C.SocialButton
-          background={'gray'}
+        </div>
+        <div
+          className={`${styles.SocialBtn}`}
+          style={{
+            backgroundColor: '#5383EC',
+          }}
           onClick={() => {
             signIn('github');
           }}
         >
           <AiFillGithub size={28} />
           Github
-        </C.SocialButton>
-      </C.Social>
-      <C.FooterDiv>
-        <p>
+        </div>
+      </div>
+      <div className='my-4 mx-0 '>
+        <p className='text-center'>
           Já possui conta?{' '}
-          <span onClick={() => openRegisterModal()}>Faça o login!</span>
+          <span
+            className='underline	cursor-pointer'
+            onClick={() => openRegisterModal()}
+          >
+            Faça o login!
+          </span>
         </p>
-      </C.FooterDiv>
-    </C.Container>
+      </div>
+    </div>
   );
 };
