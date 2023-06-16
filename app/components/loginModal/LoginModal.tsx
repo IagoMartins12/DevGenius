@@ -11,8 +11,10 @@ import useLoginModal from '@/app/hooks/useLoginModal';
 import { useState } from 'react';
 import useThemes from '@/app/hooks/useTheme';
 import { useRouter } from 'next/navigation';
+import { useRouter as useParams } from 'next/router';
 import { toast } from 'react-hot-toast';
 import styles from './style.module.scss';
+
 export const LoginModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [revealPassword, setRevealPassword] = useState(false);

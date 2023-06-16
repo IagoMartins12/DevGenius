@@ -1,6 +1,7 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+@import 'bootstrap/dist/css/bootstrap.min.css';
 
 .dark {
   --bg-color-dark: #1c1c1c;
@@ -22,10 +23,58 @@
   color: #1c1c1c;
 }
 
+.bg-footer-color-white {
+  background-color: #64313111;
+  color: #1c1c1c;
+}
+
 .input-dark {
   border-bottom: 1px solid #fafafa;
 }
 
 .input-white {
   border-bottom: 1px solid #1c1c1c;
+}
+
+.carousel-inner {
+  height: 60vh;
+  width: 100%;
+}
+
+.imgCarousel {
+  height: 60vh;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.postWidth {
+  width: 30%;
+}
+@media (max-width: 920px) {
+  .carousel-inner {
+    height: 45vh;
+  }
+
+  .imgCarousel {
+    height: 45vh;
+  }
+
+  .postWidth {
+    width: 45%;
+  }
+}
+
+@media (max-width: 620px) {
+  .carousel-inner {
+    height: 70vh;
+  }
+
+  .imgCarousel {
+    height: 70vh;
+  }
+
+  .postWidth {
+    width: 100%;
+  }
 }
