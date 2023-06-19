@@ -4,19 +4,19 @@ import prisma from '@/app/libs/prismadb';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 
 interface IParams {
-  category_id: string;
+  categoryid: string;
 }
 
-export async function PUT(request: Request, { params }: { params: IParams }) {
+export async function PATCH(request: Request, { params }: { params: IParams }) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
     return NextResponse.error();
   }
 
-  const { category_id } = params;
+  const { categoryid } = params;
 
-  if (!category_id || typeof category_id !== 'string') {
+  if (!categoryid || typeof categoryid !== 'string') {
     throw new Error('Invalid ID');
   }
 
@@ -24,9 +24,9 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
 
   const { category_name } = body;
 
-  const category = await prisma.category.updateMany({
+  const category = await prisma.category.update({
     where: {
-      id: category_id,
+      id: categoryid,
     },
     data: {
       category_name,
@@ -41,20 +41,20 @@ export async function DELETE(
   { params }: { params: IParams },
 ) {
   const currentUser = await getCurrentUser();
-
   if (!currentUser) {
     return NextResponse.error();
   }
 
-  const { category_id } = params;
+  const { categoryid } = params;
+  console.log(params);
 
-  if (!category_id || typeof category_id !== 'string') {
+  if (!categoryid || typeof categoryid !== 'string') {
     throw new Error('Invalid ID');
   }
 
   const category = await prisma.category.delete({
     where: {
-      id: category_id,
+      id: categoryid,
     },
   });
 

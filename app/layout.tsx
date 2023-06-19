@@ -31,6 +31,7 @@ export default async function RootLayout({
           boxSizing: 'border-box',
         }}
       >
+        <Header currentUser={currentUser} />
         <ToasterProvider />
         <ModalsProvider />
         {children}

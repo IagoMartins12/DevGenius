@@ -2,27 +2,74 @@ import React from 'react';
 import { signOut } from 'next-auth/react';
 import useThemes from '@/app/hooks/useTheme';
 
-export const NavBarUser = ({ display }: { display: boolean }) => {
-  const menus = [
-    {
-      name: 'Perfil',
-      action: () => {
-        console.log('clicou');
+import { User } from '@prisma/client';
+import { useRouter } from 'next/navigation';
+
+interface navBarProps {
+  display?: boolean;
+  user: User;
+}
+
+interface Menu {
+  name: string;
+  action: () => void;
+}
+
+export const NavBarUser: React.FC<navBarProps> = ({ display, user }) => {
+  let menus: Menu[];
+  const router = useRouter();
+
+  if (user.role === 1) {
+    menus = [
+      {
+        name: 'Perfil',
+        action: () => {
+          console.log('clicou');
+        },
       },
-    },
-    {
-      name: 'Configuração',
-      action: () => {
-        console.log('clicou');
+      {
+        name: 'Configuração',
+        action: () => {
+          console.log('clicou');
+        },
       },
-    },
-    {
-      name: 'Sair',
-      action: () => {
-        signOut();
+      {
+        name: 'Criar post',
+        action: () => {
+          router.push('/post/create');
+        },
       },
-    },
-  ];
+      {
+        name: 'Sair',
+        action: () => {
+          signOut();
+        },
+      },
+    ];
+  } else {
+    menus = [
+      {
+        name: 'Perfil',
+        action: () => {
+          console.log('clicou');
+        },
+      },
+      {
+        name: 'Configuração',
+        action: () => {
+          console.log('clicou');
+        },
+      },
+
+      {
+        name: 'Sair',
+        action: () => {
+          signOut();
+        },
+      },
+    ];
+  }
+
   const theme = useThemes();
   const themes: any = theme.theme;
 
@@ -41,16 +88,16 @@ export const NavBarUser = ({ display }: { display: boolean }) => {
       hover: ${themes === 'light' ? 'bg-neutral-100' : 'bg-stone-900'}      
       `}
     >
-      {menus.map((menu: any, index) => {
+      {menus.map((menu: Menu, index: number) => {
         return (
           <div
             key={index}
-            onClick={menu.action}
+            onClick={menu?.action}
             className={`w-full flex flex-col ${
               themes === 'light' ? 'bg-color-white' : 'bg-color-dark'
             }`}
           >
-            <p className='m-0 px-5 py-2'>{menu.name}</p>
+            <p className='m-0 px-5 py-2'>{menu?.name}</p>
           </div>
         );
       })}

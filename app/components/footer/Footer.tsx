@@ -12,6 +12,10 @@ import {
   AiFillLinkedin,
 } from 'react-icons/ai';
 
+interface Menu {
+  name: string;
+  action: () => void;
+}
 export const Footer = () => {
   const year = new Date().getFullYear();
 
@@ -130,7 +134,7 @@ export const Footer = () => {
         <div className='flex gap-x-8 w-full sm:w-3/12 my-6 '>
           <div className='flex flex-col gap-y-2'>
             <h4> Acesse </h4>
-            {quickLink.map((menu: any, index) => {
+            {quickLink.map((menu: Menu, index: number) => {
               return (
                 <div key={index} onClick={menu.action}>
                   <p className='hover:underline cursor-pointer '>{menu.name}</p>
@@ -140,7 +144,7 @@ export const Footer = () => {
           </div>
           <div className='flex flex-col gap-y-2'>
             <h4> Categorias </h4>
-            {categorys.map((menu: any, index) => {
+            {categorys.map((menu: Menu, index: number) => {
               return (
                 <div key={index} onClick={menu.action}>
                   <p className='hover:underline cursor-pointer '>{menu.name}</p>

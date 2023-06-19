@@ -58,22 +58,30 @@ model Post {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
   featured         Int      @default(0)
-  category_id      String   @db.ObjectId
 
   user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  category Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
 
+  Category CategoryRelationsPosts[]
   Comment  Comment[]
   Like     Like[]
   Deslike  Deslike[]
   Favorite Favorite[]
 }
 
+model CategoryRelationsPosts { 
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  categoryId    String    @db.ObjectId
+  postId        String    @db.ObjectId
+
+  post Post @relation(fields: [postId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
+}
+
 model Category {
   id            String @id @default(auto()) @map("_id") @db.ObjectId
   category_name String
 
-  Post Post[]
+  Category CategoryRelationsPosts[]
 }
 
 model Comment {

@@ -60,7 +60,7 @@ export const Header: React.FC<NavbarProps> = ({ currentUser }) => {
         gap-0
         sm:gap-10
         flex
-        fixed
+        sticky
         w-full
         z-10
       `}
@@ -108,7 +108,7 @@ export const Header: React.FC<NavbarProps> = ({ currentUser }) => {
         {currentUser ? (
           <>
             <AiOutlineUser size={28} onClick={() => toggleOpen()} />
-            <NavBarUser display={isOpen} />
+            <NavBarUser user={currentUser} display={isOpen} />
           </>
         ) : (
           <AiOutlineUser size={28} onClick={() => loginModal.onOpen()} />
