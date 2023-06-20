@@ -11,23 +11,15 @@ export async function POST(request: Request) {
   }
 
   const body = await request.json();
-  const { title, content, featured, photo_background, category_id } = body;
 
-  Object.keys(body).forEach((value: any) => {
-    if (!body[value]) {
-      NextResponse.error();
-    }
-  });
+  const { category_id, post_id } = body;
 
-  const post = await prisma.post.create({
+  const category = await prisma.categoryRelationsPosts.create({
     data: {
-      title,
-      content,
-      photo_background,
-      featured,
-      userId: currentUser.id,
+      categoryId: category_id,
+      postId: post_id,
     },
   });
 
-  return NextResponse.json(post);
+  return NextResponse.json(category);
 }

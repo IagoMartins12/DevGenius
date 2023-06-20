@@ -1,5 +1,5 @@
 import getCategories from '@/app/actions/getCategories';
-import CreatePosts from '@/app/components/createPosts/CreatePosts';
+import CreatePost from '@/app/components/createPosts/CreatePosts';
 import { Category } from '@prisma/client';
 
 export default async function Create() {
@@ -7,7 +7,7 @@ export default async function Create() {
 
   return (
     <>
-      <CreatePosts categories={categories} />
+      <CreatePost categories={categories} />
     </>
   );
 }

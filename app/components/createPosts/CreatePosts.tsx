@@ -1,33 +1,31 @@
 'use client';
 
 import ImageUpload from '@/app/components/ImageUpload';
-import { Category } from '@prisma/client';
+import { Category, Post } from '@prisma/client';
 import axios, { AxiosResponse } from 'axios';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { FieldValues, useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
-import {
-  IoMdAddCircle,
-  IoMdAddCircleOutline,
-  IoMdCloseCircleOutline,
-  IoMdCloseCircle,
-} from 'react-icons/io';
-import { MdEdit, MdOutlineEdit } from 'react-icons/md';
+import { CategorysForm } from './CategorysForm';
+import { Form } from 'react-bootstrap';
+import { ToogleButton } from './ToogleButton';
+import useThemes from '@/app/hooks/useTheme';
+import { useRouter } from 'next/navigation';
 
 type categories = Category;
-export default async function CreatePosts({
+type post = Post;
+export default async function CreatePost({
   categories,
 }: {
   categories: categories[];
 }) {
-  const [categoryInputOpen, setCategoryInputOpen] = useState(false);
   const [editCategoryInput, setEditCategoryInput] = useState(false);
   const [categoryArr, setCategoryArr] = useState<Category[]>([]);
   const [currentCategory, setCurrentCategory] = useState<Category>();
-
-  const toogleCategoryInputOpen = () => {
-    setCategoryInputOpen(prevCategoryInputOpen => !prevCategoryInputOpen);
-  };
+  const [isChecked, setIsChecked] = useState(false);
+  const router = useRouter();
+  const theme = useThemes();
+  const themes: any = theme.theme;
 
   const createCategory = async () => {
     const categoryName = watch('category_name');
@@ -37,7 +35,13 @@ export default async function CreatePosts({
         '/api/category',
         { category_name: categoryName },
       );
-      setCategoryArr(prevCategoryArr => [...prevCategoryArr, response.data]);
+      console.log('response', response);
+      await setCategoryArr(prevCategoryArr => [
+        ...prevCategoryArr,
+        response.data,
+      ]);
+      console.log('categoryArr', categoryArr);
+
       setValue('category_name', '');
       toast.success('Categoria adicionada');
     } catch (err) {
@@ -46,7 +50,6 @@ export default async function CreatePosts({
   };
 
   const removeCategory = async (category_id: string) => {
-    console.log(category_id);
     try {
       const response: AxiosResponse<Category> = await axios.delete(
         `/api/category/${category_id}`,
@@ -70,7 +73,6 @@ export default async function CreatePosts({
         { category_name },
       );
       const updatedCategory = response.data;
-      console.log('updatedCategory', updatedCategory);
       setCategoryArr(prevCategoryArr => {
         const updatedArr = prevCategoryArr.map(category => {
           console.log('category', category);
@@ -92,21 +94,51 @@ export default async function CreatePosts({
     }
   };
 
+  const onSubmit: SubmitHandler<FieldValues> = async data => {
+    const object = {
+      title: data.title,
+      featured: data.featured === true ? 1 : 0,
+      photo_background: data.photo_background,
+      content: data.content,
+    };
+
+    try {
+      const response: AxiosResponse<post> = await axios.post(
+        '/api/post',
+        object,
+      );
+      data.selectedCategories.forEach(async (category: any) => {
+        try {
+          const id = category.split(',');
+          await axios.post('/api/categoryPost', {
+            post_id: response.data.id,
+            category_id: id[1],
+          });
+        } catch (err) {
+          console.log('erro 2' + err);
+        }
+      });
+      toast.success('Post criado!');
+      router.refresh();
+    } catch (err) {
+      toast.error('Algo deu errado, tente novamente :(');
+      console.log(err);
+    }
+  };
+
   const {
     register,
     handleSubmit,
     setValue,
     watch,
     formState: { errors },
-    reset,
   } = useForm<FieldValues>({
     defaultValues: {
       title: '',
       content: '',
       photo_background: '',
       featured: false,
-      categoryName: '',
-      category_edit_nam: '',
+      selectedCategories: [],
     },
   });
 
@@ -120,153 +152,102 @@ export default async function CreatePosts({
     });
   };
 
+  const handleChange = (ev: { target: { value: any } }) => {
+    setValue('content', ev.target.value);
+  };
+
   useEffect(() => {
-    if (categories) {
-      setCategoryArr(categories);
-    }
-  }, [categories]);
+    setCategoryArr(categories);
+  }, []);
+
+  console.log(categoryArr);
 
   return (
     <>
-      <div className='flex flex-col sm:px-24 sm: py-12'>
-        <h3 className=' mt-6 ml-6 font-bold text-3xl '>Criar post</h3>
-        <div className='flex  gap-x-8  mt-6 ml-6 '>
-          <div className='flex flex-col w-4/12 '>
-            <ImageUpload
-              onChange={value => setCustomValue('photo_background', value)}
-              value={photo_background}
-            />
+      <div
+        className={`flex flex-col sm:px-24 sm:py-12
+      ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}
+      `}
+      >
+        <h3 className='sm:mx-6 mt-6 mx-6 font-bold text-3xl '>Criar post</h3>
+        <div className='flex flex-col lg:flex-row gap-y-8 lg:gap-x-8  mx-6 my-6 '>
+          <div className='flex flex-col w-full lg:w-4/12'>
+            <div>
+              <ImageUpload
+                onChange={value => setCustomValue('photo_background', value)}
+                value={photo_background}
+              />
+            </div>
+            <div className='w-full pt-3'>
+              <button
+                className='bg-red-500	 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full w-full'
+                onClick={() => {
+                  setCustomValue('photo_background', '');
+                }}
+              >
+                Excluir foto
+              </button>
+            </div>
           </div>
-          <div className='flex flex-col sm:w-8/12 border-2 pb-4'>
-            <div className='flex sm:flex-col gap-y-4 mx-6 mt-3 '>
+          <div className='flex flex-col  w-full lg:w-8/12 border-2 pb-4'>
+            <div className='flex sm:flex-col gap-y-4 mx-6 mt-3'>
               {/* titulo */}
-              <div className='flex flex-col gap-y-2'>
-                <h3 className=' font-bold text-2xl '>Titulo</h3>
+              <div className='flex flex-col gap-y-2 w-full'>
+                <h3 className=' font-bold  text-1xl sm:text-2xl '>Titulo</h3>
                 <input
                   type='text'
                   className='w-full px-2 py-2 border-2'
                   {...register('title')}
                 />
               </div>
-              {/* Categorias */}
-              <div className='flex flex-col gap-y-2'>
-                <h3 className=' font-bold text-2xl '>
-                  Selecione as categorias:{' '}
-                </h3>
-                <div className='flex px-2 py-2 border-2 items-center justify-between '>
-                  <div className='flex px-2 py-2 gap-x-5 flex-wrap '>
-                    {categoryArr.map((category: Category) => (
-                      <div
-                        className='flex gap-x-1 items-center gap-2'
-                        key={category.id}
-                      >
-                        <label className='flex gap-1'>
-                          <input
-                            type='checkbox'
-                            name='categoryRadio'
-                            value={category.category_name}
-                          />
-                          {category.category_name}
-                        </label>
-
-                        <div className='flex '>
-                          <MdEdit
-                            size={15}
-                            className='cursor-pointer'
-                            onClick={() => {
-                              setCurrentCategory(category);
-                              setEditCategoryInput(true);
-                            }}
-                          />
-                          <IoMdCloseCircle
-                            size={15}
-                            className='cursor-pointer'
-                            onClick={() => {
-                              removeCategory(category.id);
-                            }}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div>
-                    <IoMdAddCircle
-                      size={23}
-                      className='cursor-pointer'
-                      onClick={() => {
-                        toogleCategoryInputOpen();
-                      }}
-                    />
-                  </div>
-                </div>
-                {/* Criar categoria */}
-                <div
-                  className=' flex flex-col gap-y-3 pt-3'
-                  style={{
-                    display: categoryInputOpen ? 'flex' : 'none',
+            </div>
+            <div className='flex flex-col gap-y-2 mx-6 mt-3'>
+              <CategorysForm
+                categories={categoryArr}
+                createCategory={createCategory}
+                editCategory={editCategory}
+                removeCategory={removeCategory}
+                setValue={setValue}
+                register={register}
+                currentCategory={currentCategory}
+                setCurrentCategory={setCurrentCategory}
+              />
+            </div>
+            <div className='flex flex-col gap-y-2 mx-6 mt-3'>
+              <h3 className=' font-bold text-1xl sm:text-2xl  '>Contéudo: </h3>
+              <textarea
+                id=''
+                cols={30}
+                rows={10}
+                className='border-2  px-2 py-2'
+                {...register('content')}
+                onChange={ev => {
+                  handleChange(ev);
+                }}
+              />
+            </div>
+            <div className='flex flex-col gap-y-2 mx-6 mt-3 h-14'>
+              <Form className='flex justify-center'>
+                <Form.Check
+                  type='switch'
+                  checked={isChecked}
+                  id='custom-switch'
+                  onClick={() => {
+                    setIsChecked(!isChecked);
+                    setValue('featured', !isChecked);
                   }}
-                >
-                  <h3 className=' font-bold text-1xl '>Criar categoria:</h3>
-                  <div className='flex items-center gap-x-4 justify-between'>
-                    <input
-                      type='text'
-                      className='sm:w-11/12 px-2 py-2 border-2'
-                      {...register('category_name')}
-                    />
-
-                    <div className='flex items-end'>
-                      <IoMdAddCircle
-                        size={23}
-                        className='cursor-pointer'
-                        onClick={() => {
-                          createCategory();
-                        }}
-                      />
-                      <IoMdCloseCircle
-                        size={23}
-                        className='cursor-pointer'
-                        onClick={() => {
-                          toogleCategoryInputOpen();
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-                {/* Editar categoria */}
-                <div
-                  className=' flex flex-col gap-y-3 pt-3'
-                  style={{
-                    display: editCategoryInput ? 'flex' : 'none',
-                  }}
-                >
-                  <h3 className=' font-bold text-1xl '>Editar categoria:</h3>
-                  <div className='flex items-center gap-x-4 justify-between'>
-                    <input
-                      type='text'
-                      className='sm:w-11/12 px-2 py-2 border-2'
-                      placeholder={currentCategory?.category_name}
-                      {...register('category_edit_name')}
-                    />
-
-                    <div className='flex items-end'>
-                      <IoMdAddCircle
-                        size={23}
-                        className='cursor-pointer'
-                        onClick={() => {
-                          editCategory();
-                        }}
-                      />
-                      <IoMdCloseCircle
-                        size={23}
-                        className='cursor-pointer'
-                        onClick={() => {
-                          setEditCategoryInput(false);
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
+                  {...register('featured')}
+                />
+                {isChecked ? <p> Post em destaque </p> : <p>Post normal</p>}
+              </Form>
+            </div>
+            <div className='flex flex-col gap-y-2 mx-6 justify-center items-center'>
+              <button
+                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-10/12 sm:w-4/12'
+                onClick={handleSubmit(onSubmit)}
+              >
+                Criar post
+              </button>
             </div>
           </div>
         </div>
