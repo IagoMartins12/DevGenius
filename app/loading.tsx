@@ -1,6 +1,6 @@
 import { Footer } from './components/footer/Footer';
 import getCurrentUser from './actions/getCurrentUser';
-import { SkeletonHome } from './components/SkeletonHome/SkeletonHome';
+import { SkeletonHome } from './components/skeletons/SkeletonHome/SkeletonHome';
 
 const Loading = async () => {
   const currentUser = await getCurrentUser();

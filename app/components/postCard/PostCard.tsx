@@ -1,98 +1,26 @@
 'use client';
 
 import useThemes from '@/app/hooks/useTheme';
-import { Post } from '@prisma/client';
+import { Category, CategoryRelationsPosts, Post } from '@prisma/client';
 
 interface PostProps {
   posts?: Post | null;
+  categoriesPost?: CategoryRelationsPosts[];
+  categories?: Category[];
 }
-export const PostCard: React.FC<PostProps> = ({ posts }) => {
+
+export const PostCard = async ({
+  posts,
+  categoriesPost,
+  categories,
+}: {
+  posts: Post[];
+  categoriesPost: CategoryRelationsPosts[];
+  categories: Category[];
+}) => {
   const theme = useThemes();
   const themes: any = theme.theme;
-
-  const post = [
-    {
-      post_id: 1,
-      post_title: 'useQuerys no react',
-      post_Category: [
-        {
-          id: 1,
-          name: 'React',
-        },
-        {
-          id: 2,
-          name: 'node',
-        },
-      ],
-      post_data: 'August 20, 2022',
-      post_author: 'Iago martins',
-    },
-    {
-      post_id: 2,
-      post_title: 'useQuerys no react',
-      post_Category: [
-        {
-          id: 1,
-          name: 'React',
-        },
-        {
-          id: 2,
-          name: 'node',
-        },
-      ],
-      post_data: 'August 20, 2022',
-      post_author: 'Iago martins',
-    },
-    {
-      post_id: 3,
-      post_title: 'useQuerys no react',
-      post_Category: [
-        {
-          id: 1,
-          name: 'React',
-        },
-        {
-          id: 2,
-          name: 'node',
-        },
-      ],
-      post_data: 'August 20, name',
-      post_author: 'Iago martins',
-    },
-    {
-      post_id: 3,
-      post_title: 'useQuerys no react',
-      post_Category: [
-        {
-          id: 1,
-          name: 'React',
-        },
-        {
-          id: 2,
-          name: 'node',
-        },
-      ],
-      post_data: 'August 20, 2022',
-      post_author: 'Iago martins',
-    },
-    {
-      post_id: 3,
-      post_title: 'useQuerys no react',
-      post_Category: [
-        {
-          id: 1,
-          name: 'React',
-        },
-        {
-          id: 2,
-          name: 'node',
-        },
-      ],
-      post_data: 'August 20, 2022',
-      post_author: 'Iago martins',
-    },
-  ];
-
+  console.log(categories);
   return (
     <div
       className={`
@@ -107,45 +35,45 @@ export const PostCard: React.FC<PostProps> = ({ posts }) => {
       <div className='pt-1'>
         <h2 className='font-bold'>Posts recentes: </h2>
       </div>
-      <div className='flex gap-x-16 gap-y-8 flex-wrap py-4'>
-        {post.map(post => (
-          <div className='postWidth flex gap-3 flex-col px-3 py-3 border-2 rounded border-slate-400 cursor-pointer'>
-            {/* img */}
-            <div className='w-full h-56 rounded-md  border-2  border-slate-400'>
-              <img
-                className='d-block w-100 h-full'
-                src='react.jpeg'
-                alt='Third slide'
-              />
-            </div>
-            {/* categorys */}
-            <div className='flex gap-3 py-2 items-center justify-start max-w-full overflow-hidden'>
-              {post.post_Category.map(category => (
-                <div className='px-4 py-1 bg-indigo-100 rounded'>
-                  <span className='text-indigo-500 font-bold'>
-                    {category.name}
-                  </span>
-                </div>
-              ))}
-            </div>
 
-            {/* tittle */}
-            <div className='max-w-full pb-1 overflow-hidden font-semibold'>
-              <h3>{post.post_title}</h3>
+      <div className='py-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5'>
+        {posts.map((post: Post, index: number) => (
+          <div
+            className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer
+            ${themes === 'light' ? 'card-white' : 'card-dark'}`}
+            key={post.id}
+          >
+            <img
+              className='d-block w-100 h-3/12'
+              src={post.photo_background}
+              alt='Third slide'
+            />
+            <div className='px-6 py-4'>
+              <div className='font-bold text-xl mb-2'>{post.title}</div>
+              <p className='text-gray-700 text-base'>{post.resume}</p>
             </div>
-            {/* userInfo */}
-            <div className='flex items-center pt-12 justify-start mx-6 gap-x-10'>
-              <div className='flex items-center gap-2'>
-                <div className='rounded'>
-                  <img src='google-icon.png' alt='' />
-                </div>
-                <div className=''>
-                  <span>{post.post_author} </span>
-                </div>
-              </div>
-              <div className='rounded w-2/6'>
-                <span>{post.post_data}</span>
-              </div>
+            <div className='px-6 pt-4 pb-2'>
+              {categoriesPost
+                .filter(element => element.postId === post.id)
+                .filter(categoryPost =>
+                  categories.some(
+                    category => category.id === categoryPost.categoryId,
+                  ),
+                )
+                .map(categoryPost => {
+                  const category = categories.find(
+                    category => category.id === categoryPost.categoryId,
+                  );
+                  const categoryName = category ? category.category_name : '';
+                  return (
+                    <span
+                      className='inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2'
+                      key={categoryPost.id}
+                    >
+                      {categoryName}
+                    </span>
+                  );
+                })}
             </div>
           </div>
         ))}

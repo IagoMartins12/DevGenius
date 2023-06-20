@@ -4,7 +4,6 @@ import ToasterProvider from './providers/ToasterProvider';
 import ModalsProvider from './providers/ModalsProvider';
 import getCurrentUser from './actions/getCurrentUser';
 import { Header } from './components/header/Header';
-import { Footer } from './components/footer/Footer';
 
 const font = Nunito({ subsets: ['latin'] });
 

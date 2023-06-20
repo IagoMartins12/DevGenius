@@ -60,7 +60,7 @@ export const Header: React.FC<NavbarProps> = ({ currentUser }) => {
         gap-0
         sm:gap-10
         flex
-        sticky
+        fixed
         w-full
         z-10
       `}
@@ -69,7 +69,7 @@ export const Header: React.FC<NavbarProps> = ({ currentUser }) => {
           themes === 'dark'
             ? blackHeader
               ? 'rgba(18,18,18, 1)'
-              : 'rgba(18,18,18, 0.7)'
+              : 'rgb(18, 18, 18)'
             : blackHeader
             ? 'rgb(219, 218, 218, 1)'
             : 'rgb(219, 218, 218, 0.7)',

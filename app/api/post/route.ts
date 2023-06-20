@@ -11,7 +11,7 @@ export async function POST(request: Request) {
   }
 
   const body = await request.json();
-  const { title, content, featured, photo_background, category_id } = body;
+  const { title, content, featured, photo_background, resume } = body;
 
   Object.keys(body).forEach((value: any) => {
     if (!body[value]) {
@@ -25,7 +25,9 @@ export async function POST(request: Request) {
       content,
       photo_background,
       featured,
+      resume,
       userId: currentUser.id,
+      author: 'Iago Martins',
     },
   });
 

@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { Carousel } from 'react-bootstrap';
-import {} from '@/public/google-icon.png';
 import useThemes from '@/app/hooks/useTheme';
+import { Post } from '@prisma/client';
 
-export const FeaturedPosts = (posts: any) => {
+export const FeaturedPosts = ({ posts }: { posts: Post[] }) => {
   const [index, setIndex] = useState(0);
   const theme = useThemes();
   const themes: any = theme.theme;
@@ -14,57 +14,43 @@ export const FeaturedPosts = (posts: any) => {
     setIndex(selectedIndex);
   };
 
+  // Verifica se algum post tem o atributo 'featured' igual a 1
+  const hasFeaturedPost = posts.some((post: Post) => post.featured === 1);
+
   return (
     <div
       className={`
       ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}
-      `}
+            px-10 lg:px-44 pt-32 pb-4`}
     >
-      <Carousel
-        activeIndex={index}
-        onSelect={handleSelect}
-        slide={false}
-        variant={themes === 'light' ? '' : 'dark'}
-        className=''
-      >
-        <Carousel.Item>
-          <img
-            className='d-block w-100 imgCarousel'
-            src='react.jpeg'
-            alt='First slide'
-          />
-          <Carousel.Caption>
-            <h3>First slide label</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item>
-          <img
-            className='d-block w-100 imgCarousel'
-            src='react.jpeg'
-            alt='Second slide'
-          />
-
-          <Carousel.Caption>
-            <h3>Second slide label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item>
-          <img
-            className='d-block w-100 imgCarousel'
-            src='react.jpeg'
-            alt='Third slide'
-          />
-
-          <Carousel.Caption>
-            <h3>Third slide label</h3>
-            <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-            </p>
-          </Carousel.Caption>
-        </Carousel.Item>
-      </Carousel>
+      {hasFeaturedPost ? (
+        <Carousel
+          activeIndex={index}
+          onSelect={handleSelect}
+          slide={false}
+          variant={themes === 'light' ? '' : 'dark'}
+          className=''
+        >
+          {posts.map(
+            (post: Post) =>
+              post.featured === 1 && (
+                <Carousel.Item key={post.id}>
+                  <img
+                    className='d-block w-100 imgCarousel'
+                    src={post.photo_background}
+                    alt='Post background'
+                  />
+                  <Carousel.Caption>
+                    <h3>{post.title}</h3>
+                    <p>{post.resume}</p>
+                  </Carousel.Caption>
+                </Carousel.Item>
+              ),
+          )}
+        </Carousel>
+      ) : (
+        <p>No featured posts available.</p>
+      )}
     </div>
   );
 };

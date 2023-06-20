@@ -52,8 +52,10 @@ model Account {
 model Post {
   id               String   @id @default(auto()) @map("_id") @db.ObjectId
   userId           String   @db.ObjectId
+  author           String?
   title            String
   content          String
+  resume            String?
   photo_background String
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
@@ -68,20 +70,20 @@ model Post {
   Favorite Favorite[]
 }
 
+model Category {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  category_name String
+
+  CategoryRelationsPosts CategoryRelationsPosts[]
+}
+
 model CategoryRelationsPosts { 
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   categoryId    String    @db.ObjectId
   postId        String    @db.ObjectId
 
-  post Post @relation(fields: [postId], references: [id])
-  category Category @relation(fields: [categoryId], references: [id])
-}
-
-model Category {
-  id            String @id @default(auto()) @map("_id") @db.ObjectId
-  category_name String
-
-  Category CategoryRelationsPosts[]
+  post     Post     @relation(fields: [postId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }
 
 model Comment {

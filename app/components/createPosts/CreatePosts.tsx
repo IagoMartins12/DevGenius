@@ -8,19 +8,16 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { CategorysForm } from './CategorysForm';
 import { Form } from 'react-bootstrap';
-import { ToogleButton } from './ToogleButton';
 import useThemes from '@/app/hooks/useTheme';
 import { useRouter } from 'next/navigation';
 
-type categories = Category;
-type post = Post;
 export default async function CreatePost({
   categories,
 }: {
-  categories: categories[];
+  categories: Category[];
 }) {
   const [editCategoryInput, setEditCategoryInput] = useState(false);
-  const [categoryArr, setCategoryArr] = useState<Category[]>([]);
+  const [categoryArr, setCategoryArr] = useState<Category[]>(categories);
   const [currentCategory, setCurrentCategory] = useState<Category>();
   const [isChecked, setIsChecked] = useState(false);
   const router = useRouter();
@@ -35,12 +32,10 @@ export default async function CreatePost({
         '/api/category',
         { category_name: categoryName },
       );
-      console.log('response', response);
       await setCategoryArr(prevCategoryArr => [
         ...prevCategoryArr,
         response.data,
       ]);
-      console.log('categoryArr', categoryArr);
 
       setValue('category_name', '');
       toast.success('Categoria adicionada');
@@ -50,6 +45,7 @@ export default async function CreatePost({
   };
 
   const removeCategory = async (category_id: string) => {
+    console.log('category_id', category_id);
     try {
       const response: AxiosResponse<Category> = await axios.delete(
         `/api/category/${category_id}`,
@@ -100,24 +96,25 @@ export default async function CreatePost({
       featured: data.featured === true ? 1 : 0,
       photo_background: data.photo_background,
       content: data.content,
+      resume: data.resume,
     };
 
     try {
-      const response: AxiosResponse<post> = await axios.post(
+      const response: AxiosResponse<Post> = await axios.post(
         '/api/post',
         object,
       );
-      data.selectedCategories.forEach(async (category: any) => {
-        try {
-          const id = category.split(',');
-          await axios.post('/api/categoryPost', {
-            post_id: response.data.id,
-            category_id: id[1],
-          });
-        } catch (err) {
-          console.log('erro 2' + err);
-        }
+
+      const categoryRequests = data.selectedCategories.map((category: any) => {
+        const id = category.split(',')[1];
+        return axios.post('/api/categoryPost', {
+          post_id: response.data.id,
+          category_id: id,
+        });
       });
+
+      await Promise.all(categoryRequests);
+
       toast.success('Post criado!');
       router.refresh();
     } catch (err) {
@@ -136,6 +133,7 @@ export default async function CreatePost({
     defaultValues: {
       title: '',
       content: '',
+      resume: '',
       photo_background: '',
       featured: false,
       selectedCategories: [],
@@ -143,6 +141,7 @@ export default async function CreatePost({
   });
 
   const photo_background = watch('photo_background');
+  const featured = watch('featured');
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -156,16 +155,14 @@ export default async function CreatePost({
     setValue('content', ev.target.value);
   };
 
-  useEffect(() => {
-    setCategoryArr(categories);
-  }, []);
-
-  console.log(categoryArr);
+  const handleChangeResume = (ev: { target: { value: any } }) => {
+    setValue('resume', ev.target.value);
+  };
 
   return (
     <>
       <div
-        className={`flex flex-col sm:px-24 sm:py-12
+        className={`flex flex-col sm:px-24 sm:py-24
       ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}
       `}
       >
@@ -214,12 +211,27 @@ export default async function CreatePost({
               />
             </div>
             <div className='flex flex-col gap-y-2 mx-6 mt-3'>
+              <h3 className=' font-bold text-1xl sm:text-2xl  '>
+                Resumo do artigo:{' '}
+              </h3>
+              <textarea
+                id=''
+                cols={10}
+                rows={3}
+                className='border-2 px-2 py-2 resize-none'
+                {...register('resume')}
+                onChange={ev => {
+                  handleChangeResume(ev);
+                }}
+              />
+            </div>
+            <div className='flex flex-col gap-y-2 mx-6 mt-3'>
               <h3 className=' font-bold text-1xl sm:text-2xl  '>Contéudo: </h3>
               <textarea
                 id=''
                 cols={30}
                 rows={10}
-                className='border-2  px-2 py-2'
+                className='border-2 px-2 py-2 resize-none'
                 {...register('content')}
                 onChange={ev => {
                   handleChange(ev);
@@ -230,15 +242,13 @@ export default async function CreatePost({
               <Form className='flex justify-center'>
                 <Form.Check
                   type='switch'
-                  checked={isChecked}
                   id='custom-switch'
                   onClick={() => {
-                    setIsChecked(!isChecked);
-                    setValue('featured', !isChecked);
+                    setValue('featured', !featured);
                   }}
                   {...register('featured')}
                 />
-                {isChecked ? <p> Post em destaque </p> : <p>Post normal</p>}
+                {featured ? <p> Post em destaque </p> : <p>Post normal</p>}
               </Form>
             </div>
             <div className='flex flex-col gap-y-2 mx-6 justify-center items-center'>
