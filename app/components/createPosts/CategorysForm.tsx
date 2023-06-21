@@ -1,5 +1,6 @@
 'use client';
 
+import useThemes from '@/app/hooks/useTheme';
 import { Category } from '@prisma/client';
 import { useState } from 'react';
 import {
@@ -46,6 +47,9 @@ export const CategorysForm: React.FC<CategorysProps> = ({
     setValue('category_edit_name', ev.target.value);
   };
 
+  const theme = useThemes();
+  const themes: any = theme.theme;
+
   return (
     <>
       {/* Categorias */}
@@ -72,6 +76,7 @@ export const CategorysForm: React.FC<CategorysProps> = ({
                   className='cursor-pointer'
                   onClick={() => {
                     setCurrentCategory(category);
+                    categoryInputOpen ? setCategoryInputOpen(false) : null;
                     setEditCategoryInput(true);
                   }}
                 />
@@ -91,6 +96,7 @@ export const CategorysForm: React.FC<CategorysProps> = ({
             size={23}
             className='cursor-pointer'
             onClick={() => {
+              editCategoryInput ? setEditCategoryInput(false) : null;
               toogleCategoryInputOpen();
             }}
           />
@@ -107,7 +113,8 @@ export const CategorysForm: React.FC<CategorysProps> = ({
         <div className='flex items-center gap-x-4 justify-between'>
           <input
             type='text'
-            className='sm:w-11/12 w-10/12 px-2 py-2 border-2'
+            className={`sm:w-11/12 w-10/12 px-2 py-2 border-2
+                  ${themes === 'light' ? 'input-light' : 'input-dark'}`}
             {...register('category_name')}
             onChange={ev => {
               handleChange(ev);
@@ -143,7 +150,8 @@ export const CategorysForm: React.FC<CategorysProps> = ({
         <div className='flex items-center gap-x-4 justify-between'>
           <input
             type='text'
-            className='sm:w-11/12 w-10/12 px-2 py-2 border-2'
+            className={`sm:w-11/12 w-10/12 px-2 py-2 border-2
+                  ${themes === 'light' ? 'input-light' : 'input-dark'}`}
             placeholder={currentCategory?.category_name}
             {...register('category_edit_name')}
             onChange={ev => {

@@ -21,7 +21,7 @@ export const FeaturedPosts = ({ posts }: { posts: Post[] }) => {
     <div
       className={`
       ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}
-            px-10 lg:px-44 pt-32 pb-4`}
+            px-10 lg:px-32 pt-32 pb-4`}
     >
       {hasFeaturedPost ? (
         <Carousel
@@ -49,7 +49,7 @@ export const FeaturedPosts = ({ posts }: { posts: Post[] }) => {
           )}
         </Carousel>
       ) : (
-        <p>No featured posts available.</p>
+        <h1 className='text-center'>No featured posts available.</h1>
       )}
     </div>
   );

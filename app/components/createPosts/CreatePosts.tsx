@@ -3,7 +3,7 @@
 import ImageUpload from '@/app/components/ImageUpload';
 import { Category, Post } from '@prisma/client';
 import axios, { AxiosResponse } from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { CategorysForm } from './CategorysForm';
@@ -19,7 +19,6 @@ export default async function CreatePost({
   const [editCategoryInput, setEditCategoryInput] = useState(false);
   const [categoryArr, setCategoryArr] = useState<Category[]>(categories);
   const [currentCategory, setCurrentCategory] = useState<Category>();
-  const [isChecked, setIsChecked] = useState(false);
   const router = useRouter();
   const theme = useThemes();
   const themes: any = theme.theme;
@@ -91,6 +90,13 @@ export default async function CreatePost({
   };
 
   const onSubmit: SubmitHandler<FieldValues> = async data => {
+    if (data.title === '') return toast.error('Insira um titulo!');
+    if (data.photo_background === '') return toast.error('Insira uma foto!');
+    if (data.content === '') return toast.error('Insira o conteudo!');
+    if (data.resume === '') return toast.error('Insira um resumo!');
+    if (data.selectedCategories.length === 0)
+      return toast.error('Marque ao menos uma categoria!');
+
     const object = {
       title: data.title,
       featured: data.featured === true ? 1 : 0,
@@ -116,7 +122,7 @@ export default async function CreatePost({
       await Promise.all(categoryRequests);
 
       toast.success('Post criado!');
-      router.refresh();
+      reset();
     } catch (err) {
       toast.error('Algo deu errado, tente novamente :(');
       console.log(err);
@@ -129,6 +135,7 @@ export default async function CreatePost({
     setValue,
     watch,
     formState: { errors },
+    reset,
   } = useForm<FieldValues>({
     defaultValues: {
       title: '',
@@ -193,7 +200,8 @@ export default async function CreatePost({
                 <h3 className=' font-bold  text-1xl sm:text-2xl '>Titulo</h3>
                 <input
                   type='text'
-                  className='w-full px-2 py-2 border-2'
+                  className={`w-full px-2 py-2 border-2
+                  ${themes === 'light' ? 'input-light' : 'input-dark'}`}
                   {...register('title')}
                 />
               </div>
@@ -218,7 +226,8 @@ export default async function CreatePost({
                 id=''
                 cols={10}
                 rows={3}
-                className='border-2 px-2 py-2 resize-none'
+                className={`border-2 px-2 py-2 resize-none
+                  ${themes === 'light' ? 'input-light' : 'input-dark'}`}
                 {...register('resume')}
                 onChange={ev => {
                   handleChangeResume(ev);
@@ -231,7 +240,8 @@ export default async function CreatePost({
                 id=''
                 cols={30}
                 rows={10}
-                className='border-2 px-2 py-2 resize-none'
+                className={`border-2 px-2 py-2 resize-none
+                  ${themes === 'light' ? 'input-light' : 'input-dark'}`}
                 {...register('content')}
                 onChange={ev => {
                   handleChange(ev);

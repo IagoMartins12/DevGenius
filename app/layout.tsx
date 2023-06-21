@@ -4,6 +4,7 @@ import ToasterProvider from './providers/ToasterProvider';
 import ModalsProvider from './providers/ModalsProvider';
 import getCurrentUser from './actions/getCurrentUser';
 import { Header } from './components/header/Header';
+import getCategories from './actions/getCategories';
 
 const font = Nunito({ subsets: ['latin'] });
 
@@ -19,9 +20,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const currentUser = await getCurrentUser();
-
+  const categories = await getCategories();
   return (
-    <html lang='en'>
+    <html lang='pt-br'>
       <body
         className={font.className}
         style={{
@@ -30,7 +31,7 @@ export default async function RootLayout({
           boxSizing: 'border-box',
         }}
       >
-        <Header currentUser={currentUser} />
+        <Header currentUser={currentUser} categories={categories} />
         <ToasterProvider />
         <ModalsProvider />
         {children}

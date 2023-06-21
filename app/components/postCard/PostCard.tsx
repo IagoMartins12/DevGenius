@@ -1,26 +1,40 @@
 'use client';
 
 import useThemes from '@/app/hooks/useTheme';
-import { Category, CategoryRelationsPosts, Post } from '@prisma/client';
+import {
+  Category,
+  CategoryRelationsPosts,
+  Favorite,
+  Post,
+  User,
+} from '@prisma/client';
+import HeartButton from '../HeartButton';
+import Image from 'next/image';
 
 interface PostProps {
   posts?: Post | null;
   categoriesPost?: CategoryRelationsPosts[];
   categories?: Category[];
+  currentUser?: User;
+  Favorites?: Favorite[];
 }
 
 export const PostCard = async ({
   posts,
   categoriesPost,
   categories,
+  currentUser,
+  favorites,
 }: {
   posts: Post[];
   categoriesPost: CategoryRelationsPosts[];
   categories: Category[];
+  currentUser: User;
+  favorites: Favorite[];
 }) => {
   const theme = useThemes();
   const themes: any = theme.theme;
-  console.log(categories);
+
   return (
     <div
       className={`
@@ -36,21 +50,32 @@ export const PostCard = async ({
         <h2 className='font-bold'>Posts recentes: </h2>
       </div>
 
-      <div className='py-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5'>
+      <div className='py-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5'>
         {posts.map((post: Post, index: number) => (
           <div
             className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer
             ${themes === 'light' ? 'card-white' : 'card-dark'}`}
             key={post.id}
           >
-            <img
-              className='d-block w-100 h-3/12'
-              src={post.photo_background}
-              alt='Third slide'
-            />
+            <div className='aspect-video w-full relative overflow-hidden rounded-xl'>
+              <Image
+                fill
+                className='object-cover h-1 w-full group-hover:scale-110 transition'
+                src={post.photo_background}
+                alt='Listing'
+              />
+              <div className='absolute top-3 right-3'>
+                <HeartButton
+                  postId={post.id}
+                  currentUser={currentUser}
+                  favorites={favorites}
+                />{' '}
+              </div>
+            </div>
+
             <div className='px-6 py-4'>
               <div className='font-bold text-xl mb-2'>{post.title}</div>
-              <p className='text-gray-700 text-base'>{post.resume}</p>
+              <p className='text-base'>{post.resume}</p>
             </div>
             <div className='px-6 pt-4 pb-2'>
               {categoriesPost

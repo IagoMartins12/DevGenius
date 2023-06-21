@@ -1,48 +1,43 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-import getCurrentUser from "@/app/actions/getCurrentUser";
-import prisma from "@/app/libs/prismadb";
+import getCurrentUser from '@/app/actions/getCurrentUser';
+import prisma from '@/app/libs/prismadb';
 
 interface IParams {
-  postId?: string;
+  postid?: string;
   userId?: string;
 }
 
-export async function POST(
-  request: Request, 
-  { params }: { params: IParams }
-) {
+export async function POST(request: Request, { params }: { params: IParams }) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
     return NextResponse.error();
   }
 
-  const { postId } = params;
+  const { postid } = params;
 
-  if (!postId || typeof postId !== 'string') {
+  if (!postid || typeof postid !== 'string') {
     throw new Error('Invalid ID');
   }
 
-
-  if (!params.userId || typeof params.userId !== 'string') {
-    throw new Error('Invalid ID');
+  if (!currentUser.id || typeof currentUser.id !== 'string') {
+    throw new Error('Invalid ID2');
   }
-
 
   const favorite = await prisma.favorite.create({
-   data: {
-        postId: postId,
-        userId: params.userId,
-   }
+    data: {
+      postId: postid,
+      userId: currentUser.id,
+    },
   });
 
   return NextResponse.json(favorite);
 }
 
 export async function DELETE(
-  request: Request, 
-  { params }: { params: IParams }
+  request: Request,
+  { params }: { params: IParams },
 ) {
   const currentUser = await getCurrentUser();
 
@@ -50,19 +45,17 @@ export async function DELETE(
     return NextResponse.error();
   }
 
-  const { postId } = params;
+  const { postid } = params;
 
-  if (!postId || typeof postId !== 'string') {
+  if (!postid || typeof postid !== 'string') {
     throw new Error('Invalid ID');
   }
 
-  const like = await prisma.like.deleteMany({
+  const favorite = await prisma.favorite.deleteMany({
     where: {
-      id: postId,
-
-    }
+      postId: postid,
+    },
   });
 
-  return NextResponse.json(like);
+  return NextResponse.json(favorite);
 }
-

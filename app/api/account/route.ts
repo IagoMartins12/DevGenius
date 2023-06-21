@@ -20,7 +20,7 @@ export async function PATCH(request: Request) {
 
   const body = await request.json();
 
-  const { username, first_name, last_name, email, photo_url } = body;
+  const { username, name, image, email, bio } = body;
 
   const userUpdated = prisma.user.updateMany({
     where: {
@@ -28,10 +28,10 @@ export async function PATCH(request: Request) {
     },
     data: {
       username,
-      first_name,
-      last_name,
       email,
-      photo_url,
+      name,
+      image,
+      bio,
     },
   });
 

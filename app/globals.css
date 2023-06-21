@@ -41,12 +41,20 @@
   border-radius: 18px;
 }
 
-.input-dark {
+.search-dark {
   border-bottom: 1px solid #fafafa;
 }
 
-.input-white {
+.search-white {
   border-bottom: 1px solid #1c1c1c;
+}
+
+.input-dark {
+  color: #1c1c1c;
+}
+
+.input-white {
+  color: #fff;
 }
 
 .carousel-inner {
