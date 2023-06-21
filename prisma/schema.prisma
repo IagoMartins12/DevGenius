@@ -11,16 +11,19 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  name            String?
-  username   String?   @unique
-  email      String?  @unique
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  firstName       String?
+  secondName      String?
+  username        String?   @unique
+  email           String?   @unique
   emailVerified   DateTime?
   hashedPassword  String?
   image           String?
-  createdAt  DateTime @default(now())
-  role       Int      @default(0)
-  bio        String?
+  createdAt       DateTime  @default(now())
+  role            Int       @default(0)
+  bio             String?
+  gender          String? 
+  birthday        DateTime?
 
   Post     Post[]
   Account  Account[]
@@ -28,6 +31,7 @@ model User {
   Like     Like[]
   Deslike  Deslike[]
   Favorite Favorite[]
+  UserNetwork UserNetwork[]
 }
 
 model Account {
@@ -55,7 +59,7 @@ model Post {
   author           String?
   title            String
   content          String
-  resume            String?
+  resume           String?
   photo_background String
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
@@ -70,6 +74,21 @@ model Post {
   Favorite Favorite[]
 }
 
+model SocialNetwork {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  network_name  String
+
+  userNetworks  UserNetwork[]
+}
+
+model UserNetwork {
+  id              String          @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String          @db.ObjectId
+  networkId       String          @db.ObjectId
+
+  user            User            @relation(fields: [userId], references: [id])
+  socialNetwork   SocialNetwork   @relation(fields: [networkId], references: [id], onDelete: Cascade)
+}
 model Category {
   id            String @id @default(auto()) @map("_id") @db.ObjectId
   category_name String

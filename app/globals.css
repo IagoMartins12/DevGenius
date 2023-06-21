@@ -73,6 +73,10 @@
   width: 30%;
 }
 
+.active {
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
+}
 @media (max-width: 920px) {
   .carousel-inner {
     height: 45vh;

@@ -9,7 +9,7 @@ import getCategories from './actions/getCategories';
 const font = Nunito({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'Blog | Iago martins',
+  title: 'DevGenius | Iago martins',
   description:
     'Blog criado para lhe manter atualizado das mais novas tecnologias referente a MERN!',
 };

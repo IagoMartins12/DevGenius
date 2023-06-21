@@ -24,19 +24,19 @@ export const NavBarUser: React.FC<navBarProps> = ({ display, user }) => {
       {
         name: 'Perfil',
         action: () => {
-          console.log('clicou');
+          router.push('/account');
         },
       },
       {
         name: 'Configuração',
         action: () => {
-          console.log('clicou');
+          router.push('/settings');
         },
       },
       {
         name: 'Criar post',
         action: () => {
-          router.push('/post/create');
+          router.push('/create');
         },
       },
       {
