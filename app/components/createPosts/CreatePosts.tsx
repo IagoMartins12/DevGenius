@@ -205,6 +205,15 @@ export default async function CreatePost({
                   {...register('title')}
                 />
               </div>
+              <div className='flex flex-col gap-y-2 w-full'>
+                {/* <h3 className=' font-bold  text-1xl sm:text-2xl '>Titulo</h3>
+                <input
+                  type='text'
+                  className={`w-full px-2 py-2 border-2
+                  ${themes === 'light' ? 'input-light' : 'input-dark'}`}
+                  {...register('title')}
+                /> */}
+              </div>
             </div>
             <div className='flex flex-col gap-y-2 mx-6 mt-3'>
               <CategorysForm

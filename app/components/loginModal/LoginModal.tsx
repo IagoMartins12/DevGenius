@@ -84,6 +84,12 @@ export const LoginModal = () => {
       </div>
 
       <div className='flex flex-col justify-center items-center'>
+        <div>
+          <div className='form__group field'>
+            <input type='input' className='form__field' placeholder='Email' />
+            <label className='form__label'>Email</label>
+          </div>
+        </div>
         <div className={`${styles.InputWrapper}`}>
           <label htmlFor='Email'>Email</label>
           <input
