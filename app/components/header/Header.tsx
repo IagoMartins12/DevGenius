@@ -59,13 +59,15 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
       ${themes === 'light' ? 'bg-footer-color-white' : 'bg-color-dark'}
         h-20
         items-center
-        justify-around
+        justify-between
         gap-0
         sm:gap-10
         flex
         fixed
         w-full
         z-10
+        px-2
+        sm:px-12
       `}
       style={{
         backgroundColor:
@@ -78,43 +80,38 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
             : 'rgb(219, 218, 218, 0.7)',
       }}
     >
-      <h1
-        onClick={() => {
-          router.push('/');
-        }}
-        className='cursor-pointer'
-      >
-        <span className='font-bold text-xl'>Dev</span>
-        <span className=' text-violet-500	text-xl'>Genius</span>
-      </h1>
-      <div className='w-1/2 flex gap-10 hidden md:flex pointer cursor-pointer'>
-        {categories?.map(category => (
-          <p>{category.category_name}</p>
-        ))}
+      <div className='flex items-center gap-x-10 w-1/2 overflow-hidden'>
+        <h1
+          onClick={() => {
+            router.push('/');
+          }}
+          className='cursor-pointer'
+        >
+          <span className='font-bold text-xl'>Dev</span>
+          <span className=' text-violet-500	text-xl'>Genius</span>
+        </h1>
+        <div className='w-1/2 flex gap-10 hidden md:flex pointer cursor-pointer'>
+          {categories?.map(category => (
+            <p>{category.category_name}</p>
+          ))}
+        </div>
       </div>
-      <div className='flex gap-2 sm:gap-9 items-center cursor-pointer'>
+
+      <div className='flex gap-2 sm:gap-9 items-center cursor-pointer w-1/2 justify-end'>
         <div className='flex items-center justify-center'>
-          <input
-            type='text'
-            className={`
-              ${isSearchOpen ? 'cursor-text' : 'cursor-auto'}
-              ${isSearchOpen ? 'opacity-100' : 'opacity-0'}
-              transition-opacity duration-500 ease-in-out
-              bg-transparent
-               ${
-                 isSearchOpen && themes === 'light'
-                   ? 'border-none'
-                   : 'search-dark'
-               }
-              ${
-                isSearchOpen && themes === 'dark'
-                  ? 'border-none'
-                  : 'search-white'
-              }
-              outline-none
-            `}
-          />
-          <AiOutlineSearch size={28} onClick={() => toggleSearchOpen()} />
+          <div id='wrap'>
+            <div className=''>
+              <input
+                id='search'
+                name='search'
+                type='text'
+                placeholder='Pesquisar ?'
+                className='specific-input'
+              />
+              <input id='search_submit' value='Rechercher' type='submit' />
+              <AiOutlineSearch size={28} />
+            </div>
+          </div>
         </div>
         {currentUser ? (
           <>

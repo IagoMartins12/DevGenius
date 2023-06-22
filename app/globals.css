@@ -242,6 +242,69 @@ button:hover {
   display: none !important;
 }
 
+/* search input */
+@import url(https://fonts.googleapis.com/css?family=Lato:100,300,400,700);
+@import url(https://raw.github.com/FortAwesome/Font-Awesome/master/docs/assets/css/font-awesome.min.css);
+
+#wrap {
+  display: inline-block;
+  position: relative;
+  height: 28px;
+  padding: 0;
+  position: relative;
+}
+
+input.specific-input {
+  height: 28px;
+  font-size: 18px;
+  display: inline-block;
+  font-weight: 100;
+  border: none;
+  outline: none;
+  color: #555;
+  padding: 3px 60px 0px 3px;
+  width: 0px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: none;
+  z-index: 3;
+  transition: width 0.4s cubic-bezier(0, 0.795, 0, 1);
+  cursor: pointer;
+}
+
+input.specific-input:focus:hover {
+  border-bottom: 1px solid #bbb;
+}
+
+input.specific-input:focus {
+  width: 13rem;
+  height: 28px;
+  z-index: 1;
+  border-bottom: 1px solid #bbb;
+  cursor: text;
+}
+
+input[type='submit'] {
+  height: 10px;
+  width: 10px;
+  display: inline-block;
+  text-indent: -10000px;
+  border: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  cursor: pointer;
+  opacity: 0.4;
+  cursor: pointer;
+  transition: opacity 0.4s ease;
+}
+
+input[type='submit']:hover {
+  opacity: 0.8;
+}
+
 @media (max-width: 920px) {
   .carousel-inner {
     height: 45vh;
@@ -280,5 +343,9 @@ button:hover {
     left: 0;
     width: 100%;
     min-height: 100vh;
+  }
+
+  input.specific-input:focus {
+    width: 10rem;
   }
 }
