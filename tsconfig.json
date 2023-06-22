@@ -28,7 +28,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/components/registerModal/signUp.ts"
+    "app/components/registerModal3/signUp.ts"
   ],
   "exclude": ["node_modules"]
 }

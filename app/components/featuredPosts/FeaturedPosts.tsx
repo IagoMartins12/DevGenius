@@ -14,7 +14,6 @@ export const FeaturedPosts = ({ posts }: { posts: Post[] }) => {
     setIndex(selectedIndex);
   };
 
-  // Verifica se algum post tem o atributo 'featured' igual a 1
   const hasFeaturedPost = posts.some((post: Post) => post.featured === 1);
 
   return (

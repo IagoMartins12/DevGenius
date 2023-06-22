@@ -69,8 +69,14 @@
   object-position: center;
 }
 
-.postWidth {
-  width: 30%;
+.carousel-indicators {
+  display: none;
+}
+.modalPosition {
+  width: 60%;
+  top: 15vh;
+  left: 20vw;
+  position: absolute;
 }
 
 .active {
@@ -78,6 +84,10 @@
   background-color: rgb(59 130 246 / var(--tw-bg-opacity));
 }
 
+.modalPosition {
+}
+
+/* Input */
 .form__group {
   position: relative;
   padding: 20px 0 0;
@@ -120,7 +130,7 @@
   padding-bottom: 6px;
   font-weight: 700;
   border-width: 3px;
-  border-image: linear-gradient(to right, #116399, #38caef);
+  border-image: linear-gradient(to right, #966ff0, rgb(139, 92, 246));
   border-image-slice: 1;
 }
 
@@ -130,7 +140,7 @@
   display: block;
   transition: 0.2s;
   font-size: 17px;
-  color: #38caef;
+  color: #8b5cf6;
   font-weight: 700;
 }
 
@@ -138,6 +148,98 @@
 .form__field:required,
 .form__field:invalid {
   box-shadow: none;
+}
+
+/* google button  */
+button {
+  min-width: 280px;
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 1.4rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  vertical-align: middle;
+  align-items: center;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  gap: 0.75rem;
+  color: #010105;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.6s ease;
+}
+
+.button svg {
+  height: 24px;
+}
+
+button:hover {
+  transform: scale(1.02);
+  box-shadow: none;
+}
+
+/* github button */
+.button2 {
+  min-width: 280px;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(24, 23, 23);
+  color: #fafafa;
+  padding: 0.5rem 1.4rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  vertical-align: middle;
+  align-items: center;
+  border-radius: 0.5rem;
+  gap: 0.75rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: 0.6s ease;
+}
+
+.button2 svg {
+  height: 24px;
+}
+
+@keyframes jelly {
+  from {
+    transform: scale(1, 1);
+  }
+
+  30% {
+    transform: scale(1.25, 0.75);
+  }
+
+  40% {
+    transform: scale(0.75, 1.25);
+  }
+
+  50% {
+    transform: scale(1.15, 0.85);
+  }
+
+  65% {
+    transform: scale(0.95, 1.05);
+  }
+
+  75% {
+    transform: scale(1.05, 0.95);
+  }
+
+  to {
+    transform: scale(1, 1);
+  }
+}
+
+.hidden-xs-up {
+  display: none !important;
 }
 
 @media (max-width: 920px) {
@@ -152,6 +254,12 @@
   .postWidth {
     width: 45%;
   }
+
+  .modalPosition {
+    width: 90%;
+    top: 15vh;
+    left: 5vw;
+  }
 }
 
 @media (max-width: 620px) {
@@ -165,5 +273,12 @@
 
   .postWidth {
     width: 100%;
+  }
+
+  .modalPosition {
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
   }
 }
