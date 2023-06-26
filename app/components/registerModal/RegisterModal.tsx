@@ -13,6 +13,7 @@ import Image from 'next/image';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signup } from './signUp';
 import axios from 'axios';
+import { StyledInput } from '../commum/StyledInput';
 
 export const RegisterModal = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -102,45 +103,34 @@ export const RegisterModal = () => {
           </div>
 
           <div className='flex flex-col gap-y-3 w-11/12'>
-            <div className='form__group field'>
-              <input
-                type='input'
-                className='form__field'
-                placeholder='Nome de usuario'
-                required={true}
-                disabled={isLoading}
-                {...register('username')}
-              />
-              <label className='form__label'>Nome de usuario: </label>
-              {errors.username && (
-                <p className='error'>
-                  O nome deve possuir no minimo 6 caracteres
-                </p>
-              )}
-            </div>
-            <div className='form__group field'>
-              <input
-                type='input'
-                className='form__field'
-                placeholder='Email'
-                required={true}
-                disabled={isLoading}
-                {...register('email')}
-              />
-              <label className='form__label'>Email:</label>
-              {errors.email && <p className='error'>Insira um email valido</p>}
-            </div>
-            <div className='form__group field'>
-              <input
-                type={'password'}
-                className='form__field'
-                placeholder='Senha'
-                {...register('password')}
-                required={true}
-                disabled={isLoading}
-              />
-              <label className='form__label'>Senha:</label>
-            </div>
+            <StyledInput
+              id='username'
+              required
+              placeholder='Nome de usuário:'
+              label='Nome de usuário:'
+              register={register}
+              errors={errors.username}
+            />
+
+            <StyledInput
+              id='email'
+              required
+              placeholder='Email:'
+              label='Email:'
+              register={register}
+              errors={errors.email}
+            />
+
+            <StyledInput
+              type='password'
+              id='password'
+              required
+              placeholder='Senha:'
+              label='Senha:'
+              register={register}
+              errors={errors.password}
+            />
+
             <div className='flex flex-col w-full gap-y-4 mt-2'>
               <button
                 className='button bg-violet-400 flex items-center justify-center'
@@ -153,6 +143,7 @@ export const RegisterModal = () => {
                 <span className='text-center'>Ou se registre com: </span>
                 <hr className='w-3/12 ml-2' />
               </div>
+
               {/* google button */}
               <button
                 className='button'
@@ -196,10 +187,10 @@ export const RegisterModal = () => {
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='0 0 24 24'
                 >
-                  <g stroke-width='0' id='SVGRepo_bgCarrier'></g>
+                  <g strokeWidth='0' id='SVGRepo_bgCarrier'></g>
                   <g
-                    stroke-linejoin='round'
-                    stroke-linecap='round'
+                    strokeLinejoin='round'
+                    strokeLinecap='round'
                     id='SVGRepo_tracerCarrier'
                   ></g>
                   <g id='SVGRepo_iconCarrier'>

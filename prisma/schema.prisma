@@ -23,7 +23,13 @@ model User {
   role            Int       @default(0)
   bio             String?
   gender          String? 
-  birthday        DateTime?
+  birthday        String?
+  website         String?
+  github          String?
+  instagram       String?
+  facebook        String?
+  twitter         String?
+  youtube         String?
 
   Post     Post[]
   Account  Account[]
@@ -31,7 +37,6 @@ model User {
   Like     Like[]
   Deslike  Deslike[]
   Favorite Favorite[]
-  UserNetwork UserNetwork[]
 }
 
 model Account {
@@ -74,21 +79,7 @@ model Post {
   Favorite Favorite[]
 }
 
-model SocialNetwork {
-  id            String @id @default(auto()) @map("_id") @db.ObjectId
-  network_name  String
 
-  userNetworks  UserNetwork[]
-}
-
-model UserNetwork {
-  id              String          @id @default(auto()) @map("_id") @db.ObjectId
-  userId          String          @db.ObjectId
-  networkId       String          @db.ObjectId
-
-  user            User            @relation(fields: [userId], references: [id])
-  socialNetwork   SocialNetwork   @relation(fields: [networkId], references: [id], onDelete: Cascade)
-}
 model Category {
   id            String @id @default(auto()) @map("_id") @db.ObjectId
   category_name String

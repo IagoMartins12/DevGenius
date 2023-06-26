@@ -44,7 +44,6 @@ export default async function CreatePost({
   };
 
   const removeCategory = async (category_id: string) => {
-    console.log('category_id', category_id);
     try {
       const response: AxiosResponse<Category> = await axios.delete(
         `/api/category/${category_id}`,
@@ -70,9 +69,6 @@ export default async function CreatePost({
       const updatedCategory = response.data;
       setCategoryArr(prevCategoryArr => {
         const updatedArr = prevCategoryArr.map(category => {
-          console.log('category', category);
-          console.log('updatedCategory', updatedCategory);
-
           if (category.id === updatedCategory.id) {
             return updatedCategory;
           } else {
@@ -204,15 +200,6 @@ export default async function CreatePost({
                   ${themes === 'light' ? 'input-light' : 'input-dark'}`}
                   {...register('title')}
                 />
-              </div>
-              <div className='flex flex-col gap-y-2 w-full'>
-                {/* <h3 className=' font-bold  text-1xl sm:text-2xl '>Titulo</h3>
-                <input
-                  type='text'
-                  className={`w-full px-2 py-2 border-2
-                  ${themes === 'light' ? 'input-light' : 'input-dark'}`}
-                  {...register('title')}
-                /> */}
               </div>
             </div>
             <div className='flex flex-col gap-y-2 mx-6 mt-3'>

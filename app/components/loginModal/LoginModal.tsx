@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import Image from 'next/image';
 import { IoCloseOutline } from 'react-icons/io5';
+import { StyledInput } from '../commum/StyledInput';
 
 export const LoginModal = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -94,24 +95,20 @@ export const LoginModal = () => {
           </div>
 
           <div className='flex flex-col gap-y-3 w-11/12'>
-            <div className='form__group field'>
-              <input
-                type='input'
-                className='form__field'
-                placeholder='Email'
-                {...register('email', { required: true })}
-              />
-              <label className='form__label'>Email</label>
-            </div>
-            <div className='form__group field'>
-              <input
-                type={'password'}
-                className='form__field'
-                placeholder='Senha'
-                {...register('password', { required: true })}
-              />
-              <label className='form__label'>Senha</label>
-            </div>
+            <StyledInput
+              id='email'
+              required
+              placeholder='Email'
+              label='Email'
+              register={register}
+            />
+            <StyledInput
+              id='password'
+              required
+              placeholder='Senha'
+              label='Senha'
+              register={register}
+            />
             <div className='flex justify-end'>
               <span className='text-violet-500 text-base cursor-pointer underline'>
                 Esqueci minha senha
@@ -172,10 +169,10 @@ export const LoginModal = () => {
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='0 0 24 24'
                 >
-                  <g stroke-width='0' id='SVGRepo_bgCarrier'></g>
+                  <g strokeWidth='0' id='SVGRepo_bgCarrier'></g>
                   <g
-                    stroke-linejoin='round'
-                    stroke-linecap='round'
+                    strokeLinejoin='round'
+                    strokeLinecap='round'
                     id='SVGRepo_tracerCarrier'
                   ></g>
                   <g id='SVGRepo_iconCarrier'>

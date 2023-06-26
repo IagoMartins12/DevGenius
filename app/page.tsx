@@ -3,7 +3,6 @@ import {
   CategoryRelationsPosts,
   Favorite,
   Post,
-  User,
 } from '@prisma/client';
 import getPosts from './actions/getPosts';
 import { FeaturedPosts } from './components/featuredPosts/FeaturedPosts';

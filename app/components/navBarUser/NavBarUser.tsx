@@ -50,15 +50,11 @@ export const NavBarUser: React.FC<navBarProps> = ({ display, user }) => {
     menus = [
       {
         name: 'Perfil',
-        action: () => {
-          console.log('clicou');
-        },
+        action: () => {},
       },
       {
         name: 'Configuração',
-        action: () => {
-          console.log('clicou');
-        },
+        action: () => {},
       },
 
       {

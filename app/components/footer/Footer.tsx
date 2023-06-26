@@ -22,15 +22,11 @@ export const Footer = () => {
   const quickLink = [
     {
       name: 'Home',
-      action: () => {
-        console.log('clicou');
-      },
+      action: () => {},
     },
     {
       name: 'Sobre',
-      action: () => {
-        console.log('clicou');
-      },
+      action: () => {},
     },
     {
       name: 'Autor',
@@ -45,15 +41,11 @@ export const Footer = () => {
   const categorys = [
     {
       name: 'Home',
-      action: () => {
-        console.log('clicou');
-      },
+      action: () => {},
     },
     {
       name: 'Sobre',
-      action: () => {
-        console.log('clicou');
-      },
+      action: () => {},
     },
     {
       name: 'Autor',

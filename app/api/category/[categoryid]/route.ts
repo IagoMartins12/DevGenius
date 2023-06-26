@@ -46,7 +46,6 @@ export async function DELETE(
   }
 
   const { categoryid } = params;
-  console.log(params);
 
   if (!categoryid || typeof categoryid !== 'string') {
     throw new Error('Invalid ID');

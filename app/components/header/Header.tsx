@@ -66,8 +66,8 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
         fixed
         w-full
         z-10
-        px-2
-        sm:px-12
+        md:px-12
+        px-6
       `}
       style={{
         backgroundColor:
@@ -90,7 +90,7 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
           <span className='font-bold text-xl'>Dev</span>
           <span className=' text-violet-500	text-xl'>Genius</span>
         </h1>
-        <div className='w-1/2 flex gap-10 hidden md:flex pointer cursor-pointer'>
+        <div className='w-1/2 gap-10 hidden md:flex pointer cursor-pointer'>
           {categories?.map(category => (
             <p>{category.category_name}</p>
           ))}
@@ -105,7 +105,8 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
                 id='search'
                 name='search'
                 type='text'
-                placeholder='Pesquisar ?'
+                placeholder='Pesquisar?'
+                autoComplete='off'
                 className='specific-input'
               />
               <input id='search_submit' value='Rechercher' type='submit' />

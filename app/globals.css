@@ -247,7 +247,6 @@ button:hover {
 @import url(https://raw.github.com/FortAwesome/Font-Awesome/master/docs/assets/css/font-awesome.min.css);
 
 #wrap {
-  display: inline-block;
   position: relative;
   height: 28px;
   padding: 0;
@@ -257,11 +256,9 @@ button:hover {
 input.specific-input {
   height: 28px;
   font-size: 18px;
-  display: inline-block;
   font-weight: 100;
   border: none;
   outline: none;
-  color: #555;
   padding: 3px 60px 0px 3px;
   width: 0px;
   position: absolute;
@@ -304,6 +301,8 @@ input[type='submit'] {
 input[type='submit']:hover {
   opacity: 0.8;
 }
+
+/* input settings */
 
 @media (max-width: 920px) {
   .carousel-inner {
