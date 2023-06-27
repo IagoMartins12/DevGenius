@@ -54,7 +54,9 @@ export const NavBarUser: React.FC<navBarProps> = ({ display, user }) => {
       },
       {
         name: 'Configuração',
-        action: () => {},
+        action: () => {
+          router.push('/settings');
+        },
       },
 
       {

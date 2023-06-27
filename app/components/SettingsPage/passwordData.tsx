@@ -19,22 +19,6 @@ export const PasswordData: React.FC<SettingsData> = ({
   return (
     <>
       <div className='flex sm:flex-col gap-y-4 mx-6 mt-3'>
-        {/* password */}
-        <div className='flex flex-col gap-y-2 w-full'>
-          <div className='flex flex-col gap-y-2 w-full'>
-            <SettingsInput
-              id='password'
-              name='Senha atual:'
-              register={register}
-              placeholder='Senha atual'
-              type='password'
-              key='password'
-              icon={<MdPassword className='absolute top-3 left-3' size={18} />}
-            />
-          </div>
-        </div>
-      </div>
-      <div className='flex sm:flex-col gap-y-4 mx-6 mt-3'>
         {/* new password */}
         <div className='flex flex-col gap-y-2 w-full'>
           <SettingsInput
@@ -42,7 +26,7 @@ export const PasswordData: React.FC<SettingsData> = ({
             name='Nova senha:'
             register={register}
             placeholder='Nova senha'
-            type='newPassword'
+            type='password'
             key='newPassword'
             icon={<MdPassword className='absolute top-3 left-3' size={18} />}
           />
@@ -56,7 +40,7 @@ export const PasswordData: React.FC<SettingsData> = ({
             name='Confirme a nova senha:'
             register={register}
             placeholder='Confirme a nova senha'
-            type='confirmNewPassword'
+            type='password'
             key='confirmNewPassword'
             icon={<MdPassword className='absolute top-3 left-3' size={18} />}
           />

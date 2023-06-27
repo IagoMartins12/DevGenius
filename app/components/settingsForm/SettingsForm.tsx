@@ -12,6 +12,7 @@ import { SocialNetworkData } from '../SettingsPage/socialNetworkData';
 import { Post, User } from '@prisma/client';
 import axios, { AxiosResponse } from 'axios';
 import { toast } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 interface SettingsForm {
   user: User;
@@ -19,9 +20,11 @@ interface SettingsForm {
 
 export default async function SettingsForm({ user }: { user: User }) {
   const [isActive, setIsActive] = useState(0);
+  const [username, setUsername] = useState(user.username);
 
   const theme = useThemes();
   const themes: any = theme.theme;
+  const router = useRouter();
 
   const accountSubmit: SubmitHandler<FieldValues> = async data => {
     const object = {
@@ -34,7 +37,7 @@ export default async function SettingsForm({ user }: { user: User }) {
         '/api/account',
         object,
       );
-
+      setUsername(object.username);
       toast.success('Dados atualizados!');
     } catch (err) {
       toast.error('Algo deu errado, tente novamente :(');
@@ -63,8 +66,25 @@ export default async function SettingsForm({ user }: { user: User }) {
     }
   };
 
-  const onSubmit3: SubmitHandler<FieldValues> = async data => {
-    console.log('data', data);
+  const passwordSubmit: SubmitHandler<FieldValues> = async data => {
+    if (data.newPassword !== data.confirmNewPassword)
+      return toast.error('As senhas não conferem!');
+    const object = {
+      newPassword: data.newPassword,
+    };
+
+    try {
+      const response: AxiosResponse<Post> = await axios.put(
+        '/api/password',
+        object,
+      );
+
+      console.log(response);
+      toast.success('Dados atualizados!');
+    } catch (err) {
+      toast.error('Algo deu errado, tente novamente :(');
+      console.log(err);
+    }
   };
 
   const SocialNetworkSubmit: SubmitHandler<FieldValues> = async data => {
@@ -97,6 +117,8 @@ export default async function SettingsForm({ user }: { user: User }) {
     formState: { errors },
     reset,
   } = useForm<FieldValues>();
+
+  if (!user) router.push('/');
 
   return (
     <div
@@ -147,7 +169,7 @@ export default async function SettingsForm({ user }: { user: User }) {
               <img src='coffe.svg' alt='' />
             </div>
             <div className='flex items-center justify-center my-3 flex-col '>
-              <span className='font-bold text-2xl'>Iago martins</span>
+              <span className='font-bold text-2xl'>{username}</span>
             </div>
           </div>
           <div className='w-full flex items-center justify-center border-t-2 h-11'>
@@ -165,6 +187,7 @@ export default async function SettingsForm({ user }: { user: User }) {
             >
               <span className='text-sm sm:text-lg'>Pessoal</span>
             </div>
+
             <div
               className={`w-full flex items-center justify-center h-full font-bold text-xl text-center cursor-pointer border-r-2
             ${isActive === 2 ? 'active' : ''}`}
@@ -172,6 +195,7 @@ export default async function SettingsForm({ user }: { user: User }) {
             >
               <span className='text-sm sm:text-lg'>Senha</span>
             </div>
+
             <div
               className={`w-full flex items-center justify-center h-full font-bold text-xl text-center cursor-pointer
             ${isActive === 3 ? 'active' : ''}`}
@@ -200,7 +224,7 @@ export default async function SettingsForm({ user }: { user: User }) {
             <PasswordData
               register={register}
               user={user}
-              onSubmit={handleSubmit(onSubmit3)}
+              onSubmit={handleSubmit(passwordSubmit)}
             />
           )}
           {isActive === 3 && (

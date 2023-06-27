@@ -58,20 +58,16 @@ export const Footer = () => {
   ];
 
   const lightIcons = [
-    <>
-      <AiFillInstagram size={28} className='cursor-pointer' />
-      <AiFillGithub size={28} className='cursor-pointer' />
-      <AiFillFacebook size={28} className='cursor-pointer' />
-      <AiFillLinkedin size={28} className='cursor-pointer' />
-    </>,
+    <AiFillInstagram size={28} className='cursor-pointer' key={1} />,
+    <AiFillGithub size={28} className='cursor-pointer' key={2} />,
+    <AiFillFacebook size={28} className='cursor-pointer' key={3} />,
+    <AiFillLinkedin size={28} className='cursor-pointer' key={4} />,
   ];
   const darkIcons = [
-    <>
-      <AiOutlineInstagram size={28} className='cursor-pointer' />
-      <AiOutlineGithub size={28} className='cursor-pointer' />
-      <AiOutlineFacebook size={28} className='cursor-pointer' />
-      <AiOutlineLinkedin size={28} className='cursor-pointer' />
-    </>,
+    <AiOutlineInstagram size={28} className='cursor-pointer' key={5} />,
+    <AiOutlineGithub size={28} className='cursor-pointer' key={6} />,
+    <AiOutlineFacebook size={28} className='cursor-pointer' key={7} />,
+    <AiOutlineLinkedin size={28} className='cursor-pointer' key={8} />,
   ];
   const theme = useThemes();
   const themes: any = theme.theme;
@@ -128,7 +124,7 @@ export const Footer = () => {
             <h4> Acesse </h4>
             {quickLink.map((menu: Menu, index: number) => {
               return (
-                <div key={index} onClick={menu.action}>
+                <div key={menu.name} onClick={menu.action}>
                   <p className='hover:underline cursor-pointer '>{menu.name}</p>
                 </div>
               );
@@ -138,7 +134,7 @@ export const Footer = () => {
             <h4> Categorias </h4>
             {categorys.map((menu: Menu, index: number) => {
               return (
-                <div key={index} onClick={menu.action}>
+                <div key={menu.name} onClick={menu.action}>
                   <p className='hover:underline cursor-pointer '>{menu.name}</p>
                 </div>
               );

@@ -92,7 +92,7 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
         </h1>
         <div className='w-1/2 gap-10 hidden md:flex pointer cursor-pointer'>
           {categories?.map(category => (
-            <p>{category.category_name}</p>
+            <p key={category.id}>{category.category_name}</p>
           ))}
         </div>
       </div>
