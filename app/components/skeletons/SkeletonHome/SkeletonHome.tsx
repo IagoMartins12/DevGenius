@@ -11,7 +11,7 @@ export const SkeletonHome = () => {
     <div
       className={`${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}`}
     >
-      <div className='px-10 lg:px-32 pt-32'>
+      <div className='px-10 lg:px-32 pt-6'>
         <Skeleton className='d-block w-100 imgCarousel ' />
       </div>
 

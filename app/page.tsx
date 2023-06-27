@@ -3,6 +3,7 @@ import {
   CategoryRelationsPosts,
   Favorite,
   Post,
+  User,
 } from '@prisma/client';
 import getPosts from './actions/getPosts';
 import { FeaturedPosts } from './components/featuredPosts/FeaturedPosts';
@@ -17,7 +18,7 @@ export default async function Home() {
   const categoryPosts: CategoryRelationsPosts[] = await getPostCategories();
   const categories: Category[] = await getCategories();
   const favorites: Favorite[] = await getFavoritedPosts();
-  const currentUser: any = await getCurrentUser();
+  const currentUser: User | null = await getCurrentUser();
 
   return (
     <>

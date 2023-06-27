@@ -12,19 +12,18 @@ import { SocialNetworkData } from '../SettingsPage/socialNetworkData';
 import { Post, User } from '@prisma/client';
 import axios, { AxiosResponse } from 'axios';
 import { toast } from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
+import { AddressData } from '../SettingsPage/addressData';
 
 interface SettingsForm {
-  user: User;
+  user: User | null;
 }
 
-export default async function SettingsForm({ user }: { user: User }) {
+export default async function SettingsForm({ user }: { user: User | null }) {
   const [isActive, setIsActive] = useState(0);
-  const [username, setUsername] = useState(user.username);
+  const [username, setUsername] = useState(user?.username);
 
   const theme = useThemes();
   const themes: any = theme.theme;
-  const router = useRouter();
 
   const accountSubmit: SubmitHandler<FieldValues> = async data => {
     const object = {
@@ -118,11 +117,9 @@ export default async function SettingsForm({ user }: { user: User }) {
     reset,
   } = useForm<FieldValues>();
 
-  if (!user) router.push('/');
-
   return (
     <div
-      className={`flex gap-y-8 lg:gap-x-8 px-6 min-h-screen pt-28 sm:pt-44 ${
+      className={`flex gap-y-8 lg:gap-x-8 px-6 min-h-screen pt-8 ${
         themes === 'light' ? 'bg-color-white' : 'bg-color-dark'
       }`}
     >
@@ -197,11 +194,18 @@ export default async function SettingsForm({ user }: { user: User }) {
             </div>
 
             <div
-              className={`w-full flex items-center justify-center h-full font-bold text-xl text-center cursor-pointer
+              className={`w-full flex items-center justify-center h-full font-bold text-xl text-center cursor-pointer border-r-2
             ${isActive === 3 ? 'active' : ''}`}
               onClick={() => setIsActive(3)}
             >
               <span className='text-sm sm:text-lg'>Redes sociais</span>
+            </div>
+            <div
+              className={`w-full flex items-center justify-center h-full font-bold text-xl text-center cursor-pointer
+            ${isActive === 4 ? 'active' : ''}`}
+              onClick={() => setIsActive(4)}
+            >
+              <span className='text-sm sm:text-lg'>Endereço</span>
             </div>
           </div>
         </div>
@@ -229,6 +233,13 @@ export default async function SettingsForm({ user }: { user: User }) {
           )}
           {isActive === 3 && (
             <SocialNetworkData
+              register={register}
+              user={user}
+              onSubmit={handleSubmit(SocialNetworkSubmit)}
+            />
+          )}
+          {isActive === 4 && (
+            <AddressData
               register={register}
               user={user}
               onSubmit={handleSubmit(SocialNetworkSubmit)}

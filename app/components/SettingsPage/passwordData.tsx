@@ -6,7 +6,7 @@ import { User } from '@prisma/client';
 interface SettingsData {
   themes?: any;
   register: UseFormRegister<FieldValues>;
-  user: User;
+  user: User | null;
   onSubmit: () => void;
 }
 

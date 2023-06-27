@@ -1,15 +1,15 @@
+import { User } from '@prisma/client';
 import getCurrentUser from '../actions/getCurrentUser';
 import SettingsForm from '../components/settingsForm/SettingsForm';
-import { SkeletonSettings } from '../components/skeletons/SkeletonSettings/SkeletonSettings';
 
 export default async function Settings() {
-  const user: any = await getCurrentUser();
+  const user: User | null = await getCurrentUser();
 
-  // return ;
+  if (!user) return <>NÃO AUTORIZADO!</>;
+
   return (
     <>
       <SettingsForm user={user} />
-      <SkeletonSettings />
     </>
   );
 }

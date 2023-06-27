@@ -13,7 +13,7 @@ import { RiTwitterFill, RiTwitterLine } from 'react-icons/ri';
 interface SettingsData {
   themes?: any;
   register: UseFormRegister<FieldValues>;
-  user: User;
+  user: User | null;
   onSubmit: () => void;
 }
 
@@ -24,12 +24,12 @@ export const SocialNetworkData: React.FC<SettingsData> = ({
   onSubmit,
 }) => {
   const initialState = {
-    website: user.website ?? '',
-    github: user.github ?? '',
-    instagram: user.instagram ?? '',
-    facebook: user.facebook ?? '',
-    twitter: user.twitter ?? '',
-    youtube: user.youtube ?? '',
+    website: user?.website ?? '',
+    github: user?.github ?? '',
+    instagram: user?.instagram ?? '',
+    facebook: user?.facebook ?? '',
+    twitter: user?.twitter ?? '',
+    youtube: user?.youtube ?? '',
   };
 
   const [fields, setFields] = useState(initialState);

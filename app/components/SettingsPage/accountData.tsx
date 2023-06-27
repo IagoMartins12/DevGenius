@@ -8,7 +8,7 @@ import { useState } from 'react';
 interface SettingsData {
   themes?: any;
   register: UseFormRegister<FieldValues>;
-  user: User;
+  user: User | null;
   onSubmit: () => void;
 }
 
@@ -19,9 +19,9 @@ export const AccountData: React.FC<SettingsData> = ({
   onSubmit,
 }) => {
   const initialState = {
-    username: user.username ?? '',
-    bio: user.bio ?? '',
-    email: user.email ?? '',
+    username: user?.username ?? '',
+    bio: user?.bio ?? '',
+    email: user?.email ?? '',
   };
 
   const [fields, setFields] = useState(initialState);

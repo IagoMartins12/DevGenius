@@ -63,7 +63,8 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
         gap-0
         sm:gap-10
         flex
-        fixed
+        sticky
+        top-0
         w-full
         z-10
         md:px-12

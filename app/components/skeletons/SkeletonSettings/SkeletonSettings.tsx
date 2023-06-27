@@ -10,7 +10,7 @@ export const SkeletonSettings = () => {
 
   return (
     <div
-      className={`flex gap-y-8 lg:gap-x-8 px-6 min-h-screen pt-28 sm:pt-44 ${
+      className={`flex gap-y-8 lg:gap-x-8 px-6 min-h-screen pt-8 ${
         themes === 'light' ? 'bg-color-white' : 'bg-color-dark'
       }`}
     >

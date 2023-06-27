@@ -15,7 +15,7 @@ interface PostProps {
   posts?: Post | null;
   categoriesPost?: CategoryRelationsPosts[];
   categories?: Category[];
-  currentUser?: User;
+  currentUser?: User | null;
   Favorites?: Favorite[];
 }
 
@@ -29,7 +29,7 @@ export const PostCard = async ({
   posts: Post[];
   categoriesPost: CategoryRelationsPosts[];
   categories: Category[];
-  currentUser: User;
+  currentUser: User | null;
   favorites: Favorite[];
 }) => {
   const theme = useThemes();
