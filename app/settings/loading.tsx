@@ -1,10 +1,10 @@
 import { Footer } from '../components/footer/Footer';
-import { SkeletonHome } from '../components/skeletons/SkeletonHome/SkeletonHome';
+import { SkeletonSettings } from '../components/skeletons/SkeletonSettings/SkeletonSettings';
 
 const Loading = async () => {
   return (
     <>
-      <SkeletonHome />
+      <SkeletonSettings />
       <Footer />
     </>
   );

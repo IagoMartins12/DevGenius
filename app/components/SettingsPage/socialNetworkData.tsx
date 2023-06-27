@@ -40,8 +40,6 @@ export const SocialNetworkData: React.FC<SettingsData> = ({
       [ev.target.name]: ev.target.value,
     });
 
-  console.log(user);
-
   return (
     <>
       <div className='flex flex-col gap-y-4 mx-6 mt-3'>
