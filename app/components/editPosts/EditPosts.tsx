@@ -1,7 +1,7 @@
 'use client';
 
 import ImageUpload from '@/app/components/ImageUpload';
-import { Category, Post } from '@prisma/client';
+import { Category, CategoryRelationsPosts, Post } from '@prisma/client';
 import axios, { AxiosResponse } from 'axios';
 import { useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
@@ -11,15 +11,21 @@ import { Form } from 'react-bootstrap';
 import useThemes from '@/app/hooks/useTheme';
 import { useRouter } from 'next/navigation';
 
-interface CreatePosts {
+interface EditPosts {
   categories: Category[];
+  post: Post | null;
+  postCategories: CategoryRelationsPosts[] | null;
 }
 
-export const CreatePosts: React.FC<CreatePosts> = ({ categories }) => {
-  const [editCategoryInput, setEditCategoryInput] = useState(false);
+export const EditPosts: React.FC<EditPosts> = ({
+  categories,
+  post,
+  postCategories,
+}) => {
+  if (!post) return;
+
   const [categoryArr, setCategoryArr] = useState<Category[]>(categories);
   const [currentCategory, setCurrentCategory] = useState<Category>();
-  const router = useRouter();
   const theme = useThemes();
   const themes: any = theme.theme;
 
@@ -78,7 +84,6 @@ export const CreatePosts: React.FC<CreatePosts> = ({ categories }) => {
         return updatedArr;
       });
       setValue('category_edit_name', '');
-      setEditCategoryInput(false);
       toast.success('Categoria atualizada');
     } catch (err) {
       console.log(err);
@@ -134,11 +139,11 @@ export const CreatePosts: React.FC<CreatePosts> = ({ categories }) => {
     reset,
   } = useForm<FieldValues>({
     defaultValues: {
-      title: '',
-      content: '',
-      resume: '',
-      photo_background: '',
-      featured: false,
+      title: post.title,
+      content: post.content,
+      resume: post.resume,
+      photo_background: post.photo_background,
+      featured: post.featured,
       selectedCategories: [],
     },
   });
@@ -205,6 +210,7 @@ export const CreatePosts: React.FC<CreatePosts> = ({ categories }) => {
             <div className='flex flex-col gap-y-2 mx-6 mt-3'>
               <CategorysForm
                 categories={categoryArr}
+                checkedCategorys={postCategories}
                 createCategory={createCategory}
                 editCategory={editCategory}
                 removeCategory={removeCategory}
@@ -216,7 +222,7 @@ export const CreatePosts: React.FC<CreatePosts> = ({ categories }) => {
             </div>
             <div className='flex flex-col gap-y-2 mx-6 mt-3'>
               <h3 className=' font-bold text-1xl sm:text-2xl  '>
-                Resumo do artigo:{' '}
+                Resumo do artigo:
               </h3>
               <textarea
                 id=''
@@ -233,7 +239,6 @@ export const CreatePosts: React.FC<CreatePosts> = ({ categories }) => {
             <div className='flex flex-col gap-y-2 mx-6 mt-3'>
               <h3 className=' font-bold text-1xl sm:text-2xl  '>Contéudo: </h3>
               <textarea
-                id=''
                 cols={30}
                 rows={10}
                 className={`border-2 px-2 py-2 resize-none

@@ -23,3 +23,19 @@ export async function getPostCategories(params?: ICategories) {
     throw new Error(error);
   }
 }
+
+export async function getCategoriesPerId(postId: string) {
+  try {
+    const categoryRelationsPosts = await prisma.categoryRelationsPosts.findMany(
+      {
+        where: {
+          postId: postId,
+        },
+      },
+    );
+
+    return categoryRelationsPosts;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}

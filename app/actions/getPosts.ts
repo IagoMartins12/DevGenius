@@ -4,6 +4,7 @@ export interface IPosts {
   title?: string;
   category?: string;
   username?: string;
+  id?: string;
 }
 
 export default async function getPosts(params?: IPosts) {
@@ -32,6 +33,20 @@ export default async function getPosts(params?: IPosts) {
     // const safePosts = post.map(post => ({
     //   ...post,
     // }));
+
+    return post;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
+export async function getPostsPerId(id: string) {
+  try {
+    const post = await prisma.post.findFirst({
+      where: {
+        id: id,
+      },
+    });
 
     return post;
   } catch (error: any) {

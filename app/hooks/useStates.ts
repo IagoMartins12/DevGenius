@@ -1,28 +1,28 @@
 import { useEffect, useState } from 'react';
 
-export interface Regiao {
+export interface Region {
   id: number;
   sigla: string;
   nome: string;
 }
 
-export interface IEstado {
+export interface IState {
   id: number;
   sigla: string;
   nome: string;
-  regiao: Regiao;
+  regiao: Region;
 }
 
 export const useStates = () => {
-  const [estados, setEstados] = useState<IEstado[]>([]);
+  const [states, setStates] = useState<IState[]>([]);
 
   useEffect(() => {
     fetch('https://brasilapi.com.br/api/ibge/uf/v1')
       .then(response => response.json())
-      .then(data => setEstados(data));
+      .then(data => setStates(data));
   }, []);
 
   return {
-    estados,
+    states,
   };
 };

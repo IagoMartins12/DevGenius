@@ -36,7 +36,7 @@ export const NavBarUser: React.FC<navBarProps> = ({ display, user }) => {
       {
         name: 'Criar post',
         action: () => {
-          router.push('/create');
+          router.push('/post/create');
         },
       },
       {

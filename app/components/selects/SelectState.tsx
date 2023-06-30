@@ -1,32 +1,43 @@
 import { useStates } from '@/app/hooks/useStates';
+import { User } from '@prisma/client';
 import { useState } from 'react';
 import Select from 'react-select';
 
-export const SelectState = ({ onChange }: { onChange: (ev: any) => void }) => {
-  const { estados } = useStates();
-  const [selectedEstado, setSelectedEstado] = useState<number | null>(null);
-
-  const estadoOptions = estados.map(estado => ({
-    value: estado.id,
-    label: estado.nome,
-  }));
-
-  const selectedOptionEstado = estadoOptions.find(
-    e => e.value === selectedEstado,
+export const SelectState = ({
+  onChange,
+  user,
+}: {
+  onChange: (ev: any) => void;
+  user: User | null;
+}) => {
+  const [selectedState, setSelectedState] = useState<string | null>(
+    user?.state ? user.state : null,
   );
 
-  const handleEstadoUpdate = (event: any) => {
-    setSelectedEstado(event.value);
-    const selectedUf = estados.find(e => e.id === event.value)?.sigla;
+  const { states } = useStates();
+
+  const statesOptions = states.map(state => ({
+    value: state.id,
+    label: state.nome,
+  }));
+
+  const selectedOptionEstado = statesOptions.find(
+    e => e.label === selectedState,
+  );
+
+  const handleStateUpdate = (event: any) => {
+    setSelectedState(event.label);
+    const selectedUf = states.find(e => e.id === event.value)?.sigla;
     onChange(selectedUf);
   };
 
   return (
     <Select
       placeholder='Selecione um estado'
-      options={estadoOptions}
+      options={statesOptions}
       value={selectedOptionEstado}
-      onChange={handleEstadoUpdate}
+      onChange={handleStateUpdate}
+      id='state'
     />
   );
 };

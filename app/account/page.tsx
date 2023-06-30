@@ -1,21 +1,4 @@
 import Image from 'next/image';
-import {
-  AiFillEdit,
-  AiOutlineCamera,
-  AiOutlineEdit,
-  AiFillCamera,
-  AiFillSetting,
-  AiOutlineSetting,
-  AiOutlineFlag,
-  AiFillFlag,
-  AiOutlineFacebook,
-  AiOutlineGithub,
-  AiOutlineInstagram,
-  AiOutlineLinkedin,
-} from 'react-icons/ai';
-import { BsPeople } from 'react-icons/bs';
-import { GrDocumentUser } from 'react-icons/gr';
-import { IoLocationSharp, IoLocationOutline } from 'react-icons/io5';
 import { UserInfo } from '../components/AccountPage/UserInfo';
 import { UserButtons } from '../components/AccountPage/UserButtons';
 

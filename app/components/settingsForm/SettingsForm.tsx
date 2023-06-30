@@ -18,9 +18,10 @@ interface SettingsForm {
   user: User | null;
 }
 
-export default async function SettingsForm({ user }: { user: User | null }) {
+export const SettingsForm: React.FC<SettingsForm> = ({ user }) => {
   const [isActive, setIsActive] = useState(0);
   const [username, setUsername] = useState(user?.username);
+  const [user2, setUser2] = useState(user);
 
   const theme = useThemes();
   const themes: any = theme.theme;
@@ -50,6 +51,28 @@ export default async function SettingsForm({ user }: { user: User | null }) {
       secondName: data.secondName,
       birthday: data.birthday,
       gender: data.gender,
+    };
+
+    try {
+      const response: AxiosResponse<Post> = await axios.patch(
+        '/api/account',
+        object,
+      );
+
+      toast.success('Dados atualizados!');
+    } catch (err) {
+      toast.error('Algo deu errado, tente novamente :(');
+      console.log(err);
+    }
+  };
+
+  const addressSubmit = async (uf: string, city: string) => {
+    const state = document.getElementById('state')?.innerText;
+
+    const object = {
+      uf,
+      state,
+      city,
     };
 
     try {
@@ -128,15 +151,15 @@ export default async function SettingsForm({ user }: { user: User | null }) {
           {isActive === 0 && (
             <Image
               fill
-              className='sm:object-cover h-1 w-full group-hover:scale-110 transition'
-              src='programing.svg'
+              className='sm:object-cover h-1 imageSettings group-hover:scale-110 transition'
+              src='teste1.svg'
               alt='Listing'
             />
           )}
           {isActive === 1 && (
             <Image
               fill
-              className='sm:object-cover h-1 w-full group-hover:scale-110 transition'
+              className='sm:object-cover h-1 imageSettings group-hover:scale-110 transition'
               src='developer.svg'
               alt='Listing'
             />
@@ -144,15 +167,23 @@ export default async function SettingsForm({ user }: { user: User | null }) {
           {isActive === 2 && (
             <Image
               fill
-              className='sm:object-cover h-1 w-full group-hover:scale-110 transition'
-              src='firmware.svg'
+              className='sm:object-cover h-1 imageSettings group-hover:scale-110 transition'
+              src='house1.svg'
               alt='Listing'
             />
           )}
           {isActive === 3 && (
             <Image
               fill
-              className='sm:object-cover h-1 w-full group-hover:scale-110 transition'
+              className='sm:object-cover h-1 imageSettings group-hover:scale-110 transition'
+              src='firmware.svg'
+              alt='Listing'
+            />
+          )}
+          {isActive === 4 && (
+            <Image
+              fill
+              className='sm:object-cover h-1 imageSettings group-hover:scale-110 transition'
               src='social3.svg'
               alt='Listing'
             />
@@ -184,28 +215,27 @@ export default async function SettingsForm({ user }: { user: User | null }) {
             >
               <span className='text-sm sm:text-lg'>Pessoal</span>
             </div>
-
             <div
               className={`w-full flex items-center justify-center h-full font-bold text-xl text-center cursor-pointer border-r-2
             ${isActive === 2 ? 'active' : ''}`}
               onClick={() => setIsActive(2)}
             >
-              <span className='text-sm sm:text-lg'>Senha</span>
+              <span className='text-sm sm:text-lg'>Endereço</span>
             </div>
-
             <div
               className={`w-full flex items-center justify-center h-full font-bold text-xl text-center cursor-pointer border-r-2
             ${isActive === 3 ? 'active' : ''}`}
               onClick={() => setIsActive(3)}
             >
-              <span className='text-sm sm:text-lg'>Redes sociais</span>
+              <span className='text-sm sm:text-lg'>Senha</span>
             </div>
+
             <div
-              className={`w-full flex items-center justify-center h-full font-bold text-xl text-center cursor-pointer
+              className={`w-full flex items-center justify-center h-full font-bold text-xl text-center cursor-pointer 
             ${isActive === 4 ? 'active' : ''}`}
               onClick={() => setIsActive(4)}
             >
-              <span className='text-sm sm:text-lg'>Endereço</span>
+              <span className='text-sm sm:text-lg'>Redes sociais</span>
             </div>
           </div>
         </div>
@@ -225,21 +255,17 @@ export default async function SettingsForm({ user }: { user: User | null }) {
             />
           )}
           {isActive === 2 && (
+            <AddressData user={user} onSubmit={addressSubmit} />
+          )}
+          {isActive === 3 && (
             <PasswordData
               register={register}
               user={user}
               onSubmit={handleSubmit(passwordSubmit)}
             />
           )}
-          {isActive === 3 && (
-            <SocialNetworkData
-              register={register}
-              user={user}
-              onSubmit={handleSubmit(SocialNetworkSubmit)}
-            />
-          )}
           {isActive === 4 && (
-            <AddressData
+            <SocialNetworkData
               register={register}
               user={user}
               onSubmit={handleSubmit(SocialNetworkSubmit)}
@@ -249,4 +275,4 @@ export default async function SettingsForm({ user }: { user: User | null }) {
       </div>
     </div>
   );
-}
+};

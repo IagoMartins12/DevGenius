@@ -18,6 +18,9 @@ interface IParams {
   facebook?: string;
   twitter?: string;
   youtube?: string;
+  uf?: string;
+  state?: string;
+  city?: string;
 }
 
 export async function PATCH(request: Request) {
@@ -44,6 +47,9 @@ export async function PATCH(request: Request) {
     facebook,
     twitter,
     youtube,
+    uf,
+    state,
+    city,
   } = body;
 
   const dataToUpdate: Partial<IParams> = {};
@@ -90,6 +96,18 @@ export async function PATCH(request: Request) {
   }
   if (youtube) {
     dataToUpdate.youtube = youtube;
+  }
+
+  if (state) {
+    dataToUpdate.state = state;
+  }
+
+  if (city) {
+    dataToUpdate.city = city;
+  }
+
+  if (uf) {
+    dataToUpdate.uf = uf;
   }
 
   const userUpdated = await prisma.user.updateMany({

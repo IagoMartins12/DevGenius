@@ -5,7 +5,6 @@ import { IoCloseOutline } from 'react-icons/io5';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 import useLoginModal from '@/app/hooks/useLoginModal';
-import { useState } from 'react';
 import useThemes from '@/app/hooks/useTheme';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
@@ -16,14 +15,11 @@ import axios from 'axios';
 import { StyledInput } from '../commum/StyledInput';
 
 export const RegisterModal = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
-  const router = useRouter();
   const theme = useThemes();
   const themes: any = theme.theme;
-  const isOpen: any = registerModal.isOpen;
+  const isOpen: boolean = registerModal.isOpen;
 
   const openLoginModal = () => {
     registerModal.onClose();
@@ -60,9 +56,6 @@ export const RegisterModal = () => {
           return toast.error('Nome de usuario já existe');
 
         toast.error('Algo deu errado! Tente novamente');
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
   };
 

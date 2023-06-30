@@ -24,6 +24,7 @@ model User {
   bio             String?
   gender          String? 
   birthday        String?
+  uf              String?
   state           String?
   city            String?
   website         String?

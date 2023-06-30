@@ -10,6 +10,7 @@ import {
 } from '@prisma/client';
 import HeartButton from '../HeartButton';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 interface PostProps {
   posts?: Post | null;
@@ -34,6 +35,11 @@ export const PostCard = async ({
 }) => {
   const theme = useThemes();
   const themes: any = theme.theme;
+  const router = useRouter();
+
+  const navigate = (postId: string) => {
+    router.push(`post/${postId}`);
+  };
 
   return (
     <div
@@ -56,6 +62,7 @@ export const PostCard = async ({
             className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer
             ${themes === 'light' ? 'card-white' : 'card-dark'}`}
             key={post.id}
+            onClick={() => navigate(post.id)}
           >
             <div className='aspect-video w-full relative overflow-hidden rounded-xl'>
               <Image
@@ -69,7 +76,7 @@ export const PostCard = async ({
                   postId={post.id}
                   currentUser={currentUser}
                   favorites={favorites}
-                />{' '}
+                />
               </div>
             </div>
 

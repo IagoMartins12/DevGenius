@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 
-export interface ICidade {
+export interface ICity {
   nome: string;
   codigo_ibge: string;
 }
 
 export const useCitys = ({ uf }: { uf: string }) => {
-  const [cidades, setCidades] = useState<ICidade[]>([]);
+  const [citys, setCitys] = useState<ICity[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -15,12 +15,12 @@ export const useCitys = ({ uf }: { uf: string }) => {
     setLoading(true);
     fetch(`https://brasilapi.com.br/api/ibge/municipios/v1/${uf}`)
       .then(response => response.json())
-      .then(data => setCidades(data))
+      .then(data => setCitys(data))
       .then(() => setLoading(false));
   }, [uf]);
 
   return {
-    cidades,
+    citys,
     loading,
   };
 };

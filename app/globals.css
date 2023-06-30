@@ -72,6 +72,7 @@
 .carousel-indicators {
   display: none;
 }
+
 .modalPosition {
   width: 60%;
   top: 15vh;
@@ -79,6 +80,12 @@
   position: absolute;
 }
 
+.deleteModalPosition {
+  width: 40%;
+  top: 15vh;
+  left: 25vw;
+  position: absolute;
+}
 .active {
   --tw-bg-opacity: 1;
   background-color: rgb(59 130 246 / var(--tw-bg-opacity));
@@ -86,6 +93,10 @@
 
 .backgroundProfile {
   max-width: 40%;
+}
+
+.imageSettings {
+  height: auto;
 }
 
 /* Input */
@@ -323,8 +334,6 @@ input[type='submit'] {
 input[type='submit']:hover {
   opacity: 0.8;
 }
-
-/* input settings */
 
 @media (max-width: 920px) {
   .carousel-inner {
