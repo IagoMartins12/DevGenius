@@ -6,18 +6,16 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { IoMdCloseCircleOutline, IoMdCloseCircle } from 'react-icons/io';
 import { MdEdit, MdOutlineEdit } from 'react-icons/md';
-
-interface PostPage {
-  user: User | null;
-  post: Post | null;
-}
+import { AuthorCard } from '../authorCard/AuthorCard';
 
 export const PostPage = ({
   user,
   post,
+  author,
 }: {
   user: User | null;
   post: Post | null;
+  author: User | null;
 }) => {
   if (!post) {
     return <div>Post não encontrado</div>;
@@ -30,6 +28,7 @@ export const PostPage = ({
     return { __html: post.content };
   };
 
+  console.log('post', post);
   return (
     <div
       className='w-full border-2 flex  gap-x-4 px-10 
@@ -41,7 +40,7 @@ export const PostPage = ({
       }}
     >
       <div className='w-9/12 shadow-lg flex-col h-full'>
-        {user?.id === post.userId && (
+        {user?.role === 1 && (
           <div className='w-11/12 mx-auto h-auto my-6 flex items-center justify-end gap-1'>
             <IoMdCloseCircle
               size={28}
@@ -79,7 +78,9 @@ export const PostPage = ({
         ></div>
       </div>
       <div className='w-4/12 shadow-lg'>
-        <div className='w-11/12 mx-auto border-2 h-2/3 my-6'></div>
+        <div className='w-11/12 mx-auto h-2/3 my-6'>
+          <AuthorCard author={author} />
+        </div>
       </div>
     </div>
   );

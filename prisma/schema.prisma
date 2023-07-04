@@ -96,7 +96,7 @@ model CategoryRelationsPosts {
   postId        String    @db.ObjectId
 
   post     Post     @relation(fields: [postId], references: [id])
-  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id])
 }
 
 model Comment {

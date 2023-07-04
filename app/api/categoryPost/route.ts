@@ -23,3 +23,21 @@ export async function POST(request: Request) {
 
   return NextResponse.json(category);
 }
+
+export async function PUT(request: Request) {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) {
+    return NextResponse.error();
+  }
+
+  const body = await request.json();
+
+  const { category_id, post_id } = body;
+
+  const allPosts = prisma.categoryRelationsPosts.findMany({
+    where: {
+      postId: post_id,
+    },
+  });
+}

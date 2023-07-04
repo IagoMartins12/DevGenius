@@ -1,7 +1,7 @@
 'use client';
 
 import ImageUpload from '@/app/components/ImageUpload';
-import { Category, CategoryRelationsPosts, Post } from '@prisma/client';
+import { Category, CategoryRelationsPosts, Post, User } from '@prisma/client';
 import axios, { AxiosResponse } from 'axios';
 import { useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
@@ -26,8 +26,13 @@ export const EditPosts: React.FC<EditPosts> = ({
 
   const [categoryArr, setCategoryArr] = useState<Category[]>(categories);
   const [currentCategory, setCurrentCategory] = useState<Category>();
+  const [checkedCategorys, setCheckedCategorys] = useState<
+    CategoryRelationsPosts[] | null
+  >(postCategories);
+
   const theme = useThemes();
   const themes: any = theme.theme;
+  const router = useRouter();
 
   const createCategory = async () => {
     const categoryName = watch('category_name');
@@ -107,23 +112,13 @@ export const EditPosts: React.FC<EditPosts> = ({
     };
 
     try {
-      const response: AxiosResponse<Post> = await axios.post(
-        '/api/post',
+      const response: AxiosResponse<Post> = await axios.patch(
+        `/api/post/${post.id}`,
         object,
       );
 
-      const categoryRequests = data.selectedCategories.map((category: any) => {
-        const id = category.split(',')[1];
-        return axios.post('/api/categoryPost', {
-          post_id: response.data.id,
-          category_id: id,
-        });
-      });
-
-      await Promise.all(categoryRequests);
-
-      toast.success('Post criado!');
-      reset();
+      toast.success('Post editado!');
+      router.push(`/post/${post.id}`);
     } catch (err) {
       toast.error('Algo deu errado, tente novamente :(');
       console.log(err);
@@ -170,11 +165,11 @@ export const EditPosts: React.FC<EditPosts> = ({
   return (
     <>
       <div
-        className={`flex flex-col sm:px-24 sm:py-24
+        className={`flex flex-col sm:px-24 sm:py-6
       ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}
       `}
       >
-        <h3 className='sm:mx-6 mt-6 mx-6 font-bold text-3xl '>Criar post</h3>
+        <h3 className='sm:mx-6 mt-6 mx-6 font-bold text-3xl '>Editar post</h3>
         <div className='flex flex-col lg:flex-row gap-y-8 lg:gap-x-8  mx-6 my-6 '>
           <div className='flex flex-col w-full lg:w-4/12'>
             <div>
@@ -210,7 +205,8 @@ export const EditPosts: React.FC<EditPosts> = ({
             <div className='flex flex-col gap-y-2 mx-6 mt-3'>
               <CategorysForm
                 categories={categoryArr}
-                checkedCategorys={postCategories}
+                checkedCategorys={checkedCategorys}
+                setCheckedCategorys={setCheckedCategorys}
                 createCategory={createCategory}
                 editCategory={editCategory}
                 removeCategory={removeCategory}
@@ -218,6 +214,7 @@ export const EditPosts: React.FC<EditPosts> = ({
                 register={register}
                 currentCategory={currentCategory}
                 setCurrentCategory={setCurrentCategory}
+                post={post}
               />
             </div>
             <div className='flex flex-col gap-y-2 mx-6 mt-3'>
@@ -267,7 +264,7 @@ export const EditPosts: React.FC<EditPosts> = ({
                 className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-10/12 sm:w-4/12'
                 onClick={handleSubmit(onSubmit)}
               >
-                Criar post
+                Editar post
               </button>
             </div>
           </div>

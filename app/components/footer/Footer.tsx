@@ -1,6 +1,7 @@
 'use client';
 
 import useThemes from '@/app/hooks/useTheme';
+import { darkSocialIcons, lightSocialIcons } from '@/app/utils/SocialIcons';
 import {
   AiOutlineInstagram,
   AiFillInstagram,
@@ -57,18 +58,6 @@ export const Footer = () => {
     },
   ];
 
-  const lightIcons = [
-    <AiFillInstagram size={28} className='cursor-pointer' key={1} />,
-    <AiFillGithub size={28} className='cursor-pointer' key={2} />,
-    <AiFillFacebook size={28} className='cursor-pointer' key={3} />,
-    <AiFillLinkedin size={28} className='cursor-pointer' key={4} />,
-  ];
-  const darkIcons = [
-    <AiOutlineInstagram size={28} className='cursor-pointer' key={5} />,
-    <AiOutlineGithub size={28} className='cursor-pointer' key={6} />,
-    <AiOutlineFacebook size={28} className='cursor-pointer' key={7} />,
-    <AiOutlineLinkedin size={28} className='cursor-pointer' key={8} />,
-  ];
   const theme = useThemes();
   const themes: any = theme.theme;
 
@@ -145,11 +134,11 @@ export const Footer = () => {
           <h4 className='pt-4'>Siga nas redes sociais: </h4>
           {theme.theme === 'light' ? (
             <div className='flex gap-3'>
-              {lightIcons.map(element => element)}
+              {lightSocialIcons.map(element => element)}
             </div>
           ) : (
             <div className='flex gap-3'>
-              {darkIcons.map(element => element)}
+              {darkSocialIcons.map(element => element)}
             </div>
           )}
         </div>

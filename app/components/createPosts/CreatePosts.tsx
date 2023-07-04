@@ -107,13 +107,15 @@ export const CreatePosts: React.FC<CreatePosts> = ({ categories }) => {
         object,
       );
 
-      const categoryRequests = data.selectedCategories.map((category: any) => {
-        const id = category.split(',')[1];
-        return axios.post('/api/categoryPost', {
-          post_id: response.data.id,
-          category_id: id,
-        });
-      });
+      const categoryRequests = data.selectedCategories.map(
+        (category: string) => {
+          const id = category.split(',')[1];
+          return axios.post('/api/categoryPost', {
+            post_id: response.data.id,
+            category_id: id,
+          });
+        },
+      );
 
       await Promise.all(categoryRequests);
 

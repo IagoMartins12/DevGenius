@@ -4,7 +4,7 @@ import getCurrentUser from '@/app/actions/getCurrentUser';
 import prisma from '@/app/libs/prismadb';
 
 interface IParams {
-  postId?: string;
+  postid?: string;
   title?: string;
   content?: string;
   featured?: number;
@@ -22,51 +22,52 @@ export async function DELETE(
     return NextResponse.error();
   }
 
-  const { postId } = params;
+  const { postid } = params;
 
-  console.log('params', params);
-  console.log('postId', postId);
-
-  if (!postId || typeof postId !== 'string') {
+  if (!postid || typeof postid !== 'string') {
     throw new Error('Invalid ID');
   }
 
-  const post = await prisma.post.deleteMany({
+  const relationPost = await prisma.categoryRelationsPosts.deleteMany({
     where: {
-      id: postId,
+      postId: postid,
     },
   });
 
-  return NextResponse.json(post);
+  const post = await prisma.post.delete({
+    where: {
+      id: postid,
+    },
+  });
+
+  return NextResponse.json({ post: post, relationPost: relationPost });
 }
 
-export async function PUT(request: Request, { params }: { params: IParams }) {
+export async function PATCH(request: Request, { params }: { params: IParams }) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
     return NextResponse.error();
   }
 
-  const { postId } = params;
+  const { postid } = params;
+  const body = await request.json();
 
-  if (!postId || typeof postId !== 'string') {
+  const { title, featured, photo_background, content } = body;
+
+  if (!postid || typeof postid !== 'string') {
     throw new Error('Invalid ID');
   }
 
-  if (!params.category_id || typeof params.category_id !== 'string') {
-    throw new Error('Invalid ID');
-  }
-
-  const postUpdated = await prisma.post.updateMany({
+  const postUpdated = await prisma.post.update({
     where: {
-      id: postId,
+      id: postid,
     },
     data: {
-      content: params.content,
-      featured: params.featured,
-      title: params.title,
-      photo_background: params.photo_background,
-      updatedAt: Date(),
+      content: content,
+      featured: featured,
+      title: title,
+      photo_background: photo_background,
     },
   });
 

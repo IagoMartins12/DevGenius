@@ -1,8 +1,9 @@
 'use client';
 
 import useThemes from '@/app/hooks/useTheme';
-import { Category, CategoryRelationsPosts } from '@prisma/client';
-import { useState } from 'react';
+import { Category, CategoryRelationsPosts, Post } from '@prisma/client';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { RegisterOptions, UseFormSetValue } from 'react-hook-form';
 import {
   IoMdAddCircle,
   IoMdAddCircleOutline,
@@ -17,10 +18,12 @@ interface CategorysProps {
   removeCategory: (category_id: string) => void;
   editCategory: () => void;
   register: any;
-  setValue: any;
-  currentCategory: any;
+  setValue: UseFormSetValue<any>;
+  currentCategory: Category | undefined;
   setCurrentCategory: (category: Category) => void;
   checkedCategorys: CategoryRelationsPosts[] | null;
+  setCheckedCategorys: any;
+  post: Post;
 }
 export const CategorysForm: React.FC<CategorysProps> = ({
   categories,
@@ -32,9 +35,12 @@ export const CategorysForm: React.FC<CategorysProps> = ({
   currentCategory,
   setCurrentCategory,
   checkedCategorys,
+  setCheckedCategorys,
+  post,
 }) => {
   const [categoryInputOpen, setCategoryInputOpen] = useState(false);
   const [editCategoryInput, setEditCategoryInput] = useState(false);
+
   const theme = useThemes();
   const themes: any = theme.theme;
 
@@ -44,19 +50,40 @@ export const CategorysForm: React.FC<CategorysProps> = ({
 
   const handleChange = (ev: { target: { value: any } }) => {
     const [category_name, category_id] = ev.target.value.split(',');
+
+    const alreadyChecked = checkedCategorys?.some(
+      item => item.categoryId === category_id,
+    );
+
+    if (alreadyChecked) {
+      const updatedCategorys = checkedCategorys?.filter(
+        item => item.categoryId !== category_id,
+      );
+      setCheckedCategorys(updatedCategorys);
+    } else {
+      const newItem = { category_id };
+
+      console.log(newItem);
+      console.log(checkedCategorys);
+      setCheckedCategorys((prevCategorys: CategoryRelationsPosts[]) => [
+        ...prevCategorys,
+        newItem,
+      ]);
+    }
+
     setValue('category_name', category_name);
     setValue('category_id', category_id);
   };
+
   const handleChangeEdit = (ev: { target: { value: any } }) => {
     setValue('category_edit_name', ev.target.value);
   };
 
-  console.log(checkedCategorys);
   return (
     <>
       {/* Categorias */}
       <h3 className=' font-bold text-1xl sm:text-2xl'>
-        Selecione as categorias:{' '}
+        Selecione as categorias:
       </h3>
       <div className='flex px-2 py-2 border-2 items-center justify-between '>
         <div className='flex px-2 py-2 gap-x-5 flex-wrap '>
@@ -74,6 +101,7 @@ export const CategorysForm: React.FC<CategorysProps> = ({
                       item => item.categoryId === category.id,
                     )
                   }
+                  onClick={handleChange}
                 />
 
                 {category.category_name}
