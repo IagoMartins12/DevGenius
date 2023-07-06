@@ -7,6 +7,7 @@ import {
   UseFormRegister,
 } from 'react-hook-form';
 import Image from 'next/image';
+import { BiCommentAdd } from 'react-icons/bi';
 
 export const CommentsSection = ({
   comments,
@@ -29,8 +30,6 @@ export const CommentsSection = ({
     return user;
   };
 
-  console.log('postPage 2', comments);
-
   return (
     <div className='w-full flex flex-col gap-y-4'>
       <div className='flex items-center justify-start '>
@@ -45,38 +44,44 @@ export const CommentsSection = ({
             <Image
               fill
               className='object-cover rounded-full h-1 w-full '
-              src={currentUser?.image ?? '/user.svg'}
+              src={currentUser?.image ?? '/user.png'}
               alt='Post'
             />
           </div>
         </div>
-        <div className='w-11/12 flex items-center border-black  flex-col gap-y-3'>
+        <div className='w-11/12 flex items-center  flex-col gap-y-3'>
           <textarea
-            className='w-full h-3/4 p-2 resize-none border-2 border-black'
+            className='w-full h-3/4 p-2 resize-none border-1 border-black'
             id=''
             placeholder='Adicionar comentario...'
             {...register('commentContent')}
           />
-          <input
-            type='button'
-            value='Comentar'
-            className='w-full h-1/4 border-2 border-black'
-            onClick={handleSubmit(onSubmit)}
-          />
+          <button className='button w-full' onClick={handleSubmit(onSubmit)}>
+            <BiCommentAdd size={25} />
+            Comentar
+          </button>
         </div>
       </div>
       <hr />
       <div className='my-8 flex flex-col gap-y-4'>
-        {comments.map((comment: Comment) => {
-          const user = getUser(comment.userId);
-          return (
-            <CommentCard
-              comment={comment}
-              user={user}
-              currentUser={currentUser}
-            />
-          );
-        })}
+        {comments.length > 0 ? (
+          comments.map((comment: Comment) => {
+            const user = getUser(comment.userId);
+            return (
+              <CommentCard
+                comment={comment}
+                user={user}
+                currentUser={currentUser}
+              />
+            );
+          })
+        ) : (
+          <div className='flex w-full items-center justify-center'>
+            <h1 className='font-bold text-2xl text-center'>
+              Ainda não há nenhum comentario neste artigo.
+            </h1>
+          </div>
+        )}
       </div>
     </div>
   );

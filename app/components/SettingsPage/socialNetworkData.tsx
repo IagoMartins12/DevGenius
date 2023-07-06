@@ -2,14 +2,15 @@ import { Themes } from '@/app/hooks/useTheme';
 import { User } from '@prisma/client';
 import { ChangeEvent, useState } from 'react';
 import { FieldValues, UseFormRegister } from 'react-hook-form';
-import {
-  AiOutlineInstagram,
-  AiOutlineFacebook,
-  AiOutlineYoutube,
-} from 'react-icons/ai';
+
 import { CgWebsite } from 'react-icons/cg';
-import { FaGithubAlt } from 'react-icons/fa';
-import { RiTwitterFill, RiTwitterLine } from 'react-icons/ri';
+import {
+  GrFacebook,
+  GrGithub,
+  GrInstagram,
+  GrTwitter,
+  GrYoutube,
+} from 'react-icons/gr';
 
 interface SettingsData {
   themes?: Themes;
@@ -71,7 +72,7 @@ export const SocialNetworkData: React.FC<SettingsData> = ({
               value={fields.github}
               onChange={handleFieldsChange}
             />
-            <FaGithubAlt className='absolute top-3 left-3' size={18} />
+            <GrGithub className='absolute top-3 left-3' size={18} />
           </div>
         </div>
         <div className='flex flex-col gap-y-2 w-full'>
@@ -85,7 +86,7 @@ export const SocialNetworkData: React.FC<SettingsData> = ({
               value={fields.instagram}
               onChange={handleFieldsChange}
             />
-            <AiOutlineInstagram className='absolute top-3 left-3' size={18} />
+            <GrInstagram className='absolute top-3 left-3' size={18} />
           </div>
         </div>
         <div className='flex flex-col gap-y-2 w-full'>
@@ -99,7 +100,7 @@ export const SocialNetworkData: React.FC<SettingsData> = ({
               value={fields.facebook}
               onChange={handleFieldsChange}
             />
-            <AiOutlineFacebook className='absolute top-3 left-3' size={18} />
+            <GrFacebook className='absolute top-3 left-3' size={18} />
           </div>
         </div>
         <div className='flex flex-col gap-y-2 w-full'>
@@ -113,7 +114,7 @@ export const SocialNetworkData: React.FC<SettingsData> = ({
               value={fields.twitter}
               onChange={handleFieldsChange}
             />
-            <RiTwitterFill className='absolute top-3 left-3' size={18} />
+            <GrTwitter className='absolute top-3 left-3' size={18} />
           </div>
         </div>
         <div className='flex flex-col gap-y-2 w-full'>
@@ -127,7 +128,7 @@ export const SocialNetworkData: React.FC<SettingsData> = ({
               value={fields.youtube}
               onChange={handleFieldsChange}
             />
-            <AiOutlineYoutube className='absolute top-3 left-3' size={18} />
+            <GrYoutube className='absolute top-3 left-3' size={18} />
           </div>
         </div>
       </div>

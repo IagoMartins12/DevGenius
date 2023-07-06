@@ -1,8 +1,8 @@
 import { FieldValues, UseFormRegister } from 'react-hook-form';
-import { MdPassword } from 'react-icons/md';
 import { SettingsInput } from '../commum/SettingsInput';
 import { User } from '@prisma/client';
 import { Themes } from '@/app/hooks/useTheme';
+import { GrKey } from 'react-icons/gr';
 
 interface SettingsData {
   themes?: Themes;
@@ -29,7 +29,7 @@ export const PasswordData: React.FC<SettingsData> = ({
             placeholder='Nova senha'
             type='password'
             key='newPassword'
-            icon={<MdPassword className='absolute top-3 left-3' size={18} />}
+            icon={<GrKey className='absolute top-3 left-3' size={18} />}
           />
         </div>
       </div>
@@ -43,7 +43,7 @@ export const PasswordData: React.FC<SettingsData> = ({
             placeholder='Confirme a nova senha'
             type='password'
             key='confirmNewPassword'
-            icon={<MdPassword className='absolute top-3 left-3' size={18} />}
+            icon={<GrKey className='absolute top-3 left-3' size={18} />}
           />
         </div>
       </div>

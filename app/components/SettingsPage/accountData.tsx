@@ -1,6 +1,5 @@
 import { FieldValues, UseFormRegister } from 'react-hook-form';
-import { AiOutlineEdit, AiOutlineMail } from 'react-icons/ai';
-import { GrDocumentUser } from 'react-icons/gr';
+import { GrDocumentUser, GrEdit, GrMailOption } from 'react-icons/gr';
 import { SettingsInput } from '../commum/SettingsInput';
 import { User } from '@prisma/client';
 import { ChangeEvent, useState } from 'react';
@@ -47,7 +46,7 @@ export const AccountData: React.FC<SettingsData> = ({
             placeholder='Nome de usuário'
             type='username'
             key='username'
-            icon={<AiOutlineEdit className='absolute top-3 left-3' size={18} />}
+            icon={<GrEdit className='absolute top-3 left-3' size={18} />}
             value={fields.username}
             onChange={handleFieldsChange}
           />
@@ -61,7 +60,7 @@ export const AccountData: React.FC<SettingsData> = ({
             placeholder='E-mail'
             type='email'
             key='email'
-            icon={<AiOutlineMail className='absolute top-3 left-3' size={18} />}
+            icon={<GrMailOption className='absolute top-3 left-3' size={18} />}
             value={fields.email}
             onChange={handleFieldsChange}
           />

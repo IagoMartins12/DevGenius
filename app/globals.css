@@ -23,6 +23,14 @@
   color: #010105;
 }
 
+.bg-color-dark input {
+  color: #1c1c1c;
+}
+
+.bg-color-dark textarea {
+  color: #1c1c1c;
+}
+
 .bg-footer-color-white {
   box-shadow: inset 0px 120px 30px -24px #fff;
   background-color: #64313111;

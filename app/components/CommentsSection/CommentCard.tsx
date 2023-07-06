@@ -52,13 +52,13 @@ export const CommentCard = ({
   };
 
   return (
-    <div className='flex h-32 border-2 border-black p-2'>
+    <div className='flex h-32 shadow-md border-2 px-2 py-2'>
       <div className='w-1/12 flex items-start justify-center'>
         <div className='aspect-video w-12 h-12 relative'>
           <Image
             fill
             className='object-cover rounded-full h-1 w-full '
-            src={user?.image ?? '/user.svg'}
+            src={user?.image ?? '/user.png'}
             alt='Post'
           />
         </div>

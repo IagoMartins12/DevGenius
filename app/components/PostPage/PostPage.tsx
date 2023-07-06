@@ -4,8 +4,8 @@ import useDeletePostModal from '@/app/hooks/modals/useDeletePostModal';
 import { Comment, Post, User } from '@prisma/client';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { IoMdCloseCircleOutline, IoMdCloseCircle } from 'react-icons/io';
-import { MdEdit, MdOutlineEdit } from 'react-icons/md';
+import { IoMdCloseCircle } from 'react-icons/io';
+import { MdEdit } from 'react-icons/md';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import axios, { AxiosResponse } from 'axios';
@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { AuthorCard } from '../authorCard/AuthorCard';
 import { DeleteCommentModal } from '../deleteCommentModal/deleteCommentModal';
 import { CommentsSection } from '../CommentsSection/CommentsSection';
+import useThemes, { Themes } from '@/app/hooks/useTheme';
 
 export const PostPage = ({
   user,
@@ -35,6 +36,7 @@ export const PostPage = ({
 
   const router = useRouter();
   const deleteModal = useDeletePostModal();
+  const themes: Themes = useThemes().theme;
 
   const renderPostContent = () => {
     return { __html: post.content };
@@ -84,15 +86,17 @@ export const PostPage = ({
 
   return (
     <div
-      className='w-full border-2 flex  gap-x-4 px-10
+      className={`w-full flex gap-x-4 px-10
       lg:px-32
-      pt-7
+      py-7
       pb-16'
+      ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}
+      `}
       style={{
         minHeight: '100vh',
       }}
     >
-      <div className='w-9/12 shadow-lg flex-col h-full'>
+      <div className='w-9/12 shadow-lg flex-col h-full border-2'>
         {user?.role === 1 && (
           <div className='w-11/12 mx-auto h-auto my-6 flex items-center justify-end gap-1'>
             <IoMdCloseCircle
@@ -141,7 +145,7 @@ export const PostPage = ({
           />
         </div>
       </div>
-      <div className='w-4/12 shadow-lg'>
+      <div className='w-4/12 shadow-lg h-fit border-2'>
         <div className='w-11/12 mx-auto h-2/3 my-6'>
           <AuthorCard author={author} />
         </div>

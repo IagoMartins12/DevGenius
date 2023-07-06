@@ -1,10 +1,10 @@
-import { AiOutlineEdit } from 'react-icons/ai';
-import { BsCalendarDay, BsGenderAmbiguous } from 'react-icons/bs';
+import { BsGenderAmbiguous } from 'react-icons/bs';
 import { SettingsInput } from '../commum/SettingsInput';
 import { FieldValues, UseFormRegister } from 'react-hook-form';
 import { User } from '@prisma/client';
 import { ChangeEvent, useState } from 'react';
 import { Themes } from '@/app/hooks/useTheme';
+import { GrEdit, GrCalendar } from 'react-icons/gr';
 
 interface SettingsData {
   themes?: Themes;
@@ -52,9 +52,7 @@ export const PersonalData: React.FC<SettingsData> = ({
               placeholder='Primeiro nome'
               type='firstName'
               key='firstName'
-              icon={
-                <AiOutlineEdit className='absolute top-3 left-3' size={18} />
-              }
+              icon={<GrEdit className='absolute top-3 left-3' size={18} />}
               value={fields.firstName}
               onChange={handleFieldsChange}
             />
@@ -67,9 +65,7 @@ export const PersonalData: React.FC<SettingsData> = ({
               placeholder='Segundo nome'
               type='secondName'
               key='secondName'
-              icon={
-                <AiOutlineEdit className='absolute top-3 left-3' size={18} />
-              }
+              icon={<GrEdit className='absolute top-3 left-3' size={18} />}
               value={fields.secondName}
               onChange={handleFieldsChange}
             />
@@ -90,7 +86,7 @@ export const PersonalData: React.FC<SettingsData> = ({
                 value={fields.birthday}
                 onChange={handleFieldsChange}
               />
-              <BsCalendarDay className='absolute top-3 left-3' size={18} />
+              <GrCalendar className='absolute top-3 left-3' size={18} />
             </div>
           </div>
           <div className='flex flex-col gap-y-2 w-full sm:w-6/12'>

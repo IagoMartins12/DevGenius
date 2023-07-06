@@ -4,6 +4,7 @@ import getCurrentUser from '@/app/actions/getCurrentUser';
 import { getPostsPerId } from '@/app/actions/getPosts';
 import { getAllUsers } from '@/app/actions/getUser';
 import { PostPage } from '@/app/components/PostPage/PostPage';
+import { Footer } from '@/app/components/footer/Footer';
 import { Comment, Post } from '@prisma/client';
 
 interface Iparams {
@@ -26,6 +27,7 @@ export default async function Post({ params }: { params: Iparams }) {
         comments={comments}
         allUsers={allUsers}
       />
+      <Footer />
     </>
   );
 }

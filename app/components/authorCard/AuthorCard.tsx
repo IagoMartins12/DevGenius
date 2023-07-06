@@ -9,7 +9,7 @@ interface AuthorCardProps {
 
 export const AuthorCard: React.FC<AuthorCardProps> = ({ author }) => {
   return (
-    <div className='border-2 w-full mx-auto h-4/5 gap-y-4 flex flex-col items-center'>
+    <div className='w-full mx-auto h-4/5 gap-y-4 flex flex-col items-center'>
       <div
         className='flex justify-center items-end'
         style={{
