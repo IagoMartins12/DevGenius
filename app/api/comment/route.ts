@@ -1,17 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-import prisma from "@/app/libs/prismadb";
-import getCurrentUser from "@/app/actions/getCurrentUser";
+import prisma from '@/app/libs/prismadb';
+import getCurrentUser from '@/app/actions/getCurrentUser';
 
 interface IParams {
   postId?: string;
   userId?: string;
 }
 
-export async function POST(
-  request: Request, 
-  { params }: {params: IParams}
-) {
+export async function POST(request: Request, { params }: { params: IParams }) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
@@ -20,23 +17,18 @@ export async function POST(
 
   const body = await request.json();
 
-  const { 
-    content,
-    postId
-   } = body;
+  const { content, postId } = body;
 
   if (!postId || typeof postId !== 'string') {
-    return NextResponse.error()
-
+    return NextResponse.error();
   }
 
   const comment = await prisma.comment.create({
     data: {
-      postId, 
+      postId,
       content,
       userId: currentUser.id,
-      createdAt: Date(),
-    }
+    },
   });
 
   return NextResponse.json(comment);

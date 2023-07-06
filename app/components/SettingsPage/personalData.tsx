@@ -29,7 +29,10 @@ export const PersonalData: React.FC<SettingsData> = ({
   const [fields, setFields] = useState(initialState);
 
   const handleFieldsChange = (
-    ev: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>,
+    ev:
+      | ChangeEvent<HTMLInputElement>
+      | ChangeEvent<HTMLSelectElement>
+      | ChangeEvent<HTMLTextAreaElement>,
   ) =>
     setFields({
       ...fields,

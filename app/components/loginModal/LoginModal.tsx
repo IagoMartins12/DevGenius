@@ -2,8 +2,8 @@
 
 import { signIn } from 'next-auth/react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import useRegisterModal from '@/app/hooks/useRegisterModal';
-import useLoginModal from '@/app/hooks/useLoginModal';
+import useRegisterModal from '@/app/hooks/modals/useRegisterModal';
+import useLoginModal from '@/app/hooks/modals/useLoginModal';
 import { useState } from 'react';
 import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { useRouter } from 'next/navigation';
@@ -102,6 +102,7 @@ export const LoginModal = () => {
               register={register}
             />
             <StyledInput
+              type='password'
               id='password'
               required
               placeholder='Senha'
@@ -191,8 +192,8 @@ export const LoginModal = () => {
             <Image
               fill
               className='sm:object-cover h-1 w-full group-hover:scale-110 transition'
-              src='login.svg'
-              alt='Listing'
+              src='/login.svg'
+              alt='login'
             />
           </div>
         </div>

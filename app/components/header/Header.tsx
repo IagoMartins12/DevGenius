@@ -3,7 +3,7 @@
 import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { AiOutlineSearch, AiOutlineUser } from 'react-icons/ai';
 import { MdLightMode, MdDarkMode } from 'react-icons/md';
-import useLoginModal from '@/app/hooks/useLoginModal';
+import useLoginModal from '@/app/hooks/modals/useLoginModal';
 import { Category, User } from '@prisma/client';
 import { useCallback, useEffect, useState } from 'react';
 import { NavBarUser } from '../navBarUser/NavBarUser';
@@ -16,7 +16,6 @@ interface NavbarProps {
 
 export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [blackHeader, setBlackHeader] = useState(false);
 
   const theme = useThemes();
@@ -26,10 +25,6 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
 
   const toggleOpen = () => {
     setIsOpen(!isOpen);
-  };
-
-  const toggleSearchOpen = () => {
-    setIsSearchOpen(!isSearchOpen);
   };
 
   const handleThemeToggle = () => {

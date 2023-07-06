@@ -3,8 +3,8 @@
 import { signIn } from 'next-auth/react';
 import { IoCloseOutline } from 'react-icons/io5';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import useRegisterModal from '@/app/hooks/useRegisterModal';
-import useLoginModal from '@/app/hooks/useLoginModal';
+import useRegisterModal from '@/app/hooks/modals/useRegisterModal';
+import useLoginModal from '@/app/hooks/modals/useLoginModal';
 import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
@@ -202,8 +202,8 @@ export const RegisterModal = () => {
             <Image
               fill
               className=' h-1 w-full group-hover:scale-110 transition'
-              src='register.svg'
-              alt='Listing'
+              src='/register.svg'
+              alt='register'
             />
           </div>
         </div>

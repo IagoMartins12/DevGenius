@@ -1,4 +1,4 @@
-import useDeletePostModal from '@/app/hooks/useDeletePostModal';
+import useDeletePostModal from '@/app/hooks/modals/useDeletePostModal';
 import useThemes, { Themes } from '@/app/hooks/useTheme';
 import axios from 'axios';
 import Image from 'next/image';
