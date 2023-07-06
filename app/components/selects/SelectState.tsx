@@ -1,7 +1,7 @@
 import { useStates } from '@/app/hooks/useStates';
 import { User } from '@prisma/client';
 import { useState } from 'react';
-import Select from 'react-select';
+import Select, { SingleValue } from 'react-select';
 
 export const SelectState = ({
   onChange,
@@ -10,8 +10,8 @@ export const SelectState = ({
   onChange: (ev: any) => void;
   user: User | null;
 }) => {
-  const [selectedState, setSelectedState] = useState<string | null>(
-    user?.state ? user.state : null,
+  const [selectedState, setSelectedState] = useState<string | undefined>(
+    user?.state ? user.state : undefined,
   );
 
   const { states } = useStates();
@@ -25,9 +25,14 @@ export const SelectState = ({
     e => e.label === selectedState,
   );
 
-  const handleStateUpdate = (event: any) => {
-    setSelectedState(event.label);
-    const selectedUf = states.find(e => e.id === event.value)?.sigla;
+  const handleStateUpdate = (
+    event: SingleValue<{
+      value: number;
+      label: string;
+    }>,
+  ) => {
+    setSelectedState(event?.label);
+    const selectedUf = states.find(e => e.id === event?.value)?.sigla;
     onChange(selectedUf);
   };
 

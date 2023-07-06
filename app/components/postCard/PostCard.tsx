@@ -1,6 +1,6 @@
 'use client';
 
-import useThemes from '@/app/hooks/useTheme';
+import useThemes, { Themes } from '@/app/hooks/useTheme';
 import {
   Category,
   CategoryRelationsPosts,
@@ -33,8 +33,7 @@ export const PostCard = async ({
   currentUser: User | null;
   favorites: Favorite[];
 }) => {
-  const theme = useThemes();
-  const themes: any = theme.theme;
+  const themes: Themes = useThemes().theme;
   const router = useRouter();
 
   const navigate = (postId: string) => {

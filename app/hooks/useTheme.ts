@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-type Themes = 'dark' | 'light';
+export type Themes = 'dark' | 'light';
 
 interface SetThemes {
   theme: Themes;

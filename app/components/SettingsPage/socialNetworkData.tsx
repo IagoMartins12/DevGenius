@@ -1,5 +1,6 @@
+import { Themes } from '@/app/hooks/useTheme';
 import { User } from '@prisma/client';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { FieldValues, UseFormRegister } from 'react-hook-form';
 import {
   AiOutlineInstagram,
@@ -11,7 +12,7 @@ import { FaGithubAlt } from 'react-icons/fa';
 import { RiTwitterFill, RiTwitterLine } from 'react-icons/ri';
 
 interface SettingsData {
-  themes?: any;
+  themes?: Themes;
   register: UseFormRegister<FieldValues>;
   user: User | null;
   onSubmit: () => void;
@@ -34,7 +35,7 @@ export const SocialNetworkData: React.FC<SettingsData> = ({
 
   const [fields, setFields] = useState(initialState);
 
-  const handleFieldsChange = (ev: any) =>
+  const handleFieldsChange = (ev: ChangeEvent<HTMLInputElement>) =>
     setFields({
       ...fields,
       [ev.target.name]: ev.target.value,

@@ -12,5 +12,9 @@ export default async function Post({ params }: { params: Iparams }) {
   const post = await getPostsPerId(params.postid);
   const author = await getAuthor();
 
-  return <PostPage post={post} user={currentUser} author={author} />;
+  return (
+    <>
+      <PostPage post={post} user={currentUser} author={author} />
+    </>
+  );
 }

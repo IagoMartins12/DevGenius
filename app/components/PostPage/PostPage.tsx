@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 import { IoMdCloseCircleOutline, IoMdCloseCircle } from 'react-icons/io';
 import { MdEdit, MdOutlineEdit } from 'react-icons/md';
 import { AuthorCard } from '../authorCard/AuthorCard';
+import { CommentsSection } from '../CommentsSection/CommentsSection';
+import { FieldValues, useForm } from 'react-hook-form';
 
 export const PostPage = ({
   user,
@@ -27,8 +29,18 @@ export const PostPage = ({
   const renderPostContent = () => {
     return { __html: post.content };
   };
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+    reset,
+  } = useForm<FieldValues>({
+    defaultValues: {
+      content: '',
+    },
+  });
 
-  console.log('post', post);
   return (
     <div
       className='w-full border-2 flex  gap-x-4 px-10 
@@ -75,7 +87,11 @@ export const PostPage = ({
         <div
           className='w-11/12 mx-auto h-auto my-6'
           dangerouslySetInnerHTML={renderPostContent()}
-        ></div>
+        />
+        <hr className='w-11/12 mx-auto' />
+        <div className='w-11/12 mx-auto h-3/6 my-6'>
+          <CommentsSection />
+        </div>
       </div>
       <div className='w-4/12 shadow-lg'>
         <div className='w-11/12 mx-auto h-2/3 my-6'>

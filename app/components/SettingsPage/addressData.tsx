@@ -1,15 +1,12 @@
-import { FieldValues, UseFormRegister } from 'react-hook-form';
-import { AiOutlineEdit, AiOutlineMail } from 'react-icons/ai';
-import { GrDocumentUser } from 'react-icons/gr';
-import { SettingsInput } from '../commum/SettingsInput';
 import { User } from '@prisma/client';
 import { useState } from 'react';
 import { SelectState } from '../selects/SelectState';
 import { SelectCity } from '../selects/SelectCity';
 import useUserInfo from '@/app/hooks/useUserInfo';
+import { Themes } from '@/app/hooks/useTheme';
 
 interface SettingsData {
-  themes?: any;
+  themes?: Themes;
   user: User | null;
   onSubmit: (uf: string, city: string) => void;
 }

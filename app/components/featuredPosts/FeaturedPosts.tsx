@@ -2,13 +2,12 @@
 
 import { useState } from 'react';
 import { Carousel } from 'react-bootstrap';
-import useThemes from '@/app/hooks/useTheme';
+import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { Post } from '@prisma/client';
 
 export const FeaturedPosts = ({ posts }: { posts: Post[] }) => {
   const [index, setIndex] = useState(0);
-  const theme = useThemes();
-  const themes: any = theme.theme;
+  const themes: Themes = useThemes().theme;
 
   const handleSelect = (selectedIndex: number) => {
     setIndex(selectedIndex);

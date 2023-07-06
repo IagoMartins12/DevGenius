@@ -5,7 +5,7 @@ import { IoCloseOutline } from 'react-icons/io5';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 import useLoginModal from '@/app/hooks/useLoginModal';
-import useThemes from '@/app/hooks/useTheme';
+import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import Image from 'next/image';
@@ -17,8 +17,7 @@ import { StyledInput } from '../commum/StyledInput';
 export const RegisterModal = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
-  const theme = useThemes();
-  const themes: any = theme.theme;
+  const themes: Themes = useThemes().theme;
   const isOpen: boolean = registerModal.isOpen;
 
   const openLoginModal = () => {

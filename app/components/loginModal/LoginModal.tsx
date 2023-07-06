@@ -5,7 +5,7 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 import useLoginModal from '@/app/hooks/useLoginModal';
 import { useState } from 'react';
-import useThemes from '@/app/hooks/useTheme';
+import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import Image from 'next/image';
@@ -18,9 +18,8 @@ export const LoginModal = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
   const router = useRouter();
-  const theme = useThemes();
-  const themes: any = theme.theme;
-  const isOpen: any = loginModal.isOpen;
+  const themes: Themes = useThemes().theme;
+  const isOpen: boolean = loginModal.isOpen;
 
   const openRegisterModal = () => {
     loginModal.onClose();

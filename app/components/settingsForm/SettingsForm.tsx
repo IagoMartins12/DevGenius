@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Image from 'next/image';
-import useThemes from '@/app/hooks/useTheme';
+import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { AccountData } from '../SettingsPage/accountData';
 import { PersonalData } from '../SettingsPage/personalData';
 import { PasswordData } from '../SettingsPage/passwordData';
@@ -23,8 +23,7 @@ export const SettingsForm: React.FC<SettingsForm> = ({ user }) => {
   const [username, setUsername] = useState(user?.username);
   const [user2, setUser2] = useState(user);
 
-  const theme = useThemes();
-  const themes: any = theme.theme;
+  const themes: Themes = useThemes().theme;
 
   const accountSubmit: SubmitHandler<FieldValues> = async data => {
     const object = {

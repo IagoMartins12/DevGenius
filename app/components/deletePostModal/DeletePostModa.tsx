@@ -1,5 +1,5 @@
 import useDeletePostModal from '@/app/hooks/useDeletePostModal';
-import useThemes from '@/app/hooks/useTheme';
+import useThemes, { Themes } from '@/app/hooks/useTheme';
 import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -7,14 +7,12 @@ import { toast } from 'react-hot-toast';
 
 export const DeletePostModal: React.FC = () => {
   const deleteModal = useDeletePostModal();
-  const theme = useThemes();
-  const themes: any = theme.theme;
+  const themes: Themes = useThemes().theme;
   const isOpen: boolean = deleteModal.isOpen;
   const router = useRouter();
 
   const deletePost = () => {
     const postid = deleteModal.currentPost?.id;
-    console.log(postid);
     axios
       .delete(`/api/post/${postid}`)
       .then(() => {

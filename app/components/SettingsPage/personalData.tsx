@@ -3,10 +3,11 @@ import { BsCalendarDay, BsGenderAmbiguous } from 'react-icons/bs';
 import { SettingsInput } from '../commum/SettingsInput';
 import { FieldValues, UseFormRegister } from 'react-hook-form';
 import { User } from '@prisma/client';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import { Themes } from '@/app/hooks/useTheme';
 
 interface SettingsData {
-  themes?: any;
+  themes?: Themes;
   register: UseFormRegister<FieldValues>;
   user: User | null;
   onSubmit: () => void;
@@ -27,7 +28,9 @@ export const PersonalData: React.FC<SettingsData> = ({
 
   const [fields, setFields] = useState(initialState);
 
-  const handleFieldsChange = (ev: any) =>
+  const handleFieldsChange = (
+    ev: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>,
+  ) =>
     setFields({
       ...fields,
       [ev.target.name]: ev.target.value,

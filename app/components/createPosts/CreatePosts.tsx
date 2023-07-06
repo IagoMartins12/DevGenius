@@ -3,14 +3,12 @@
 import ImageUpload from '@/app/components/ImageUpload';
 import { Category, Post } from '@prisma/client';
 import axios, { AxiosResponse } from 'axios';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { CategorysForm } from './CategorysForm';
 import { Form } from 'react-bootstrap';
-import useThemes from '@/app/hooks/useTheme';
-import { useRouter } from 'next/navigation';
-
+import useThemes, { Themes } from '@/app/hooks/useTheme';
 interface CreatePosts {
   categories: Category[];
 }
@@ -19,9 +17,7 @@ export const CreatePosts: React.FC<CreatePosts> = ({ categories }) => {
   const [editCategoryInput, setEditCategoryInput] = useState(false);
   const [categoryArr, setCategoryArr] = useState<Category[]>(categories);
   const [currentCategory, setCurrentCategory] = useState<Category>();
-  const router = useRouter();
-  const theme = useThemes();
-  const themes: any = theme.theme;
+  const themes: Themes = useThemes().theme;
 
   const createCategory = async () => {
     const categoryName = watch('category_name');
@@ -156,11 +152,11 @@ export const CreatePosts: React.FC<CreatePosts> = ({ categories }) => {
     });
   };
 
-  const handleChange = (ev: { target: { value: any } }) => {
+  const handleChange = (ev: ChangeEvent<HTMLTextAreaElement>) => {
     setValue('content', ev.target.value);
   };
 
-  const handleChangeResume = (ev: { target: { value: any } }) => {
+  const handleChangeResume = (ev: ChangeEvent<HTMLTextAreaElement>) => {
     setValue('resume', ev.target.value);
   };
 

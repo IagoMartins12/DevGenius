@@ -1,6 +1,6 @@
 'use client';
 
-import useThemes from '@/app/hooks/useTheme';
+import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { darkSocialIcons, lightSocialIcons } from '@/app/utils/SocialIcons';
 import {
   AiOutlineInstagram,
@@ -19,6 +19,7 @@ interface Menu {
 }
 export const Footer = () => {
   const year = new Date().getFullYear();
+  const themes: Themes = useThemes().theme;
 
   const quickLink = [
     {
@@ -57,9 +58,6 @@ export const Footer = () => {
       action: () => {},
     },
   ];
-
-  const theme = useThemes();
-  const themes: any = theme.theme;
 
   return (
     <footer
@@ -132,7 +130,7 @@ export const Footer = () => {
         </div>
         <div className='flex flex-col w-full sm:w-3/12 items-center justify-center gap-3'>
           <h4 className='pt-4'>Siga nas redes sociais: </h4>
-          {theme.theme === 'light' ? (
+          {themes === 'light' ? (
             <div className='flex gap-3'>
               {lightSocialIcons.map(element => element)}
             </div>

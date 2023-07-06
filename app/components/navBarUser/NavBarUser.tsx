@@ -1,6 +1,6 @@
 import React from 'react';
 import { signOut } from 'next-auth/react';
-import useThemes from '@/app/hooks/useTheme';
+import useThemes, { Themes } from '@/app/hooks/useTheme';
 
 import { User } from '@prisma/client';
 import { useRouter } from 'next/navigation';
@@ -18,6 +18,7 @@ interface Menu {
 export const NavBarUser: React.FC<navBarProps> = ({ display, user }) => {
   let menus: Menu[];
   const router = useRouter();
+  const themes: Themes = useThemes().theme;
 
   if (user.role === 1) {
     menus = [
@@ -69,9 +70,6 @@ export const NavBarUser: React.FC<navBarProps> = ({ display, user }) => {
       },
     ];
   }
-
-  const theme = useThemes();
-  const themes: any = theme.theme;
 
   return (
     <div

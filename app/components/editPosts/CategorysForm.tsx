@@ -1,9 +1,14 @@
 'use client';
 
-import useThemes from '@/app/hooks/useTheme';
+import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { Category, CategoryRelationsPosts, Post } from '@prisma/client';
-import { Dispatch, SetStateAction, useState } from 'react';
-import { RegisterOptions, UseFormSetValue } from 'react-hook-form';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import {
+  FieldValues,
+  RegisterOptions,
+  UseFormRegister,
+  UseFormSetValue,
+} from 'react-hook-form';
 import {
   IoMdAddCircle,
   IoMdAddCircleOutline,
@@ -17,8 +22,8 @@ interface CategorysProps {
   createCategory: () => void;
   removeCategory: (category_id: string) => void;
   editCategory: () => void;
-  register: any;
-  setValue: UseFormSetValue<any>;
+  register: UseFormRegister<FieldValues>;
+  setValue: UseFormSetValue<FieldValues>;
   currentCategory: Category | undefined;
   setCurrentCategory: (category: Category) => void;
   checkedCategorys: CategoryRelationsPosts[] | null;
@@ -41,14 +46,13 @@ export const CategorysForm: React.FC<CategorysProps> = ({
   const [categoryInputOpen, setCategoryInputOpen] = useState(false);
   const [editCategoryInput, setEditCategoryInput] = useState(false);
 
-  const theme = useThemes();
-  const themes: any = theme.theme;
+  const themes: Themes = useThemes().theme;
 
   const toogleCategoryInputOpen = () => {
     setCategoryInputOpen(prevCategoryInputOpen => !prevCategoryInputOpen);
   };
 
-  const handleChange = (ev: { target: { value: any } }) => {
+  const handleChange = (ev: ChangeEvent<HTMLInputElement>) => {
     const [category_name, category_id] = ev.target.value.split(',');
 
     const alreadyChecked = checkedCategorys?.some(
@@ -63,8 +67,6 @@ export const CategorysForm: React.FC<CategorysProps> = ({
     } else {
       const newItem = { category_id };
 
-      console.log(newItem);
-      console.log(checkedCategorys);
       setCheckedCategorys((prevCategorys: CategoryRelationsPosts[]) => [
         ...prevCategorys,
         newItem,
@@ -75,7 +77,7 @@ export const CategorysForm: React.FC<CategorysProps> = ({
     setValue('category_id', category_id);
   };
 
-  const handleChangeEdit = (ev: { target: { value: any } }) => {
+  const handleChangeEdit = (ev: ChangeEvent<HTMLInputElement>) => {
     setValue('category_edit_name', ev.target.value);
   };
 
@@ -92,16 +94,15 @@ export const CategorysForm: React.FC<CategorysProps> = ({
               <label className='flex gap-1'>
                 <input
                   type='checkbox'
-                  name='categoryRadio'
                   value={`${category.category_name},${category.id}`}
                   {...register('selectedCategories')}
                   checked={
-                    checkedCategorys &&
-                    checkedCategorys.some(
-                      item => item.categoryId === category.id,
-                    )
+                    checkedCategorys
+                      ? checkedCategorys.some(
+                          item => item.categoryId === category.id,
+                        )
+                      : undefined
                   }
-                  onClick={handleChange}
                 />
 
                 {category.category_name}

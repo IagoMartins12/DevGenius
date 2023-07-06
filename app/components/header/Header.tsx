@@ -1,6 +1,6 @@
 'use client';
 
-import useThemes from '@/app/hooks/useTheme';
+import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { AiOutlineSearch, AiOutlineUser } from 'react-icons/ai';
 import { MdLightMode, MdDarkMode } from 'react-icons/md';
 import useLoginModal from '@/app/hooks/useLoginModal';
@@ -20,6 +20,7 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
   const [blackHeader, setBlackHeader] = useState(false);
 
   const theme = useThemes();
+  const themes: Themes = theme.theme;
   const loginModal = useLoginModal();
   const router = useRouter();
 
@@ -34,8 +35,6 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
   const handleThemeToggle = () => {
     theme.setTheme(theme.theme === 'light' ? 'dark' : 'light');
   };
-
-  let themes: any = theme.theme;
 
   useEffect(() => {
     const scrollListener = () => {

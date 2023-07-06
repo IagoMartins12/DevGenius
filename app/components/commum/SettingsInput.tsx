@@ -1,6 +1,7 @@
+import { ChangeEvent } from 'react';
 import { FieldValues, UseFormRegister } from 'react-hook-form';
 
-interface StyledInputProps {
+interface SettingsInputProps {
   name: string;
   id: string;
   type?: string;
@@ -9,11 +10,13 @@ interface StyledInputProps {
   label?: string;
   required?: boolean;
   icon?: any;
-  value?: any;
-  onChange?: (ev: any) => void;
+  value?: string;
+  onChange?: (
+    ev: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
+  ) => void;
 }
 
-export const SettingsInput: React.FC<StyledInputProps> = ({
+export const SettingsInput: React.FC<SettingsInputProps> = ({
   id,
   name,
   type = 'text',

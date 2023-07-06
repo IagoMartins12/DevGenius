@@ -3,10 +3,11 @@ import { AiOutlineEdit, AiOutlineMail } from 'react-icons/ai';
 import { GrDocumentUser } from 'react-icons/gr';
 import { SettingsInput } from '../commum/SettingsInput';
 import { User } from '@prisma/client';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import { Themes } from '@/app/hooks/useTheme';
 
 interface SettingsData {
-  themes?: any;
+  themes?: Themes;
   register: UseFormRegister<FieldValues>;
   user: User | null;
   onSubmit: () => void;
@@ -26,7 +27,9 @@ export const AccountData: React.FC<SettingsData> = ({
 
   const [fields, setFields] = useState(initialState);
 
-  const handleFieldsChange = (ev: any) =>
+  const handleFieldsChange = (
+    ev: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
+  ) =>
     setFields({
       ...fields,
       [ev.target.name]: ev.target.value,
