@@ -6,9 +6,12 @@ import {
   UseFormHandleSubmit,
   UseFormRegister,
 } from 'react-hook-form';
+import { Dispatch, SetStateAction, useState } from 'react';
+import Image from 'next/image';
 
 export const CommentsSection = ({
   comments,
+  setComments,
   currentUser,
   register,
   onSubmit,
@@ -16,6 +19,7 @@ export const CommentsSection = ({
   allUsers,
 }: {
   comments: Comment[];
+  setComments: Dispatch<SetStateAction<Comment[]>>;
   currentUser: User | null;
   register: UseFormRegister<FieldValues>;
   onSubmit: SubmitHandler<FieldValues>;
@@ -27,17 +31,27 @@ export const CommentsSection = ({
 
     return user;
   };
+
+  console.log('postPage 2', comments);
+
   return (
     <div className='w-full flex flex-col gap-y-4'>
       <div className='flex items-center justify-start '>
         <h1 className='font-bold text-xl'>
-          Comentarios:
+          Comentarios:{' '}
           <span className='font-semibold text-lg'>{comments.length}</span>
         </h1>
       </div>
       <div className='flex h-44'>
         <div className='w-1/12 flex items-start justify-center'>
-          <div className='w-14 h-14 rounded-full bg-slate-500'></div>
+          <div className='aspect-video w-12 h-12 relative'>
+            <Image
+              fill
+              className='object-cover rounded-full h-1 w-full '
+              src={currentUser?.image ?? '/user.svg'}
+              alt='Post'
+            />
+          </div>
         </div>
         <div className='w-11/12 flex items-center border-black  flex-col gap-y-3'>
           <textarea
@@ -63,6 +77,7 @@ export const CommentsSection = ({
               comment={comment}
               user={user}
               currentUser={currentUser}
+              setCommentsSection={setComments}
             />
           );
         })}

@@ -21,7 +21,7 @@ export async function getCommentsPerID(postId: string) {
         postId: postId,
       },
       orderBy: {
-        createdAt: 'desc',
+        createdAt: 'asc',
       },
     });
 

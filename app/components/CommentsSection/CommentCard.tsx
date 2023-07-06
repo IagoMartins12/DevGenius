@@ -1,19 +1,70 @@
+import useDeleteCommentModal from '@/app/hooks/modals/useDeleteCommentModal';
 import { Comment, User } from '@prisma/client';
+import Image from 'next/image';
+import { Dispatch, SetStateAction } from 'react';
 import { IoMdCloseCircle } from 'react-icons/io';
 
 export const CommentCard = ({
   comment,
   user,
   currentUser,
+  setCommentsSection,
 }: {
   comment: Comment;
   user: User | undefined;
   currentUser: User | null;
+  setCommentsSection: Dispatch<SetStateAction<Comment[]>>;
 }) => {
+  const deleteModal = useDeleteCommentModal();
+
+  const handleCloseClick = () => {
+    deleteModal.setCurrentComment(comment);
+    deleteModal.onOpen();
+    document.body.style.overflow = 'hidden';
+  };
+
+  const formatDate = (date: any) => {
+    if (isNaN(date)) {
+      const match = date.match(
+        /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}).(\d{3})Z$/,
+      );
+      if (match) {
+        date = new Date(
+          Date.UTC(
+            parseInt(match[1]),
+            parseInt(match[2]) - 1,
+            parseInt(match[3]),
+            parseInt(match[4]),
+            parseInt(match[5]),
+            parseInt(match[6]),
+            parseInt(match[7]),
+          ),
+        );
+      }
+    }
+
+    if (isNaN(date)) {
+      return '';
+    }
+
+    return date.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+    });
+  };
+
   return (
     <div className='flex h-32 border-2 border-black p-2'>
       <div className='w-1/12 flex items-start justify-center'>
-        <div className='w-14 h-14 rounded-full bg-slate-500'></div>
+        <div className='aspect-video w-12 h-12 relative'>
+          <Image
+            fill
+            className='object-cover rounded-full h-1 w-full '
+            src={user?.image ?? '/user.svg'}
+            alt='Post'
+          />
+        </div>
       </div>
       <div className='w-11/12 flex items-center border-black  flex-col gap-y-3'>
         <div className='w-full h-full py-1 px-2 flex flex-col gap-y-1'>
@@ -23,11 +74,7 @@ export const CommentCard = ({
                 {user?.username}
               </span>
               <span className='text-sm text-center'>
-                {comment.createdAt.toLocaleDateString('pt-BR', {
-                  day: '2-digit',
-                  month: 'long',
-                  year: 'numeric',
-                })}
+                {formatDate(comment.createdAt)}
               </span>
             </div>
             {user?.id === currentUser?.id && (
@@ -35,7 +82,7 @@ export const CommentCard = ({
                 <IoMdCloseCircle
                   size={20}
                   className='cursor-pointer'
-                  onClick={() => {}}
+                  onClick={handleCloseClick} // Use a função de fechamento criada anteriormente
                 />
               </div>
             )}

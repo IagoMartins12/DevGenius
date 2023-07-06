@@ -1,15 +1,15 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-import prisma from "@/app/libs/prismadb";
-import getCurrentUser from "@/app/actions/getCurrentUser";
+import prisma from '@/app/libs/prismadb';
+import getCurrentUser from '@/app/actions/getCurrentUser';
 
 interface IParams {
-  commentId?: string;
+  commentid?: string;
 }
 
 export async function DELETE(
-  request: Request, 
-  { params }: {params: IParams}
+  request: Request,
+  { params }: { params: IParams },
 ) {
   const currentUser = await getCurrentUser();
 
@@ -17,25 +17,16 @@ export async function DELETE(
     return NextResponse.error();
   }
 
-  const { commentId } = params;
+  const { commentid } = params;
 
-  if (!commentId || typeof commentId !== 'string') {
-    return NextResponse.error()
-
+  if (!commentid || typeof commentid !== 'string') {
+    return NextResponse.error();
   }
-
-  const body = await request.json();
-
-  const { 
-    postId,
-   } = body;
 
   const deslike = await prisma.comment.deleteMany({
     where: {
-      id: commentId,
-      postId,
-      userId: currentUser.id
-    }
+      id: commentid,
+    },
   });
 
   return NextResponse.json(deslike);

@@ -11,6 +11,8 @@ import { CommentsSection } from '../CommentsSection/CommentsSection';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import axios, { AxiosResponse } from 'axios';
+import { useEffect, useState } from 'react';
+import { DeleteCommentModal } from '../deleteCommentModal/deleteCommentModal';
 
 export const PostPage = ({
   user,
@@ -28,6 +30,8 @@ export const PostPage = ({
   if (!post) {
     return <div>Post não encontrado</div>;
   }
+
+  const [commentState, setCommentsState] = useState(comments);
 
   const router = useRouter();
   const deleteModal = useDeletePostModal();
@@ -51,6 +55,19 @@ export const PostPage = ({
         object,
       );
 
+      const newComment = {
+        id: response.data.id,
+        content: response.data.content,
+        postId: response.data.postId,
+        userId: response.data.userId,
+        createdAt: response.data.createdAt,
+      };
+
+      console.log('response', response);
+      console.log('newComment', newComment);
+
+      setCommentsState(prevState => [...prevState, newComment]);
+
       toast.success('Obrigado pelo comentario!');
       reset();
     } catch (err) {
@@ -59,19 +76,11 @@ export const PostPage = ({
     }
   };
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-    reset,
-  } = useForm<FieldValues>({
+  const { register, handleSubmit, reset } = useForm<FieldValues>({
     defaultValues: {
-      content: '',
+      commentContent: '',
     },
   });
-
-  console.log('allUsers', allUsers);
 
   return (
     <div
@@ -123,7 +132,8 @@ export const PostPage = ({
         <hr className='w-11/12 mx-auto' />
         <div className='w-11/12 mx-auto h-3/6 my-6'>
           <CommentsSection
-            comments={comments}
+            comments={commentState}
+            setComments={setCommentsState}
             currentUser={user}
             register={register}
             onSubmit={onSubmit}
@@ -137,6 +147,10 @@ export const PostPage = ({
           <AuthorCard author={author} />
         </div>
       </div>
+      <DeleteCommentModal
+        comments={commentState}
+        setComments={setCommentsState}
+      />
     </div>
   );
 };
