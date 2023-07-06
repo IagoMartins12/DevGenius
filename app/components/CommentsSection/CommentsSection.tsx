@@ -6,12 +6,10 @@ import {
   UseFormHandleSubmit,
   UseFormRegister,
 } from 'react-hook-form';
-import { Dispatch, SetStateAction, useState } from 'react';
 import Image from 'next/image';
 
 export const CommentsSection = ({
   comments,
-  setComments,
   currentUser,
   register,
   onSubmit,
@@ -19,7 +17,6 @@ export const CommentsSection = ({
   allUsers,
 }: {
   comments: Comment[];
-  setComments: Dispatch<SetStateAction<Comment[]>>;
   currentUser: User | null;
   register: UseFormRegister<FieldValues>;
   onSubmit: SubmitHandler<FieldValues>;
@@ -77,7 +74,6 @@ export const CommentsSection = ({
               comment={comment}
               user={user}
               currentUser={currentUser}
-              setCommentsSection={setComments}
             />
           );
         })}

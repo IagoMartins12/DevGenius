@@ -1,19 +1,16 @@
 import useDeleteCommentModal from '@/app/hooks/modals/useDeleteCommentModal';
 import { Comment, User } from '@prisma/client';
 import Image from 'next/image';
-import { Dispatch, SetStateAction } from 'react';
 import { IoMdCloseCircle } from 'react-icons/io';
 
 export const CommentCard = ({
   comment,
   user,
   currentUser,
-  setCommentsSection,
 }: {
   comment: Comment;
   user: User | undefined;
   currentUser: User | null;
-  setCommentsSection: Dispatch<SetStateAction<Comment[]>>;
 }) => {
   const deleteModal = useDeleteCommentModal();
 

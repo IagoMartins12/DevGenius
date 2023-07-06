@@ -6,13 +6,13 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { IoMdCloseCircleOutline, IoMdCloseCircle } from 'react-icons/io';
 import { MdEdit, MdOutlineEdit } from 'react-icons/md';
-import { AuthorCard } from '../authorCard/AuthorCard';
-import { CommentsSection } from '../CommentsSection/CommentsSection';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import axios, { AxiosResponse } from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { AuthorCard } from '../authorCard/AuthorCard';
 import { DeleteCommentModal } from '../deleteCommentModal/deleteCommentModal';
+import { CommentsSection } from '../CommentsSection/CommentsSection';
 
 export const PostPage = ({
   user,
@@ -84,7 +84,7 @@ export const PostPage = ({
 
   return (
     <div
-      className='w-full border-2 flex  gap-x-4 px-10 
+      className='w-full border-2 flex  gap-x-4 px-10
       lg:px-32
       pt-7
       pb-16'
@@ -133,7 +133,6 @@ export const PostPage = ({
         <div className='w-11/12 mx-auto h-3/6 my-6'>
           <CommentsSection
             comments={commentState}
-            setComments={setCommentsState}
             currentUser={user}
             register={register}
             onSubmit={onSubmit}
