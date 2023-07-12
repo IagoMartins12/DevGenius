@@ -53,17 +53,17 @@ export const CommentCard = ({
 
   return (
     <div className='flex h-32 shadow-md border-2 px-2 py-2'>
-      <div className='w-1/12 flex items-start justify-center'>
+      <div className='lg:w-1/12 w-2/12 flex items-start justify-center'>
         <div className='aspect-video w-12 h-12 relative'>
           <Image
             fill
-            className='object-cover rounded-full h-1 w-full '
+            className='object-cover rounded-full h-1 w-full'
             src={user?.image ?? '/user.png'}
             alt='Post'
           />
         </div>
       </div>
-      <div className='w-11/12 flex items-center border-black  flex-col gap-y-3'>
+      <div className='lg:w-11/12 w-10/12 flex items-center border-black  flex-col gap-y-3'>
         <div className='w-full h-full py-1 px-2 flex flex-col gap-y-1'>
           <div className='flex items-center gap-x-3 justify-between'>
             <div className='flex items-center gap-x-3'>

@@ -26,7 +26,7 @@ export const AuthorCard: React.FC<AuthorCardProps> = ({ author }) => {
         </div>
       </div>
       <div className='flex items-center justify-center flex-col gap-y-2 w-11/12 mx-auto'>
-        <h2 className='font-bold text-xl'>
+        <h2 className='font-bold text-xl text-center'>
           {author?.firstName} {author?.secondName}
         </h2>
         <h3 className='font-semibold text-lg text-center'>{author?.bio}</h3>

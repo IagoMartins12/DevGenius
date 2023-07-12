@@ -1,7 +1,13 @@
 'use client';
 
 import useDeletePostModal from '@/app/hooks/modals/useDeletePostModal';
-import { Comment, Post, User } from '@prisma/client';
+import {
+  Category,
+  CategoryRelationsPosts,
+  Comment,
+  Post,
+  User,
+} from '@prisma/client';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { IoMdCloseCircle } from 'react-icons/io';
@@ -18,28 +24,35 @@ import useThemes, { Themes } from '@/app/hooks/useTheme';
 export const PostPage = ({
   user,
   post,
+  posts,
   author,
   comments,
   allUsers,
+  categories,
+  categoryPosts,
 }: {
   user: User | null;
   post: Post | null;
+  posts: Post[];
   author: User | null;
   comments: Comment[];
   allUsers: User[];
+  categories: Category[];
+  categoryPosts: CategoryRelationsPosts[];
 }) => {
   if (!post) {
     return <div>Post não encontrado</div>;
   }
 
   const [commentState, setCommentsState] = useState(comments);
+  const [postState, setPostState] = useState(post);
 
   const router = useRouter();
   const deleteModal = useDeletePostModal();
   const themes: Themes = useThemes().theme;
 
   const renderPostContent = () => {
-    return { __html: post.content };
+    return { __html: postState.content };
   };
 
   const onSubmit: SubmitHandler<FieldValues> = async data => {
@@ -48,7 +61,7 @@ export const PostPage = ({
 
     const object = {
       content: data.commentContent,
-      postId: post.id,
+      postId: postState.id,
     };
 
     try {
@@ -65,11 +78,7 @@ export const PostPage = ({
         createdAt: response.data.createdAt,
       };
 
-      console.log('response', response);
-      console.log('newComment', newComment);
-
       setCommentsState(prevState => [...prevState, newComment]);
-
       toast.success('Obrigado pelo comentario!');
       reset();
     } catch (err) {
@@ -83,6 +92,9 @@ export const PostPage = ({
       commentContent: '',
     },
   });
+
+  console.log('categories', categories);
+  console.log('categoryPosts', categoryPosts);
 
   return (
     <div
@@ -103,7 +115,7 @@ export const PostPage = ({
               size={28}
               className='cursor-pointer'
               onClick={() => {
-                deleteModal.setCurrentPost(post);
+                deleteModal.setCurrentPost(postState);
                 deleteModal.onOpen();
               }}
             />
@@ -120,14 +132,14 @@ export const PostPage = ({
             <Image
               fill
               className='object-cover h-1 w-full group-hover:scale-110 transition '
-              src={post.photo_background ?? ''}
+              src={postState.photo_background ?? ''}
               alt='Post'
             />
           </div>
         </div>
 
         <div className='w-11/12 mx-auto h-auto my-6'>
-          <h1 className='font-bold text-2xl'>{post.title}</h1>
+          <h1 className='font-bold text-2xl'>{postState.title}</h1>
         </div>
         <div
           className='w-11/12 mx-auto h-auto my-6'

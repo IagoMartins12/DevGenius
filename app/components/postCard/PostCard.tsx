@@ -20,7 +20,7 @@ interface PostProps {
   Favorites?: Favorite[];
 }
 
-export const PostCard = async ({
+export const PostCard = ({
   posts,
   categoriesPost,
   categories,

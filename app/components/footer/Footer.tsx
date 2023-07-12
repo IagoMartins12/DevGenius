@@ -2,16 +2,6 @@
 
 import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { darkSocialIcons, lightSocialIcons } from '@/app/utils/SocialIcons';
-import {
-  AiOutlineInstagram,
-  AiFillInstagram,
-  AiFillGithub,
-  AiOutlineGithub,
-  AiOutlineFacebook,
-  AiFillFacebook,
-  AiOutlineLinkedin,
-  AiFillLinkedin,
-} from 'react-icons/ai';
 
 interface Menu {
   name: string;
