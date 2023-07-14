@@ -3,6 +3,7 @@ import getCategories, { getPostCategories } from '@/app/actions/getCategories';
 import getComments, { getCommentsPerID } from '@/app/actions/getComments';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import getPosts, { getPostsPerId } from '@/app/actions/getPosts';
+import { getRelatedPosts } from '@/app/actions/getRelatedPosts';
 import { getAllUsers } from '@/app/actions/getUser';
 import { PostPage } from '@/app/components/PostPage/PostPage';
 import { Footer } from '@/app/components/footer/Footer';
@@ -20,7 +21,9 @@ export default async function Post({ params }: { params: Iparams }) {
   const comments: Comment[] = await getCommentsPerID(params.postid);
   const allUsers = await getAllUsers();
   const categories = await getCategories();
-  const categoryPosts: CategoryRelationsPosts[] = await getPostCategories();
+  const categoryPosts: CategoryRelationsPosts[] = await getRelatedPosts(
+    params.postid,
+  );
 
   return (
     <>

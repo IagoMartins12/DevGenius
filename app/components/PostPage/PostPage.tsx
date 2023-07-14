@@ -20,6 +20,7 @@ import { AuthorCard } from '../authorCard/AuthorCard';
 import { DeleteCommentModal } from '../deleteCommentModal/deleteCommentModal';
 import { CommentsSection } from '../CommentsSection/CommentsSection';
 import useThemes, { Themes } from '@/app/hooks/useTheme';
+import RelatedPosts from '../RelatedPosts/RelatedPosts';
 
 export const PostPage = ({
   user,
@@ -93,9 +94,6 @@ export const PostPage = ({
     },
   });
 
-  console.log('categories', categories);
-  console.log('categoryPosts', categoryPosts);
-
   return (
     <div
       className={`w-full flex gap-x-4 px-10
@@ -146,6 +144,10 @@ export const PostPage = ({
           dangerouslySetInnerHTML={renderPostContent()}
         />
         <hr className='w-11/12 mx-auto' />
+        <div>
+          <RelatedPosts />
+        </div>
+        <hr />
         <div className='w-11/12 mx-auto h-3/6 my-6'>
           <CommentsSection
             comments={commentState}

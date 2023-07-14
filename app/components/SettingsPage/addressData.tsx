@@ -2,20 +2,13 @@ import { User } from '@prisma/client';
 import { useState } from 'react';
 import { SelectState } from '../selects/SelectState';
 import { SelectCity } from '../selects/SelectCity';
-import useUserInfo from '@/app/hooks/useUserInfo';
-import { Themes } from '@/app/hooks/useTheme';
 
 interface SettingsData {
-  themes?: Themes;
   user: User | null;
   onSubmit: (uf: string, city: string) => void;
 }
 
-export const AddressData: React.FC<SettingsData> = ({
-  themes,
-  user,
-  onSubmit,
-}) => {
+export const AddressData: React.FC<SettingsData> = ({ user, onSubmit }) => {
   const [selectedUf, setSelectedUf] = useState(user?.uf ? user.uf : '');
   const [selectedCity, setSelectedCity] = useState(user?.city ? user.city : '');
 

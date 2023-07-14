@@ -13,8 +13,6 @@ import { IoCloseOutline } from 'react-icons/io5';
 import { StyledInput } from '../commum/StyledInput';
 
 export const LoginModal = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
   const router = useRouter();
@@ -25,6 +23,7 @@ export const LoginModal = () => {
     loginModal.onClose();
     registerModal.onOpen();
   };
+
   const {
     register,
     handleSubmit,
@@ -37,14 +36,10 @@ export const LoginModal = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = data => {
-    setIsLoading(true);
-
     signIn('credentials', {
       ...data,
       redirect: false,
     }).then(callback => {
-      setIsLoading(false);
-
       if (callback?.ok) {
         toast.success('Login feito com sucesso');
         router.refresh();

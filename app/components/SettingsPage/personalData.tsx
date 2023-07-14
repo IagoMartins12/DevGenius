@@ -3,18 +3,15 @@ import { SettingsInput } from '../commum/SettingsInput';
 import { FieldValues, UseFormRegister } from 'react-hook-form';
 import { User } from '@prisma/client';
 import { ChangeEvent, useState } from 'react';
-import { Themes } from '@/app/hooks/useTheme';
 import { GrEdit, GrCalendar } from 'react-icons/gr';
 
 interface SettingsData {
-  themes?: Themes;
   register: UseFormRegister<FieldValues>;
   user: User | null;
   onSubmit: () => void;
 }
 
 export const PersonalData: React.FC<SettingsData> = ({
-  themes,
   register,
   user,
   onSubmit,

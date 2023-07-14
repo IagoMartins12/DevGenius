@@ -1,20 +1,14 @@
 import { FieldValues, UseFormRegister } from 'react-hook-form';
 import { SettingsInput } from '../commum/SettingsInput';
-import { User } from '@prisma/client';
-import { Themes } from '@/app/hooks/useTheme';
 import { GrKey } from 'react-icons/gr';
 
 interface SettingsData {
-  themes?: Themes;
   register: UseFormRegister<FieldValues>;
-  user: User | null;
   onSubmit: () => void;
 }
 
 export const PasswordData: React.FC<SettingsData> = ({
-  themes,
   register,
-  user,
   onSubmit,
 }) => {
   return (

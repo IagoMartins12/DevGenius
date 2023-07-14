@@ -3,17 +3,14 @@ import { GrDocumentUser, GrEdit, GrMailOption } from 'react-icons/gr';
 import { SettingsInput } from '../commum/SettingsInput';
 import { User } from '@prisma/client';
 import { ChangeEvent, useState } from 'react';
-import { Themes } from '@/app/hooks/useTheme';
 
 interface SettingsData {
-  themes?: Themes;
   register: UseFormRegister<FieldValues>;
   user: User | null;
   onSubmit: () => void;
 }
 
 export const AccountData: React.FC<SettingsData> = ({
-  themes,
   register,
   user,
   onSubmit,

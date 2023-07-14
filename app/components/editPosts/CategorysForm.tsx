@@ -1,21 +1,8 @@
-'use client';
-
-import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { Category, CategoryRelationsPosts, Post } from '@prisma/client';
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
-import {
-  FieldValues,
-  RegisterOptions,
-  UseFormRegister,
-  UseFormSetValue,
-} from 'react-hook-form';
-import {
-  IoMdAddCircle,
-  IoMdAddCircleOutline,
-  IoMdCloseCircleOutline,
-  IoMdCloseCircle,
-} from 'react-icons/io';
-import { MdEdit, MdOutlineEdit } from 'react-icons/md';
+import { ChangeEvent, useState } from 'react';
+import { FieldValues, UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import { IoMdAddCircle, IoMdCloseCircle } from 'react-icons/io';
+import { MdEdit } from 'react-icons/md';
 
 interface CategorysProps {
   categories: Category[];
@@ -41,12 +28,9 @@ export const CategorysForm: React.FC<CategorysProps> = ({
   setCurrentCategory,
   checkedCategorys,
   setCheckedCategorys,
-  post,
 }) => {
   const [categoryInputOpen, setCategoryInputOpen] = useState(false);
   const [editCategoryInput, setEditCategoryInput] = useState(false);
-
-  const themes: Themes = useThemes().theme;
 
   const toogleCategoryInputOpen = () => {
     setCategoryInputOpen(prevCategoryInputOpen => !prevCategoryInputOpen);
@@ -152,7 +136,7 @@ export const CategorysForm: React.FC<CategorysProps> = ({
           <input
             type='text'
             className={`sm:w-11/12 w-10/12 px-2 py-2 border-2
-                  ${themes === 'light' ? 'input-light' : 'input-dark'}`}
+                  `}
             {...register('category_name')}
             onChange={ev => {
               handleChange(ev);
@@ -188,8 +172,7 @@ export const CategorysForm: React.FC<CategorysProps> = ({
         <div className='flex items-center gap-x-4 justify-between'>
           <input
             type='text'
-            className={`sm:w-11/12 w-10/12 px-2 py-2 border-2
-                  ${themes === 'light' ? 'input-light' : 'input-dark'}`}
+            className={`sm:w-11/12 w-10/12 px-2 py-2 border-2`}
             placeholder={currentCategory?.category_name}
             {...register('category_edit_name')}
             onChange={ev => {

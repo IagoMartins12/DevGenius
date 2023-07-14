@@ -5,7 +5,7 @@ import { AiOutlineSearch, AiOutlineUser } from 'react-icons/ai';
 import { MdLightMode, MdDarkMode } from 'react-icons/md';
 import useLoginModal from '@/app/hooks/modals/useLoginModal';
 import { Category, User } from '@prisma/client';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavBarUser } from '../navBarUser/NavBarUser';
 import { useRouter } from 'next/navigation';
 

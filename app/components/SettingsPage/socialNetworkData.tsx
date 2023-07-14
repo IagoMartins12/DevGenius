@@ -1,4 +1,3 @@
-import { Themes } from '@/app/hooks/useTheme';
 import { User } from '@prisma/client';
 import { ChangeEvent, useState } from 'react';
 import { FieldValues, UseFormRegister } from 'react-hook-form';
@@ -13,14 +12,12 @@ import {
 } from 'react-icons/gr';
 
 interface SettingsData {
-  themes?: Themes;
   register: UseFormRegister<FieldValues>;
   user: User | null;
   onSubmit: () => void;
 }
 
 export const SocialNetworkData: React.FC<SettingsData> = ({
-  themes,
   register,
   user,
   onSubmit,

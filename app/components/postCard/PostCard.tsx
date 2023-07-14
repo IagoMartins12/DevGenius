@@ -12,14 +12,6 @@ import HeartButton from '../HeartButton';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-interface PostProps {
-  posts?: Post | null;
-  categoriesPost?: CategoryRelationsPosts[];
-  categories?: Category[];
-  currentUser?: User | null;
-  Favorites?: Favorite[];
-}
-
 export const PostCard = ({
   posts,
   categoriesPost,

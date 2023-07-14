@@ -1,7 +1,7 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-@import 'bootstrap/dist/css/bootstrap.min.css';
+/* @import 'bootstrap/dist/css/bootstrap.min.css'; */
 
 .dark {
   --bg-color-dark: #1c1c1c;
@@ -173,7 +173,7 @@
 }
 
 /* google button  */
-button {
+/* button {
   min-width: 280px;
   display: flex;
   justify-content: center;
@@ -201,7 +201,7 @@ button {
 button:hover {
   transform: scale(1.02);
   box-shadow: none;
-}
+} */
 
 .profileBtn {
   border: 1px solid rgba(0, 0, 0, 0.25);

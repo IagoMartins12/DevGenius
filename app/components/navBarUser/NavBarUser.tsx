@@ -1,7 +1,5 @@
-import React from 'react';
 import { signOut } from 'next-auth/react';
 import useThemes, { Themes } from '@/app/hooks/useTheme';
-
 import { User } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 

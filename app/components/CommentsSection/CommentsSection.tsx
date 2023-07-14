@@ -26,7 +26,6 @@ export const CommentsSection = ({
 }) => {
   const getUser = (id: string) => {
     const user = allUsers.find((user: User) => user.id === id);
-
     return user;
   };
 
