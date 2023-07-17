@@ -29,7 +29,7 @@ export const PostCard = ({
   const router = useRouter();
 
   const navigate = (postId: string) => {
-    router.push(`post/${postId}`);
+    router.push(`/post/${postId}`);
   };
 
   return (

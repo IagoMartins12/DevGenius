@@ -20,7 +20,8 @@ import { AuthorCard } from '../authorCard/AuthorCard';
 import { DeleteCommentModal } from '../deleteCommentModal/deleteCommentModal';
 import { CommentsSection } from '../CommentsSection/CommentsSection';
 import useThemes, { Themes } from '@/app/hooks/useTheme';
-import RelatedPosts from '../RelatedPosts/RelatedPosts';
+import { RelatedPosts } from '../RelatedPosts/RelatedPosts';
+import { PostCard } from '../postCard/PostCard';
 
 export const PostPage = ({
   user,
@@ -145,9 +146,14 @@ export const PostPage = ({
         />
         <hr className='w-11/12 mx-auto' />
         <div>
-          <RelatedPosts />
+          {/* <RelatedPosts
+            posts={posts}
+            categories={categories}
+            categoriesPost={categoryPosts}
+            currentUser={user}
+          /> */}
         </div>
-        <hr />
+        <hr className='w-11/12 mx-auto' />
         <div className='w-11/12 mx-auto h-3/6 my-6'>
           <CommentsSection
             comments={commentState}

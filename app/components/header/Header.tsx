@@ -31,6 +31,9 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
     theme.setTheme(theme.theme === 'light' ? 'dark' : 'light');
   };
 
+  const navigate = (category: Category) => {
+    router.push(`/category/${category.id}`);
+  };
   useEffect(() => {
     const scrollListener = () => {
       if (window.scrollY > 10) {
@@ -87,7 +90,9 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
         </h1>
         <div className='w-1/2 gap-10 hidden md:flex pointer cursor-pointer'>
           {categories?.map(category => (
-            <p key={category.id}>{category.category_name}</p>
+            <p key={category.id} onClick={() => navigate(category)}>
+              {category.category_name}
+            </p>
           ))}
         </div>
       </div>
