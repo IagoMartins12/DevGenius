@@ -1,48 +1,43 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-import getCurrentUser from "@/app/actions/getCurrentUser";
-import prisma from "@/app/libs/prismadb";
+import getCurrentUser from '@/app/actions/getCurrentUser';
+import prisma from '@/app/libs/prismadb';
 
 interface IParams {
-  postId?: string;
+  postid?: string;
   userId?: string;
 }
 
-export async function POST(
-  request: Request, 
-  { params }: { params: IParams }
-) {
+export async function POST(request: Request, { params }: { params: IParams }) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
     return NextResponse.error();
   }
 
-  const { postId } = params;
+  const { postid } = params;
 
-  if (!postId || typeof postId !== 'string') {
+  if (!postid || typeof postid !== 'string') {
     throw new Error('Invalid ID');
   }
 
-
-  if (!params.userId || typeof params.userId !== 'string') {
+  if (!currentUser.id || typeof currentUser.id !== 'string') {
     throw new Error('Invalid ID');
   }
-
 
   const deslike = await prisma.deslike.create({
-   data: {
-        postId: postId,
-        userId: params.userId,
-   }
+    data: {
+      postId: postid,
+      userId: currentUser.id,
+    },
   });
 
   return NextResponse.json(deslike);
 }
 
 export async function DELETE(
-  request: Request, 
-  { params }: { params: IParams }
+  request: Request,
+  { params }: { params: IParams },
 ) {
   const currentUser = await getCurrentUser();
 
@@ -50,19 +45,17 @@ export async function DELETE(
     return NextResponse.error();
   }
 
-  const { postId } = params;
+  const { postid } = params;
 
-  if (!postId || typeof postId !== 'string') {
+  if (!postid || typeof postid !== 'string') {
     throw new Error('Invalid ID');
   }
 
   const deslike = await prisma.deslike.deleteMany({
     where: {
-      id: postId,
-
-    }
+      postId: postid,
+    },
   });
 
   return NextResponse.json(deslike);
 }
-

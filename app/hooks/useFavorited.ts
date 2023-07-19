@@ -4,26 +4,26 @@ import { useCallback, useMemo } from 'react';
 import { toast } from 'react-hot-toast';
 
 import useLoginModal from './modals/useLoginModal';
-import { Like, User } from '@prisma/client';
+import { Favorite, User } from '@prisma/client';
 
-interface IUseDesliked {
+interface IUseFavorited {
   postId: string;
   currentUser?: User | null;
-  desLiked: Like[];
+  favorited: Favorite[];
 }
 
-const useDesliked = ({ postId, currentUser, desLiked }: IUseDesliked) => {
+const useFavorited = ({ postId, currentUser, favorited }: IUseFavorited) => {
   const router = useRouter();
 
   const loginModal = useLoginModal();
 
-  const hasDesliked = useMemo(() => {
-    const userFavorites = desLiked.map(desliked => {
-      desliked.userId === currentUser?.id;
+  const hasFavorited = useMemo(() => {
+    const userFavorites = favorited.map(favorite => {
+      favorite.userId === currentUser?.id;
     });
 
     return userFavorites;
-  }, [currentUser, desLiked]);
+  }, [currentUser, favorited]);
 
   const toggleFavorite = useCallback(
     async (e: React.MouseEvent<HTMLDivElement>) => {
@@ -33,17 +33,17 @@ const useDesliked = ({ postId, currentUser, desLiked }: IUseDesliked) => {
         return loginModal.onOpen();
       }
 
-      const userDesliked = desLiked.some(desliked => {
-        return desliked.postId === postId;
+      const userFavorited = favorited.some(favorited => {
+        return favorited.postId === postId;
       });
 
       try {
         let request;
 
-        if (userDesliked) {
-          request = () => axios.delete(`/api/deslike/${postId}`);
+        if (userFavorited) {
+          request = () => axios.delete(`/api/favorite/${postId}`);
         } else {
-          request = () => axios.post(`/api/deslike/${postId}`);
+          request = () => axios.post(`/api/favorite/${postId}`);
         }
 
         await request();
@@ -53,13 +53,13 @@ const useDesliked = ({ postId, currentUser, desLiked }: IUseDesliked) => {
         toast.error('Algo deu errado, tente novamente');
       }
     },
-    [currentUser, hasDesliked, postId, loginModal, router],
+    [currentUser, hasFavorited, postId, loginModal, router],
   );
 
   return {
-    hasDesliked,
+    hasFavorited,
     toggleFavorite,
   };
 };
 
-export default useDesliked;
+export default useFavorited;

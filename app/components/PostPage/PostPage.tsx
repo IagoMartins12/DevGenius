@@ -5,6 +5,7 @@ import {
   Category,
   CategoryRelationsPosts,
   Comment,
+  Deslike,
   Favorite,
   Like,
   Post,
@@ -34,6 +35,8 @@ export const PostPage = ({
   categories,
   categoryPosts,
   liked,
+  deslikes,
+  favorites,
 }: {
   user: User | null;
   post: Post | null;
@@ -44,6 +47,8 @@ export const PostPage = ({
   categories: Category[];
   categoryPosts: CategoryRelationsPosts[];
   liked: Like[];
+  deslikes: Deslike[];
+  favorites: Favorite[];
 }) => {
   if (!post) {
     return <div>Post não encontrado</div>;
@@ -138,6 +143,8 @@ export const PostPage = ({
         postId={post.id}
         currentUser={user}
         liked={liked}
+        desliked={deslikes}
+        favorites={favorites}
       />
 
       <div className='w-9/12 shadow-lg flex-col h-full border-2'>

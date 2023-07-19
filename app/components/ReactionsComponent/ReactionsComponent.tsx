@@ -5,8 +5,10 @@ import { FaRegComments } from 'react-icons/fa';
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs';
 import { Tooltip } from 'react-tooltip';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
-import { Favorite, Like, User } from '@prisma/client';
-import HeartButton from '../HeartButton';
+import { Deslike, Favorite, Like, User } from '@prisma/client';
+import LikedButton from './LikedButton';
+import DeslikedButton from './DeslikedButton';
+import FavoritedButton from './FavoriteButton';
 
 interface IReactionsComponent {
   likeAction: () => void;
@@ -17,6 +19,8 @@ interface IReactionsComponent {
   postId: string;
   currentUser?: User | null;
   liked: Like[];
+  desliked: Deslike[];
+  favorites: Favorite[];
 }
 export const ReactionsComponent: React.FC<IReactionsComponent> = ({
   likeAction,
@@ -27,8 +31,17 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
   postId,
   currentUser,
   liked,
+  desliked,
+  favorites,
 }) => {
   const likedLenght = liked.filter(liked => liked.postId === postId).length;
+  const desLikedLenght = desliked.filter(
+    desliked => desliked.postId === postId,
+  ).length;
+  const favoritedLenght = favorites.filter(
+    favorites => favorites.postId === postId,
+  ).length;
+
   return (
     <div className='flex flex-col gap-y-4 fixed top-1/4 left-12'>
       <Tooltip id='my-tooltip' style={{ zIndex: '9999' }} />
@@ -38,7 +51,7 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
         data-tooltip-place='right'
         className='flex cursor-pointer flex-col items-center justify-center gap-y-2'
       >
-        <HeartButton liked={liked} postId={postId} currentUser={currentUser} />
+        <LikedButton liked={liked} postId={postId} currentUser={currentUser} />
         <span>{likedLenght}</span>
       </a>
 
@@ -48,8 +61,12 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
         data-tooltip-place='right'
         className='flex cursor-pointer flex-col items-center justify-center gap-y-2'
       >
-        <FcDislike size={30} onClick={dislikeAction} />
-        <span>4</span>
+        <DeslikedButton
+          desLiked={desliked}
+          postId={postId}
+          currentUser={currentUser}
+        />
+        <span>{desLikedLenght}</span>
       </a>
 
       <a
@@ -67,10 +84,13 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
         data-tooltip-content='Salvar!'
         data-tooltip-place='right'
         className='flex cursor-pointer flex-col items-center justify-center gap-y-2'
-        href='commentArea'
       >
-        <BsBookmark size={30} onClick={saveAction} />
-        <span>4</span>
+        <FavoritedButton
+          favorited={favorites}
+          postId={postId}
+          currentUser={currentUser}
+        />
+        <span>{favoritedLenght}</span>
       </a>
 
       <a

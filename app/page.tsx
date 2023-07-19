@@ -13,6 +13,7 @@ import getCategories, { getPostCategories } from './actions/getCategories';
 import { getFavoritedPosts, getLikedPosts } from './actions/getActionsOnPosts';
 import getCurrentUser from './actions/getCurrentUser';
 import { FeaturedPosts } from './components/featuredPosts/FeaturedPosts';
+import useInfos from './hooks/useInfos';
 
 export default async function Home() {
   const posts: Post[] = await getPosts();

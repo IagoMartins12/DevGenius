@@ -22,6 +22,7 @@ export default async function RootLayout({
 }) {
   const currentUser = await getCurrentUser();
   const categories = await getCategories();
+
   return (
     <html lang='pt-br'>
       <Head>

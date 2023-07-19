@@ -23,7 +23,7 @@ const LikedButton: React.FC<LikedButtonProps> = ({
   });
 
   const userFavorites = liked.some(liked => {
-    return liked.postId === postId;
+    return liked.postId === postId && liked.userId === currentUser?.id;
   });
 
   return (
@@ -38,16 +38,7 @@ const LikedButton: React.FC<LikedButtonProps> = ({
         cursor-pointer
       '
     >
-      <AiOutlineHeart
-        size={28}
-        className='
-          fill-white
-        '
-      />
-      <AiFillHeart
-        size={24}
-        className={userFavorites ? 'fill-rose-500' : 'fill-neutral-500/70'}
-      />
+      {userFavorites ? <AiFillHeart size={28} /> : <AiOutlineHeart size={28} />}
     </div>
   );
 };

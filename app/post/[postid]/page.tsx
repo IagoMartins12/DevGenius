@@ -45,6 +45,8 @@ export default async function Post({ params }: { params: Iparams }) {
         categories={categories}
         categoryPosts={categoryPosts}
         liked={liked}
+        deslikes={deslikes}
+        favorites={favorites}
       />
       <Footer />
     </>
