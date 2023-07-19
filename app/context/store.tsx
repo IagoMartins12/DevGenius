@@ -1,16 +1,36 @@
 'use client';
 
-import { Category } from '@prisma/client';
+import { Category, Deslike, Favorite, Like, Post, User } from '@prisma/client';
 import { ReactNode, createContext, useContext, useState } from 'react';
 
 interface ContextProps {
-  categoriesState: Category[] | undefined;
-  setCategories: React.Dispatch<React.SetStateAction<Category[]>>;
+  categoriesState: Category[];
+  setCategoriesState: React.Dispatch<React.SetStateAction<Category[]>>;
+  likeState: Like[];
+  setLikesState: React.Dispatch<React.SetStateAction<Like[]>>;
+  deslikeState: Deslike[];
+  setDeslikesState: React.Dispatch<React.SetStateAction<Deslike[]>>;
+  favoritesState: Favorite[];
+  setFavoritesState: React.Dispatch<React.SetStateAction<Favorite[]>>;
+  postsState: Post[];
+  setPostsState: React.Dispatch<React.SetStateAction<Post[]>>;
+  currentUserState: User | null;
+  setCurrentUserState: React.Dispatch<React.SetStateAction<User | null>>;
 }
 
 const GlobalContext = createContext<ContextProps>({
   categoriesState: [],
-  setCategories: () => {},
+  setCategoriesState: () => {},
+  likeState: [],
+  setLikesState: () => {},
+  deslikeState: [],
+  setDeslikesState: () => {},
+  favoritesState: [],
+  setFavoritesState: () => {},
+  postsState: [],
+  setPostsState: () => {},
+  currentUserState: null,
+  setCurrentUserState: () => {},
 });
 
 export const GlobalContextProvider = ({
@@ -18,10 +38,30 @@ export const GlobalContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const [categoriesState, setCategories] = useState<Category[]>([]);
+  const [categoriesState, setCategoriesState] = useState<Category[]>([]);
+  const [likeState, setLikesState] = useState<Like[]>([]);
+  const [deslikeState, setDeslikesState] = useState<Deslike[]>([]);
+  const [favoritesState, setFavoritesState] = useState<Favorite[]>([]);
+  const [postsState, setPostsState] = useState<Post[]>([]);
+  const [currentUserState, setCurrentUserState] = useState<User | null>(null);
 
   return (
-    <GlobalContext.Provider value={{ categoriesState, setCategories }}>
+    <GlobalContext.Provider
+      value={{
+        categoriesState,
+        setCategoriesState,
+        likeState,
+        setLikesState,
+        deslikeState,
+        setDeslikesState,
+        favoritesState,
+        setFavoritesState,
+        postsState,
+        setPostsState,
+        currentUserState,
+        setCurrentUserState,
+      }}
+    >
       {children}
     </GlobalContext.Provider>
   );

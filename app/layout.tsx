@@ -7,6 +7,13 @@ import { Header } from './components/header/Header';
 import getCategories from './actions/getCategories';
 import Head from 'next/head';
 import { GlobalContextProvider } from './context/store';
+import {
+  getDeslikedPost,
+  getFavoritedPosts,
+  getLikedPosts,
+} from './actions/getActionsOnPosts';
+import getPosts from './actions/getPosts';
+import { SetContexts } from './components/SetContexts/SetContexts';
 
 const font = Nunito({ subsets: ['latin'] });
 
@@ -23,7 +30,10 @@ export default async function RootLayout({
 }) {
   const currentUser = await getCurrentUser();
   const categories = await getCategories();
-
+  const likes = await getLikedPosts();
+  const deslikes = await getDeslikedPost();
+  const favorites = await getFavoritedPosts();
+  const posts = await getPosts();
   return (
     <html lang='pt-br'>
       <Head>
@@ -48,7 +58,15 @@ export default async function RootLayout({
         }}
       >
         <GlobalContextProvider>
-          <Header currentUser={currentUser} categories={categories} />
+          <Header />
+          <SetContexts
+            categories={categories}
+            deslikes={deslikes}
+            favorites={favorites}
+            likes={likes}
+            posts={posts}
+            user={currentUser}
+          />
           <ToasterProvider />
           <ModalsProvider />
           {children}

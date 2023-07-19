@@ -5,9 +5,6 @@ import {
   Category,
   CategoryRelationsPosts,
   Comment,
-  Deslike,
-  Favorite,
-  Like,
   Post,
   User,
 } from '@prisma/client';
@@ -35,9 +32,6 @@ export const PostPage = ({
   allUsers,
   categories,
   categoryPosts,
-  liked,
-  deslikes,
-  favorites,
 }: {
   user: User | null;
   post: Post | null;
@@ -47,9 +41,6 @@ export const PostPage = ({
   allUsers: User[];
   categories: Category[];
   categoryPosts: CategoryRelationsPosts[];
-  liked: Like[];
-  deslikes: Deslike[];
-  favorites: Favorite[];
 }) => {
   if (!post) {
     return <div>Post não encontrado</div>;
@@ -57,7 +48,7 @@ export const PostPage = ({
 
   const [commentState, setCommentsState] = useState(comments);
   const [postState, setPostState] = useState(post);
-  const { categoriesState, setCategories } = useGlobalContext();
+  const { likeState } = useGlobalContext();
 
   const router = useRouter();
   const deleteModal = useDeletePostModal();
@@ -125,7 +116,7 @@ export const PostPage = ({
     console.log('save');
   };
 
-  console.log(categoriesState);
+  console.log('likeState', likeState);
   return (
     <div
       className={`w-full flex gap-x-4 px-10
@@ -146,9 +137,6 @@ export const PostPage = ({
         commentsLenght={commentState.length}
         postId={post.id}
         currentUser={user}
-        liked={liked}
-        desliked={deslikes}
-        favorites={favorites}
       />
 
       <div className='w-9/12 shadow-lg flex-col h-full border-2'>

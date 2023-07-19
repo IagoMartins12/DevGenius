@@ -38,7 +38,11 @@ const LikedButton: React.FC<LikedButtonProps> = ({
         cursor-pointer
       '
     >
-      {userFavorites ? <AiFillHeart size={28} /> : <AiOutlineHeart size={28} />}
+      {userFavorites ? (
+        <AiFillHeart size={28} className='fill-rose-500' />
+      ) : (
+        <AiOutlineHeart size={28} />
+      )}
     </div>
   );
 };

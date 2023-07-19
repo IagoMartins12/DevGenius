@@ -1,32 +1,22 @@
 'use client';
 
 import useThemes, { Themes } from '@/app/hooks/useTheme';
-import {
-  Category,
-  CategoryRelationsPosts,
-  Like,
-  Post,
-  User,
-} from '@prisma/client';
+import { CategoryRelationsPosts, Post, User } from '@prisma/client';
 import HeartButton from '../HeartButton';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useGlobalContext } from '@/app/context/store';
 
 export const PostCard = ({
-  posts,
   categoriesPost,
-  categories,
-  currentUser,
-  liked,
 }: {
-  posts: Post[];
   categoriesPost: CategoryRelationsPosts[];
-  categories: Category[];
-  currentUser: User | null;
-  liked: Like[];
 }) => {
   const themes: Themes = useThemes().theme;
   const router = useRouter();
+
+  const { categoriesState, likeState, postsState, currentUserState } =
+    useGlobalContext();
 
   const navigatePost = (postId: string) => {
     router.push(`/post/${postId}`);
@@ -51,7 +41,7 @@ export const PostCard = ({
       </div>
 
       <div className='py-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5'>
-        {posts.map((post: Post, index: number) => (
+        {postsState.map((post: Post, index: number) => (
           <div
             className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer
             ${themes === 'light' ? 'card-white' : 'card-dark'}`}
@@ -68,8 +58,8 @@ export const PostCard = ({
               <div className='absolute top-3 right-3'>
                 <HeartButton
                   postId={post.id}
-                  currentUser={currentUser}
-                  liked={liked}
+                  currentUser={currentUserState}
+                  liked={likeState}
                 />
               </div>
             </div>
@@ -82,12 +72,12 @@ export const PostCard = ({
               {categoriesPost
                 .filter(element => element.postId === post.id)
                 .filter(categoryPost =>
-                  categories.some(
+                  categoriesState.some(
                     category => category.id === categoryPost.categoryId,
                   ),
                 )
                 .map(categoryPost => {
-                  const category = categories.find(
+                  const category = categoriesState.find(
                     category => category.id === categoryPost.categoryId,
                   );
                   const categoryName = category ? category.category_name : '';

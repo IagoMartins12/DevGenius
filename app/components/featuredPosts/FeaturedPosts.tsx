@@ -4,16 +4,19 @@ import { useState } from 'react';
 import { Carousel } from 'react-bootstrap';
 import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { Post } from '@prisma/client';
+import { useGlobalContext } from '@/app/context/store';
 
-export const FeaturedPosts = ({ posts }: { posts: Post[] }) => {
+export const FeaturedPosts = () => {
   const [index, setIndex] = useState(0);
   const themes: Themes = useThemes().theme;
+
+  const { postsState } = useGlobalContext();
 
   const handleSelect = (selectedIndex: number) => {
     setIndex(selectedIndex);
   };
 
-  const hasFeaturedPost = posts.some((post: Post) => post.featured === 1);
+  const hasFeaturedPost = postsState.some((post: Post) => post.featured === 1);
 
   return (
     <div
@@ -29,7 +32,7 @@ export const FeaturedPosts = ({ posts }: { posts: Post[] }) => {
           variant={themes === 'light' ? '' : 'dark'}
           className=''
         >
-          {posts.map(
+          {postsState.map(
             (post: Post) =>
               post.featured === 1 && (
                 <Carousel.Item key={post.id}>

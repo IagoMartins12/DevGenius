@@ -10,20 +10,17 @@ import { NavBarUser } from '../navBarUser/NavBarUser';
 import { useRouter } from 'next/navigation';
 import { useGlobalContext } from '@/app/context/store';
 
-interface NavbarProps {
-  currentUser?: User | null;
-  categories: Category[];
-}
+interface NavbarProps {}
 
-export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
+export const Header: React.FC<NavbarProps> = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [blackHeader, setBlackHeader] = useState(false);
 
+  const { currentUserState, categoriesState } = useGlobalContext();
   const theme = useThemes();
   const themes: Themes = theme.theme;
   const loginModal = useLoginModal();
   const router = useRouter();
-  const { categoriesState, setCategories } = useGlobalContext();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -44,7 +41,6 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
   };
 
   useEffect(() => {
-    setCategories(categories);
     const scrollListener = () => {
       if (window.scrollY > 10) {
         setBlackHeader(true);
@@ -59,8 +55,6 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
       window.removeEventListener('scroll', scrollListener);
     };
   }, []);
-
-  console.log(categoriesState);
 
   return (
     <header
@@ -101,7 +95,7 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
           <span className=' text-violet-500	text-xl'>Genius</span>
         </h1>
         <div className='w-1/2 gap-10 hidden md:flex pointer cursor-pointer'>
-          {categories?.map(category => (
+          {categoriesState?.map(category => (
             <p key={category.id} onClick={() => navigate(category)}>
               {category.category_name}
             </p>
@@ -130,10 +124,10 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
             </div>
           </div>
         </div>
-        {currentUser ? (
+        {currentUserState ? (
           <>
             <AiOutlineUser size={28} onClick={() => toggleOpen()} />
-            <NavBarUser user={currentUser} display={isOpen} />
+            <NavBarUser user={currentUserState} display={isOpen} />
           </>
         ) : (
           <AiOutlineUser size={28} onClick={() => loginModal.onOpen()} />

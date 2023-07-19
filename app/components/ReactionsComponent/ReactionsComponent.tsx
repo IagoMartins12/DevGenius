@@ -9,6 +9,7 @@ import { Deslike, Favorite, Like, User } from '@prisma/client';
 import LikedButton from './LikedButton';
 import DeslikedButton from './DeslikedButton';
 import FavoritedButton from './FavoriteButton';
+import { useGlobalContext } from '@/app/context/store';
 
 interface IReactionsComponent {
   likeAction: () => void;
@@ -18,9 +19,6 @@ interface IReactionsComponent {
   commentsLenght: number;
   postId: string;
   currentUser?: User | null;
-  liked: Like[];
-  desliked: Deslike[];
-  favorites: Favorite[];
 }
 export const ReactionsComponent: React.FC<IReactionsComponent> = ({
   likeAction,
@@ -30,15 +28,14 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
   commentsLenght,
   postId,
   currentUser,
-  liked,
-  desliked,
-  favorites,
 }) => {
-  const likedLenght = liked.filter(liked => liked.postId === postId).length;
-  const desLikedLenght = desliked.filter(
+  const { likeState, deslikeState, favoritesState } = useGlobalContext();
+
+  const likedLenght = likeState.filter(liked => liked.postId === postId).length;
+  const desLikedLenght = deslikeState.filter(
     desliked => desliked.postId === postId,
   ).length;
-  const favoritedLenght = favorites.filter(
+  const favoritedLenght = favoritesState.filter(
     favorites => favorites.postId === postId,
   ).length;
 
@@ -51,7 +48,11 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
         data-tooltip-place='right'
         className='flex cursor-pointer flex-col items-center justify-center gap-y-2'
       >
-        <LikedButton liked={liked} postId={postId} currentUser={currentUser} />
+        <LikedButton
+          liked={likeState}
+          postId={postId}
+          currentUser={currentUser}
+        />
         <span>{likedLenght}</span>
       </a>
 
@@ -62,7 +63,7 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
         className='flex cursor-pointer flex-col items-center justify-center gap-y-2'
       >
         <DeslikedButton
-          desLiked={desliked}
+          desLiked={deslikeState}
           postId={postId}
           currentUser={currentUser}
         />
@@ -86,7 +87,7 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
         className='flex cursor-pointer flex-col items-center justify-center gap-y-2'
       >
         <FavoritedButton
-          favorited={favorites}
+          favorited={favoritesState}
           postId={postId}
           currentUser={currentUser}
         />
