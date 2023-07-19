@@ -24,6 +24,7 @@ import { DeleteCommentModal } from '../deleteCommentModal/deleteCommentModal';
 import { CommentsSection } from '../CommentsSection/CommentsSection';
 import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { ReactionsComponent } from '../ReactionsComponent/ReactionsComponent';
+import { useGlobalContext } from '@/app/context/store';
 
 export const PostPage = ({
   user,
@@ -56,6 +57,7 @@ export const PostPage = ({
 
   const [commentState, setCommentsState] = useState(comments);
   const [postState, setPostState] = useState(post);
+  const { categoriesState, setCategories } = useGlobalContext();
 
   const router = useRouter();
   const deleteModal = useDeletePostModal();
@@ -122,6 +124,8 @@ export const PostPage = ({
   const saveAction = () => {
     console.log('save');
   };
+
+  console.log(categoriesState);
   return (
     <div
       className={`w-full flex gap-x-4 px-10

@@ -8,21 +8,22 @@ import { Category, User } from '@prisma/client';
 import { useEffect, useRef, useState } from 'react';
 import { NavBarUser } from '../navBarUser/NavBarUser';
 import { useRouter } from 'next/navigation';
+import { useGlobalContext } from '@/app/context/store';
 
 interface NavbarProps {
   currentUser?: User | null;
-  categories?: Category[];
+  categories: Category[];
 }
 
 export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [search, setSearch] = useState(false);
   const [blackHeader, setBlackHeader] = useState(false);
 
   const theme = useThemes();
   const themes: Themes = theme.theme;
   const loginModal = useLoginModal();
   const router = useRouter();
+  const { categoriesState, setCategories } = useGlobalContext();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -43,6 +44,7 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
   };
 
   useEffect(() => {
+    setCategories(categories);
     const scrollListener = () => {
       if (window.scrollY > 10) {
         setBlackHeader(true);
@@ -57,6 +59,8 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
       window.removeEventListener('scroll', scrollListener);
     };
   }, []);
+
+  console.log(categoriesState);
 
   return (
     <header

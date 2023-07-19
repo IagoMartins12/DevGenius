@@ -6,6 +6,7 @@ import getCurrentUser from './actions/getCurrentUser';
 import { Header } from './components/header/Header';
 import getCategories from './actions/getCategories';
 import Head from 'next/head';
+import { GlobalContextProvider } from './context/store';
 
 const font = Nunito({ subsets: ['latin'] });
 
@@ -46,10 +47,12 @@ export default async function RootLayout({
           boxSizing: 'border-box',
         }}
       >
-        <Header currentUser={currentUser} categories={categories} />
-        <ToasterProvider />
-        <ModalsProvider />
-        {children}
+        <GlobalContextProvider>
+          <Header currentUser={currentUser} categories={categories} />
+          <ToasterProvider />
+          <ModalsProvider />
+          {children}
+        </GlobalContextProvider>
       </body>
     </html>
   );
