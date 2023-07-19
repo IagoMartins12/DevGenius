@@ -12,30 +12,24 @@ import HeartButton from '../HeartButton';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-export const CategoryCard = ({
+export const SearchCard = ({
   posts,
   categoriesPost,
   categories,
   currentUser,
   favorites,
-  categoryName,
 }: {
   posts: Post[];
   categoriesPost: CategoryRelationsPosts[];
   categories: Category[];
   currentUser: User | null;
   favorites: Favorite[];
-  categoryName: string | undefined;
 }) => {
   const themes: Themes = useThemes().theme;
   const router = useRouter();
 
-  const navigatePost = (postId: string) => {
+  const navigate = (postId: string) => {
     router.push(`/post/${postId}`);
-  };
-
-  const navigateCategory = (categoryId: string) => {
-    router.push(`/category/${categoryId}`);
   };
 
   return (
@@ -48,13 +42,11 @@ export const CategoryCard = ({
       pt-7
       pb-16
       ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}`}
-      style={{ minHeight: '91vh' }}
     >
       <div className=''>
-        <h2 className=' text-xl font-bold'>
-          {categoryName ? <> {categoryName}: </> : 'Categoria não encontrada'}{' '}
-        </h2>
+        <h2 className='text-xl font-bold'>Resultados: </h2>
       </div>
+
       {posts.length > 0 ? (
         <div className='py-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5'>
           {posts.map((post: Post, index: number) => (
@@ -62,7 +54,7 @@ export const CategoryCard = ({
               className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer
             ${themes === 'light' ? 'card-white' : 'card-dark'}`}
               key={post.id}
-              onClick={() => navigatePost(post.id)}
+              onClick={() => navigate(post.id)}
             >
               <div className='aspect-video w-full relative overflow-hidden rounded-xl'>
                 <Image
@@ -101,10 +93,6 @@ export const CategoryCard = ({
                       <span
                         className='inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2'
                         key={categoryPost.id}
-                        onClick={ev => {
-                          ev.stopPropagation();
-                          navigateCategory(categoryPost.categoryId);
-                        }}
                       >
                         {categoryName}
                       </span>
@@ -115,7 +103,7 @@ export const CategoryCard = ({
           ))}
         </div>
       ) : (
-        <div className='w-full flex items-center justify-center'>
+        <div className='w-full h-40 flex items-center justify-center'>
           <h1 className='text-2xl font-bold text-center'>
             Nenhum artigo encontrado!
           </h1>

@@ -4,7 +4,7 @@ import useThemes, { Themes } from '@/app/hooks/useTheme';
 import {
   Category,
   CategoryRelationsPosts,
-  Favorite,
+  Like,
   Post,
   User,
 } from '@prisma/client';
@@ -17,21 +17,24 @@ export const PostCard = ({
   categoriesPost,
   categories,
   currentUser,
-  favorites,
+  liked,
 }: {
   posts: Post[];
   categoriesPost: CategoryRelationsPosts[];
   categories: Category[];
   currentUser: User | null;
-  favorites: Favorite[];
+  liked: Like[];
 }) => {
   const themes: Themes = useThemes().theme;
   const router = useRouter();
 
-  const navigate = (postId: string) => {
+  const navigatePost = (postId: string) => {
     router.push(`/post/${postId}`);
   };
 
+  const navigateCategory = (categoryId: string) => {
+    router.push(`/category/${categoryId}`);
+  };
   return (
     <div
       className={`
@@ -53,7 +56,7 @@ export const PostCard = ({
             className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer
             ${themes === 'light' ? 'card-white' : 'card-dark'}`}
             key={post.id}
-            onClick={() => navigate(post.id)}
+            onClick={() => navigatePost(post.id)}
           >
             <div className='aspect-video w-full relative overflow-hidden rounded-xl'>
               <Image
@@ -66,7 +69,7 @@ export const PostCard = ({
                 <HeartButton
                   postId={post.id}
                   currentUser={currentUser}
-                  favorites={favorites}
+                  liked={liked}
                 />
               </div>
             </div>
@@ -92,6 +95,10 @@ export const PostCard = ({
                     <span
                       className='inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2'
                       key={categoryPost.id}
+                      onClick={ev => {
+                        ev.stopPropagation();
+                        navigateCategory(categoryPost.categoryId);
+                      }}
                     >
                       {categoryName}
                     </span>

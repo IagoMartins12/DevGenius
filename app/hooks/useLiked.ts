@@ -4,27 +4,27 @@ import { useCallback, useMemo } from 'react';
 import { toast } from 'react-hot-toast';
 
 import useLoginModal from './modals/useLoginModal';
-import { Favorite, User } from '@prisma/client';
+import { Like, User } from '@prisma/client';
 
-interface IUseFavorite {
+interface IUseLiked {
   postId: string;
   currentUser?: User | null;
-  favorites: Favorite[];
+  liked: Like[];
 }
 
-const useFavorite = ({ postId, currentUser, favorites }: IUseFavorite) => {
+const useLiked = ({ postId, currentUser, liked }: IUseLiked) => {
   const router = useRouter();
 
   const loginModal = useLoginModal();
   const userId = currentUser?.id || null;
 
   const hasFavorited = useMemo(() => {
-    const userFavorites = favorites.map(favorite => {
-      favorite.userId === currentUser?.id;
+    const userFavorites = liked.map(liked => {
+      liked.userId === currentUser?.id;
     });
 
     return userFavorites;
-  }, [currentUser, favorites]);
+  }, [currentUser, liked]);
 
   const toggleFavorite = useCallback(
     async (e: React.MouseEvent<HTMLDivElement>) => {
@@ -34,17 +34,18 @@ const useFavorite = ({ postId, currentUser, favorites }: IUseFavorite) => {
         return loginModal.onOpen();
       }
 
-      const userFavorites = favorites.some(favorite => {
-        return favorite.postId === postId;
+      const userFavorites = liked.some(liked => {
+        return liked.postId === postId;
       });
 
+      console.log(userFavorites);
       try {
         let request;
 
         if (userFavorites) {
-          request = () => axios.delete(`/api/favorite/${postId}`);
+          request = () => axios.delete(`/api/like/${postId}`);
         } else {
-          request = () => axios.post(`/api/favorite/${postId}`);
+          request = () => axios.post(`/api/like/${postId}`);
         }
 
         await request();
@@ -63,4 +64,4 @@ const useFavorite = ({ postId, currentUser, favorites }: IUseFavorite) => {
   };
 };
 
-export default useFavorite;
+export default useLiked;

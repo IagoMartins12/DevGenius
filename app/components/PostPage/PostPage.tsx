@@ -5,6 +5,8 @@ import {
   Category,
   CategoryRelationsPosts,
   Comment,
+  Favorite,
+  Like,
   Post,
   User,
 } from '@prisma/client';
@@ -15,13 +17,12 @@ import { MdEdit } from 'react-icons/md';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import axios, { AxiosResponse } from 'axios';
-import { useState } from 'react';
+import { RefObject, useRef, useState } from 'react';
 import { AuthorCard } from '../authorCard/AuthorCard';
 import { DeleteCommentModal } from '../deleteCommentModal/deleteCommentModal';
 import { CommentsSection } from '../CommentsSection/CommentsSection';
 import useThemes, { Themes } from '@/app/hooks/useTheme';
-import { RelatedPosts } from '../RelatedPosts/RelatedPosts';
-import { PostCard } from '../postCard/PostCard';
+import { ReactionsComponent } from '../ReactionsComponent/ReactionsComponent';
 
 export const PostPage = ({
   user,
@@ -32,6 +33,7 @@ export const PostPage = ({
   allUsers,
   categories,
   categoryPosts,
+  liked,
 }: {
   user: User | null;
   post: Post | null;
@@ -41,6 +43,7 @@ export const PostPage = ({
   allUsers: User[];
   categories: Category[];
   categoryPosts: CategoryRelationsPosts[];
+  liked: Like[];
 }) => {
   if (!post) {
     return <div>Post não encontrado</div>;
@@ -52,6 +55,7 @@ export const PostPage = ({
   const router = useRouter();
   const deleteModal = useDeletePostModal();
   const themes: Themes = useThemes().theme;
+  const commentsSectionRef = useRef<HTMLDivElement>(null);
 
   const renderPostContent = () => {
     return { __html: postState.content };
@@ -95,6 +99,24 @@ export const PostPage = ({
     },
   });
 
+  const likeAction = () => {
+    console.log('save');
+  };
+
+  const dislikeAction = () => {
+    console.log('save');
+  };
+
+  const commentAction = () => {
+    commentsSectionRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  };
+
+  const saveAction = () => {
+    console.log('save');
+  };
   return (
     <div
       className={`w-full flex gap-x-4 px-10
@@ -107,6 +129,17 @@ export const PostPage = ({
         minHeight: '100vh',
       }}
     >
+      <ReactionsComponent
+        likeAction={likeAction}
+        dislikeAction={dislikeAction}
+        commentAction={commentAction}
+        saveAction={saveAction}
+        commentsLenght={commentState.length}
+        postId={post.id}
+        currentUser={user}
+        liked={liked}
+      />
+
       <div className='w-9/12 shadow-lg flex-col h-full border-2'>
         {user?.role === 1 && (
           <div className='w-11/12 mx-auto h-auto my-6 flex items-center justify-end gap-1'>
@@ -144,15 +177,7 @@ export const PostPage = ({
           className='w-11/12 mx-auto h-auto my-6'
           dangerouslySetInnerHTML={renderPostContent()}
         />
-        <hr className='w-11/12 mx-auto' />
-        <div>
-          {/* <RelatedPosts
-            posts={posts}
-            categories={categories}
-            categoriesPost={categoryPosts}
-            currentUser={user}
-          /> */}
-        </div>
+
         <hr className='w-11/12 mx-auto' />
         <div className='w-11/12 mx-auto h-3/6 my-6'>
           <CommentsSection
@@ -162,6 +187,7 @@ export const PostPage = ({
             onSubmit={onSubmit}
             handleSubmit={handleSubmit}
             allUsers={allUsers}
+            commentsSectionRef={commentsSectionRef}
           />
         </div>
       </div>

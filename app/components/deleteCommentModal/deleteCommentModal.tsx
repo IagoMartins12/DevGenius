@@ -3,7 +3,7 @@ import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { Comment } from '@prisma/client';
 import axios from 'axios';
 import Image from 'next/image';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, RefObject, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
 
 export const DeleteCommentModal = ({

@@ -1,3 +1,8 @@
+import {
+  getDeslikedPost,
+  getFavoritedPosts,
+  getLikedPosts,
+} from '@/app/actions/getActionsOnPosts';
 import getAuthor from '@/app/actions/getAuthor';
 import getCategories, { getPostCategories } from '@/app/actions/getCategories';
 import getComments, { getCommentsPerID } from '@/app/actions/getComments';
@@ -24,6 +29,9 @@ export default async function Post({ params }: { params: Iparams }) {
   const categoryPosts: CategoryRelationsPosts[] = await getRelatedPosts(
     params.postid,
   );
+  const favorites = await getFavoritedPosts();
+  const deslikes = await getDeslikedPost();
+  const liked = await getLikedPosts();
 
   return (
     <>
@@ -36,6 +44,7 @@ export default async function Post({ params }: { params: Iparams }) {
         allUsers={allUsers}
         categories={categories}
         categoryPosts={categoryPosts}
+        liked={liked}
       />
       <Footer />
     </>

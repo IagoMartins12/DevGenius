@@ -5,7 +5,7 @@ import { AiOutlineSearch, AiOutlineUser } from 'react-icons/ai';
 import { MdLightMode, MdDarkMode } from 'react-icons/md';
 import useLoginModal from '@/app/hooks/modals/useLoginModal';
 import { Category, User } from '@prisma/client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { NavBarUser } from '../navBarUser/NavBarUser';
 import { useRouter } from 'next/navigation';
 
@@ -16,12 +16,15 @@ interface NavbarProps {
 
 export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [search, setSearch] = useState(false);
   const [blackHeader, setBlackHeader] = useState(false);
 
   const theme = useThemes();
   const themes: Themes = theme.theme;
   const loginModal = useLoginModal();
   const router = useRouter();
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const toggleOpen = () => {
     setIsOpen(!isOpen);
@@ -34,6 +37,11 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
   const navigate = (category: Category) => {
     router.push(`/category/${category.id}`);
   };
+
+  const navigateToSearch = (search: string) => {
+    router.push(`/search/${search}`);
+  };
+
   useEffect(() => {
     const scrollListener = () => {
       if (window.scrollY > 10) {
@@ -54,7 +62,6 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
     <header
       className={`
       ${themes === 'light' ? 'bg-footer-color-white' : 'bg-color-dark'}
-        h-20
         items-center
         justify-between
         gap-0
@@ -76,6 +83,7 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
             : blackHeader
             ? 'rgb(219, 218, 218, 1)'
             : 'rgb(219, 218, 218, 0.7)',
+        height: '9vh',
       }}
     >
       <div className='flex items-center gap-x-10 w-1/2 overflow-hidden'>
@@ -108,6 +116,10 @@ export const Header: React.FC<NavbarProps> = ({ currentUser, categories }) => {
                 placeholder='Pesquisar?'
                 autoComplete='off'
                 className='specific-input'
+                onClick={() => {
+                  console.log(inputRef.current?.value);
+                }}
+                ref={inputRef}
               />
               <input id='search_submit' value='Rechercher' type='submit' />
               <AiOutlineSearch size={28} />

@@ -3,15 +3,15 @@
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 
 import { Like, User } from '@prisma/client';
-import useLiked from '../hooks/useLiked';
+import useLiked from '@/app/hooks/useLiked';
 
-interface HeartButtonProps {
+interface LikedButtonProps {
   postId: string;
   currentUser?: User | null;
   liked: Like[];
 }
 
-const HeartButton: React.FC<HeartButtonProps> = ({
+const LikedButton: React.FC<LikedButtonProps> = ({
   postId,
   currentUser,
   liked,
@@ -42,9 +42,6 @@ const HeartButton: React.FC<HeartButtonProps> = ({
         size={28}
         className='
           fill-white
-          absolute
-          -top-[2px]
-          -right-[2px]
         '
       />
       <AiFillHeart
@@ -55,4 +52,4 @@ const HeartButton: React.FC<HeartButtonProps> = ({
   );
 };
 
-export default HeartButton;
+export default LikedButton;

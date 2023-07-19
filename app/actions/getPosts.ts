@@ -49,3 +49,28 @@ export async function getPostsPerId(id: string) {
     throw new Error(error);
   }
 }
+
+export async function getPostBySearch(search: string) {
+  try {
+    const posts = await prisma.post.findMany({
+      where: {
+        OR: [
+          {
+            content: {
+              contains: search,
+            },
+          },
+          {
+            title: {
+              contains: search,
+            },
+          },
+        ],
+      },
+    });
+
+    return posts;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}

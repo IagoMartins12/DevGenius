@@ -8,6 +8,7 @@ import {
 } from 'react-hook-form';
 import Image from 'next/image';
 import { BiCommentAdd } from 'react-icons/bi';
+import { RefObject } from 'react';
 
 export const CommentsSection = ({
   comments,
@@ -16,6 +17,7 @@ export const CommentsSection = ({
   onSubmit,
   handleSubmit,
   allUsers,
+  commentsSectionRef,
 }: {
   comments: Comment[];
   currentUser: User | null;
@@ -23,6 +25,7 @@ export const CommentsSection = ({
   onSubmit: SubmitHandler<FieldValues>;
   handleSubmit: UseFormHandleSubmit<FieldValues, undefined>;
   allUsers: User[];
+  commentsSectionRef: RefObject<HTMLDivElement>;
 }) => {
   const getUser = (id: string) => {
     const user = allUsers.find((user: User) => user.id === id);
@@ -30,7 +33,7 @@ export const CommentsSection = ({
   };
 
   return (
-    <div className='w-full flex flex-col gap-y-4'>
+    <div className='w-full flex flex-col gap-y-4' ref={commentsSectionRef}>
       <div className='flex items-center justify-start '>
         <h1 className='font-bold text-xl'>
           Comentarios:{' '}
