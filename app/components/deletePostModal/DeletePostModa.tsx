@@ -1,3 +1,4 @@
+import { useGlobalContext } from '@/app/context/store';
 import useDeletePostModal from '@/app/hooks/modals/useDeletePostModal';
 import useThemes, { Themes } from '@/app/hooks/useTheme';
 import axios from 'axios';
@@ -10,13 +11,16 @@ export const DeletePostModal: React.FC = () => {
   const themes: Themes = useThemes().theme;
   const isOpen: boolean = deleteModal.isOpen;
   const router = useRouter();
-
+  const { setPostsState } = useGlobalContext();
   const deletePost = () => {
     const postid = deleteModal.currentPost?.id;
     axios
       .delete(`/api/post/${postid}`)
       .then(() => {
         toast.success('Post Excluido');
+        setPostsState(prevPosts =>
+          prevPosts.filter(post => post.id !== postid),
+        );
         deleteModal.onClose();
         router.push('/');
       })

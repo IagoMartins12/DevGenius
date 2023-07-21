@@ -1,16 +1,10 @@
-import { FieldValues, UseFormRegister } from 'react-hook-form';
+import { useSettingsForm } from '@/app/hooks/customHooks/useSettingsForm';
 import { SettingsInput } from '../commum/SettingsInput';
 import { GrKey } from 'react-icons/gr';
 
-interface SettingsData {
-  register: UseFormRegister<FieldValues>;
-  onSubmit: () => void;
-}
+export const PasswordData: React.FC = () => {
+  const { handleSubmit, passwordSubmit, register } = useSettingsForm();
 
-export const PasswordData: React.FC<SettingsData> = ({
-  register,
-  onSubmit,
-}) => {
   return (
     <>
       <div className='flex sm:flex-col gap-y-4 mx-6 mt-3'>
@@ -45,7 +39,7 @@ export const PasswordData: React.FC<SettingsData> = ({
       <div className='flex flex-col gap-y-2 mx-6 my-6 justify-center items-center'>
         <button
           className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-10/12 sm:w-4/12'
-          onClick={onSubmit}
+          onClick={handleSubmit(passwordSubmit)}
         >
           Editar informações
         </button>

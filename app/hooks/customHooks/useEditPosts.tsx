@@ -1,5 +1,5 @@
 import { Category, CategoryRelationsPosts, Post } from '@prisma/client';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
@@ -20,12 +20,11 @@ export const useEditPosts = ({
   const router = useRouter();
 
   const onSubmit: SubmitHandler<FieldValues> = async data => {
+    console.log(data);
     if (data.title === '') return toast.error('Insira um titulo!');
     if (data.photo_background === '') return toast.error('Insira uma foto!');
     if (data.content === '') return toast.error('Insira o conteudo!');
     if (data.resume === '') return toast.error('Insira um resumo!');
-    if (data.selectedCategories.length === 0)
-      return toast.error('Marque ao menos uma categoria!');
 
     const object = {
       title: data.title,
@@ -36,10 +35,7 @@ export const useEditPosts = ({
     };
 
     try {
-      const response: AxiosResponse<Post> = await axios.patch(
-        `/api/post/${post.id}`,
-        object,
-      );
+      await axios.patch(`/api/post/${post.id}`, object);
 
       toast.success('Post editado!');
       router.push(`/post/${post.id}`);
@@ -89,7 +85,6 @@ export const useEditPosts = ({
     setCustomValue,
     handleChange,
     handleChangeResume,
-
     currentCategory,
     checkedCategorys,
     setCheckedCategorys,

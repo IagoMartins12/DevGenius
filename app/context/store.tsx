@@ -26,6 +26,8 @@ interface ContextProps {
   setCurrentUserState: React.Dispatch<React.SetStateAction<User | null>>;
   commentsState: Comment[];
   setCommentsState: React.Dispatch<React.SetStateAction<Comment[]>>;
+  postState: Post | null;
+  setPostState: React.Dispatch<React.SetStateAction<Post | null>>;
 }
 
 const GlobalContext = createContext<ContextProps>({
@@ -43,6 +45,8 @@ const GlobalContext = createContext<ContextProps>({
   setCurrentUserState: () => {},
   commentsState: [],
   setCommentsState: () => {},
+  postState: null,
+  setPostState: () => {},
 });
 
 export const GlobalContextProvider = ({
@@ -57,7 +61,7 @@ export const GlobalContextProvider = ({
   const [postsState, setPostsState] = useState<Post[]>([]);
   const [currentUserState, setCurrentUserState] = useState<User | null>(null);
   const [commentsState, setCommentsState] = useState<Comment[]>([]);
-
+  const [postState, setPostState] = useState<Post | null>(null);
   return (
     <GlobalContext.Provider
       value={{
@@ -75,6 +79,8 @@ export const GlobalContextProvider = ({
         setCurrentUserState,
         commentsState,
         setCommentsState,
+        postState,
+        setPostState,
       }}
     >
       {children}

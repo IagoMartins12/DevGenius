@@ -3,23 +3,20 @@ import { GrDocumentUser, GrEdit, GrMailOption } from 'react-icons/gr';
 import { SettingsInput } from '../commum/SettingsInput';
 import { User } from '@prisma/client';
 import { ChangeEvent, useState } from 'react';
+import { useSettingsForm } from '@/app/hooks/customHooks/useSettingsForm';
 
 interface SettingsData {
-  register: UseFormRegister<FieldValues>;
   user: User | null;
-  onSubmit: () => void;
 }
 
-export const AccountData: React.FC<SettingsData> = ({
-  register,
-  user,
-  onSubmit,
-}) => {
+export const AccountData: React.FC<SettingsData> = ({ user }) => {
   const initialState = {
     username: user?.username ?? '',
     bio: user?.bio ?? '',
     email: user?.email ?? '',
   };
+
+  const { handleSubmit, accountSubmit, register } = useSettingsForm();
 
   const [fields, setFields] = useState(initialState);
 
@@ -84,7 +81,7 @@ export const AccountData: React.FC<SettingsData> = ({
       <div className='flex flex-col gap-y-2 mx-6 my-6 justify-center items-center'>
         <button
           className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-10/12 sm:w-4/12'
-          onClick={onSubmit}
+          onClick={handleSubmit(accountSubmit)}
         >
           Editar informações
         </button>

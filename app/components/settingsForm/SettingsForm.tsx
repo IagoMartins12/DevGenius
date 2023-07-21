@@ -6,29 +6,20 @@ import { AccountData } from '../SettingsPage/accountData';
 import { PersonalData } from '../SettingsPage/personalData';
 import { PasswordData } from '../SettingsPage/passwordData';
 import { SocialNetworkData } from '../SettingsPage/socialNetworkData';
-import { User } from '@prisma/client';
 import { AddressData } from '../SettingsPage/addressData';
 import { useSettingsForm } from '@/app/hooks/customHooks/useSettingsForm';
+import { useGlobalContext } from '@/app/context/store';
 
-interface SettingsForm {
-  user: User | null;
-}
-
-export const SettingsForm: React.FC<SettingsForm> = ({ user }) => {
+export const SettingsForm: React.FC = () => {
   const themes: Themes = useThemes().theme;
+  const { currentUserState } = useGlobalContext();
 
   const {
     isActive,
     setIsActive,
-    username,
-    personalSubmit,
-    SocialNetworkSubmit,
-    accountSubmit,
-    addressSubmit,
-    passwordSubmit,
+
     register,
-    handleSubmit,
-  } = useSettingsForm({ user });
+  } = useSettingsForm();
 
   return (
     <div
@@ -87,7 +78,9 @@ export const SettingsForm: React.FC<SettingsForm> = ({ user }) => {
               <img src='coffe.svg' alt='' />
             </div>
             <div className='flex items-center justify-center my-3 flex-col '>
-              <span className='font-bold text-2xl'>{username}</span>
+              <span className='font-bold text-2xl'>
+                {currentUserState?.username}
+              </span>
             </div>
           </div>
           <div className='w-full flex items-center justify-center border-t-2 h-11'>
@@ -130,36 +123,11 @@ export const SettingsForm: React.FC<SettingsForm> = ({ user }) => {
           </div>
         </div>
         <div className='flex flex-col w-full lg:w-full border-2 self-start'>
-          {isActive === 0 && (
-            <AccountData
-              register={register}
-              user={user}
-              onSubmit={handleSubmit(accountSubmit)}
-            />
-          )}
-          {isActive === 1 && (
-            <PersonalData
-              register={register}
-              user={user}
-              onSubmit={handleSubmit(personalSubmit)}
-            />
-          )}
-          {isActive === 2 && (
-            <AddressData user={user} onSubmit={addressSubmit} />
-          )}
-          {isActive === 3 && (
-            <PasswordData
-              register={register}
-              onSubmit={handleSubmit(passwordSubmit)}
-            />
-          )}
-          {isActive === 4 && (
-            <SocialNetworkData
-              register={register}
-              user={user}
-              onSubmit={handleSubmit(SocialNetworkSubmit)}
-            />
-          )}
+          {isActive === 0 && <AccountData user={currentUserState} />}
+          {isActive === 1 && <PersonalData user={currentUserState} />}
+          {isActive === 2 && <AddressData user={currentUserState} />}
+          {isActive === 3 && <PasswordData />}
+          {isActive === 4 && <SocialNetworkData user={currentUserState} />}
         </div>
       </div>
     </div>

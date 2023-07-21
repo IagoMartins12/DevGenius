@@ -4,18 +4,13 @@ import { FieldValues, UseFormRegister } from 'react-hook-form';
 import { User } from '@prisma/client';
 import { ChangeEvent, useState } from 'react';
 import { GrEdit, GrCalendar } from 'react-icons/gr';
+import { useSettingsForm } from '@/app/hooks/customHooks/useSettingsForm';
 
 interface SettingsData {
-  register: UseFormRegister<FieldValues>;
   user: User | null;
-  onSubmit: () => void;
 }
 
-export const PersonalData: React.FC<SettingsData> = ({
-  register,
-  user,
-  onSubmit,
-}) => {
+export const PersonalData: React.FC<SettingsData> = ({ user }) => {
   const initialState = {
     firstName: user?.firstName ?? '',
     secondName: user?.secondName ?? '',
@@ -24,6 +19,7 @@ export const PersonalData: React.FC<SettingsData> = ({
   };
 
   const [fields, setFields] = useState(initialState);
+  const { handleSubmit, personalSubmit, register } = useSettingsForm();
 
   const handleFieldsChange = (
     ev:
@@ -111,7 +107,7 @@ export const PersonalData: React.FC<SettingsData> = ({
       <div className='flex flex-col gap-y-2 mx-6 my-6 justify-center items-center'>
         <button
           className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-10/12 sm:w-4/12'
-          onClick={onSubmit}
+          onClick={handleSubmit(personalSubmit)}
         >
           Editar informações
         </button>

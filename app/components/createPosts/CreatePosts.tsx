@@ -5,21 +5,69 @@ import { CategorysForm } from './CategorysForm';
 import { Form } from 'react-bootstrap';
 import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { useCreatePosts } from '@/app/hooks/customHooks/useCreatePosts';
+import { useState } from 'react';
+import { FieldValues, SubmitHandler } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
+import axios, { AxiosResponse } from 'axios';
+import { Post } from '@prisma/client';
+import { useGlobalContext } from '@/app/context/store';
 
 export const CreatePosts: React.FC = () => {
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
   const {
     featured,
     handleChange,
     handleChangeResume,
     handleSubmit,
-    onSubmit,
     photo_background,
     register,
     setCustomValue,
     setValue,
+    reset,
   } = useCreatePosts();
-  const themes: Themes = useThemes().theme;
 
+  const { postsState, setPostsState } = useGlobalContext();
+
+  const onSubmit: SubmitHandler<FieldValues> = async data => {
+    if (data.title === '') return toast.error('Insira um titulo!');
+    if (data.photo_background === '') return toast.error('Insira uma foto!');
+    if (data.content === '') return toast.error('Insira o conteudo!');
+    if (data.resume === '') return toast.error('Insira um resumo!');
+    if (selectedCategories.length === 0)
+      return toast.error('Marque pelo menos uma categoria!');
+
+    const object = {
+      title: data.title,
+      featured: data.featured === true ? 1 : 0,
+      photo_background: data.photo_background,
+      content: data.content,
+      resume: data.resume,
+    };
+
+    try {
+      const response: AxiosResponse<Post> = await axios.post(
+        '/api/post',
+        object,
+      );
+      const categoryRequests = selectedCategories.map((category: string) => {
+        return axios.post('/api/categoryPost', {
+          post_id: response.data.id,
+          category_id: category,
+        });
+      });
+      console.log(selectedCategories);
+      await Promise.all(categoryRequests);
+      const updatedPosts = [...postsState, response.data];
+      setPostsState(updatedPosts);
+      toast.success('Post criado!');
+      reset();
+    } catch (err) {
+      toast.error('Algo deu errado, tente novamente :(');
+      console.log(err);
+    }
+  };
+  const themes: Themes = useThemes().theme;
   return (
     <>
       <div
@@ -61,7 +109,10 @@ export const CreatePosts: React.FC = () => {
               </div>
             </div>
             <div className='flex flex-col gap-y-2 mx-6 mt-3'>
-              <CategorysForm />
+              <CategorysForm
+                selectedCategories={selectedCategories}
+                setSelectedCategories={setSelectedCategories}
+              />
             </div>
             <div className='flex flex-col gap-y-2 mx-6 mt-3'>
               <h3 className=' font-bold text-1xl sm:text-2xl  '>

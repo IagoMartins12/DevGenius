@@ -2,15 +2,16 @@ import { User } from '@prisma/client';
 import { useState } from 'react';
 import { SelectState } from '../selects/SelectState';
 import { SelectCity } from '../selects/SelectCity';
+import { useSettingsForm } from '@/app/hooks/customHooks/useSettingsForm';
 
 interface SettingsData {
   user: User | null;
-  onSubmit: (uf: string, city: string) => void;
 }
 
-export const AddressData: React.FC<SettingsData> = ({ user, onSubmit }) => {
+export const AddressData: React.FC<SettingsData> = ({ user }) => {
   const [selectedUf, setSelectedUf] = useState(user?.uf ? user.uf : '');
   const [selectedCity, setSelectedCity] = useState(user?.city ? user.city : '');
+  const { addressSubmit } = useSettingsForm();
 
   return (
     <>
@@ -33,8 +34,8 @@ export const AddressData: React.FC<SettingsData> = ({ user, onSubmit }) => {
       <div className='flex flex-col gap-y-2 mx-6 my-6 justify-center items-center'>
         <button
           className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-10/12 sm:w-4/12'
-          onClick={async () => {
-            onSubmit(selectedUf, selectedCity);
+          onClick={() => {
+            addressSubmit(selectedUf, selectedCity);
           }}
         >
           Editar informações

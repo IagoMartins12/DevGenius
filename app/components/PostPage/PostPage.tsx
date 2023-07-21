@@ -28,12 +28,14 @@ export const PostPage = ({
   allUsers: User[];
   categoryPosts: CategoryRelationsPosts[];
 }) => {
-  if (!post) {
+  const { currentUserState, setCommentsState, postState, setPostState } =
+    useGlobalContext();
+
+  setPostState(post);
+
+  if (!postState) {
     return <div>Post não encontrado</div>;
   }
-
-  const [postState, setPostState] = useState(post);
-  const { currentUserState, setCommentsState } = useGlobalContext();
 
   const router = useRouter();
   const deleteModal = useDeletePostModal();
@@ -101,7 +103,7 @@ export const PostPage = ({
         minHeight: '100vh',
       }}
     >
-      <ReactionsComponent commentAction={commentAction} postId={post.id} />
+      <ReactionsComponent commentAction={commentAction} postId={postState.id} />
 
       <div className='w-9/12 shadow-lg flex-col h-full border-2'>
         {currentUserState?.role === 1 && (
@@ -117,7 +119,7 @@ export const PostPage = ({
             <MdEdit
               size={28}
               className='cursor-pointer'
-              onClick={() => router.push(`${post.id}/edit`)}
+              onClick={() => router.push(`${postState.id}/edit`)}
             />
           </div>
         )}
@@ -149,6 +151,7 @@ export const PostPage = ({
             handleSubmit={handleSubmit}
             allUsers={allUsers}
             commentsSectionRef={commentsSectionRef}
+            postId={postState.id}
           />
         </div>
       </div>

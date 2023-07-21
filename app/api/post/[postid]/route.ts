@@ -53,7 +53,7 @@ export async function PATCH(request: Request, { params }: { params: IParams }) {
   const { postid } = params;
   const body = await request.json();
 
-  const { title, featured, photo_background, content } = body;
+  const { title, featured, photo_background, content, resume } = body;
 
   if (!postid || typeof postid !== 'string') {
     throw new Error('Invalid ID');
@@ -68,6 +68,7 @@ export async function PATCH(request: Request, { params }: { params: IParams }) {
       featured: featured,
       title: title,
       photo_background: photo_background,
+      resume: resume,
     },
   });
 

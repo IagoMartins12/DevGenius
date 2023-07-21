@@ -1,16 +1,28 @@
 import { useGlobalContext } from '@/app/context/store';
 import { useCreatePosts } from '@/app/hooks/customHooks/useCreatePosts';
 import { Category } from '@prisma/client';
-import { ChangeEvent, useState } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 import { IoMdAddCircle, IoMdCloseCircle } from 'react-icons/io';
 import { MdEdit } from 'react-icons/md';
 
-export const CategorysForm: React.FC = ({}) => {
+interface props {
+  selectedCategories: string[];
+  setSelectedCategories: Dispatch<SetStateAction<string[]>>;
+}
+export const CategorysForm: React.FC<props> = ({
+  selectedCategories,
+  setSelectedCategories,
+}) => {
   const [categoryInputOpen, setCategoryInputOpen] = useState(false);
   const [editCategoryInput, setEditCategoryInput] = useState(false);
 
   const { categoriesState } = useGlobalContext();
-
   const {
     register,
     setValue,
@@ -24,12 +36,22 @@ export const CategorysForm: React.FC = ({}) => {
   const toogleCategoryInputOpen = () => {
     setCategoryInputOpen(prevCategoryInputOpen => !prevCategoryInputOpen);
   };
-
   const handleChange = (ev: ChangeEvent<HTMLInputElement>) => {
     const [category_name, category_id] = ev.target.value.split(',');
-    setValue('category_name', category_name);
-    setValue('category_id', category_id);
+    const newSelectedCategories = [...selectedCategories];
+
+    if (ev.target.checked) {
+      newSelectedCategories.push(category_id);
+    } else {
+      const index = newSelectedCategories.indexOf(category_id);
+      if (index !== -1) {
+        newSelectedCategories.splice(index, 1);
+      }
+    }
+
+    setSelectedCategories(newSelectedCategories);
   };
+
   const handleChangeEdit = (ev: ChangeEvent<HTMLInputElement>) => {
     setValue('category_edit_name', ev.target.value);
   };
@@ -49,7 +71,10 @@ export const CategorysForm: React.FC = ({}) => {
                   type='checkbox'
                   value={`${category.category_name},${category.id}`}
                   {...register('selectedCategories')}
+                  onChange={handleChange}
+                  checked={selectedCategories.includes(category.id)}
                 />
+
                 {category.category_name}
               </label>
 

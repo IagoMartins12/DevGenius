@@ -25,6 +25,8 @@ export const CategoryCard = ({
     category => category.id === categoryId,
   );
 
+  console.log(categoryName);
+
   const navigatePost = (postId: string) => {
     router.push(`/post/${postId}`);
   };
@@ -47,7 +49,11 @@ export const CategoryCard = ({
     >
       <div className=''>
         <h2 className=' text-xl font-bold'>
-          {categoryName ? <> {categoryName}: </> : 'Categoria não encontrada'}{' '}
+          {categoryName ? (
+            <> {categoryName.category_name}: </>
+          ) : (
+            'Categoria não encontrada'
+          )}{' '}
         </h2>
       </div>
       {posts.length > 0 ? (

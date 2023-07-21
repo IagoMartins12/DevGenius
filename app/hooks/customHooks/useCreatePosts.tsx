@@ -7,6 +7,7 @@ import { toast } from 'react-hot-toast';
 
 export const useCreatePosts = () => {
   const [currentCategory, setCurrentCategory] = useState<Category>();
+
   const { setCategoriesState } = useGlobalContext();
 
   const createCategory = async () => {
@@ -71,47 +72,6 @@ export const useCreatePosts = () => {
     }
   };
 
-  const onSubmit: SubmitHandler<FieldValues> = async data => {
-    if (data.title === '') return toast.error('Insira um titulo!');
-    if (data.photo_background === '') return toast.error('Insira uma foto!');
-    if (data.content === '') return toast.error('Insira o conteudo!');
-    if (data.resume === '') return toast.error('Insira um resumo!');
-    if (data.selectedCategories.length === 0)
-      return toast.error('Marque ao menos uma categoria!');
-
-    const object = {
-      title: data.title,
-      featured: data.featured === true ? 1 : 0,
-      photo_background: data.photo_background,
-      content: data.content,
-      resume: data.resume,
-    };
-
-    try {
-      const response: AxiosResponse<Post> = await axios.post(
-        '/api/post',
-        object,
-      );
-
-      const categoryRequests = data.selectedCategories.map(
-        (category: string) => {
-          const id = category.split(',')[1];
-          return axios.post('/api/categoryPost', {
-            post_id: response.data.id,
-            category_id: id,
-          });
-        },
-      );
-
-      await Promise.all(categoryRequests);
-      toast.success('Post criado!');
-      reset();
-    } catch (err) {
-      toast.error('Algo deu errado, tente novamente :(');
-      console.log(err);
-    }
-  };
-
   const { register, handleSubmit, setValue, watch, reset } =
     useForm<FieldValues>({
       defaultValues: {
@@ -157,6 +117,7 @@ export const useCreatePosts = () => {
     removeCategory,
     editCategory,
     currentCategory,
-    onSubmit,
+    watch,
+    reset,
   };
 };

@@ -24,6 +24,8 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
     commentsState,
   } = useGlobalContext();
 
+  const comments = commentsState.filter(comment => comment.postId === postId);
+
   const likedLenght = likeState.filter(liked => liked.postId === postId).length;
   const desLikedLenght = deslikeState.filter(
     desliked => desliked.postId === postId,
@@ -70,7 +72,7 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
         className='flex cursor-pointer flex-col items-center justify-center gap-y-2'
       >
         <FaRegComments size={30} onClick={commentAction} />
-        <span>{commentsState.length}</span>
+        <span>{comments.length}</span>
       </a>
 
       <a
