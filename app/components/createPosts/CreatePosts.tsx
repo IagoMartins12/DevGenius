@@ -1,164 +1,24 @@
 'use client';
 
 import ImageUpload from '@/app/components/ImageUpload';
-import { Category, Post } from '@prisma/client';
-import axios, { AxiosResponse } from 'axios';
-import { ChangeEvent, useState } from 'react';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { toast } from 'react-hot-toast';
 import { CategorysForm } from './CategorysForm';
 import { Form } from 'react-bootstrap';
 import useThemes, { Themes } from '@/app/hooks/useTheme';
-interface CreatePosts {
-  categories: Category[];
-}
+import { useCreatePosts } from '@/app/hooks/customHooks/useCreatePosts';
 
-export const CreatePosts: React.FC<CreatePosts> = ({ categories }) => {
-  const [editCategoryInput, setEditCategoryInput] = useState(false);
-  const [categoryArr, setCategoryArr] = useState<Category[]>(categories);
-  const [currentCategory, setCurrentCategory] = useState<Category>();
-  const themes: Themes = useThemes().theme;
-
-  const createCategory = async () => {
-    const categoryName = watch('category_name');
-
-    try {
-      const response: AxiosResponse<Category> = await axios.post(
-        '/api/category',
-        { category_name: categoryName },
-      );
-      await setCategoryArr(prevCategoryArr => [
-        ...prevCategoryArr,
-        response.data,
-      ]);
-
-      setValue('category_name', '');
-      toast.success('Categoria adicionada');
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const removeCategory = async (category_id: string) => {
-    try {
-      const response: AxiosResponse<Category> = await axios.delete(
-        `/api/category/${category_id}`,
-      );
-      setCategoryArr(prevCategoryArr =>
-        prevCategoryArr.filter(category => category.id !== category_id),
-      );
-      toast.success('Categoria removida');
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const editCategory = async () => {
-    const category_id = currentCategory?.id;
-    const category_name = watch('category_edit_name');
-
-    try {
-      const response: AxiosResponse<Category> = await axios.patch(
-        `/api/category/${category_id}`,
-        { category_name },
-      );
-      const updatedCategory = response.data;
-      setCategoryArr(prevCategoryArr => {
-        const updatedArr = prevCategoryArr.map(category => {
-          if (category.id === updatedCategory.id) {
-            return updatedCategory;
-          } else {
-            return category;
-          }
-        });
-        return updatedArr;
-      });
-      setValue('category_edit_name', '');
-      setEditCategoryInput(false);
-      toast.success('Categoria atualizada');
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const onSubmit: SubmitHandler<FieldValues> = async data => {
-    if (data.title === '') return toast.error('Insira um titulo!');
-    if (data.photo_background === '') return toast.error('Insira uma foto!');
-    if (data.content === '') return toast.error('Insira o conteudo!');
-    if (data.resume === '') return toast.error('Insira um resumo!');
-    if (data.selectedCategories.length === 0)
-      return toast.error('Marque ao menos uma categoria!');
-
-    const object = {
-      title: data.title,
-      featured: data.featured === true ? 1 : 0,
-      photo_background: data.photo_background,
-      content: data.content,
-      resume: data.resume,
-    };
-
-    try {
-      const response: AxiosResponse<Post> = await axios.post(
-        '/api/post',
-        object,
-      );
-
-      const categoryRequests = data.selectedCategories.map(
-        (category: string) => {
-          const id = category.split(',')[1];
-          return axios.post('/api/categoryPost', {
-            post_id: response.data.id,
-            category_id: id,
-          });
-        },
-      );
-
-      await Promise.all(categoryRequests);
-
-      toast.success('Post criado!');
-      reset();
-    } catch (err) {
-      toast.error('Algo deu errado, tente novamente :(');
-      console.log(err);
-    }
-  };
-
+export const CreatePosts: React.FC = () => {
   const {
-    register,
+    featured,
+    handleChange,
+    handleChangeResume,
     handleSubmit,
+    onSubmit,
+    photo_background,
+    register,
+    setCustomValue,
     setValue,
-    watch,
-    formState: { errors },
-    reset,
-  } = useForm<FieldValues>({
-    defaultValues: {
-      title: '',
-      content: '',
-      resume: '',
-      photo_background: '',
-      featured: false,
-      selectedCategories: [],
-    },
-  });
-
-  const photo_background = watch('photo_background');
-  const featured = watch('featured');
-
-  const setCustomValue = (id: string, value: any) => {
-    setValue(id, value, {
-      shouldDirty: true,
-      shouldTouch: true,
-      shouldValidate: true,
-    });
-  };
-
-  const handleChange = (ev: ChangeEvent<HTMLTextAreaElement>) => {
-    setValue('content', ev.target.value);
-  };
-
-  const handleChangeResume = (ev: ChangeEvent<HTMLTextAreaElement>) => {
-    setValue('resume', ev.target.value);
-  };
+  } = useCreatePosts();
+  const themes: Themes = useThemes().theme;
 
   return (
     <>
@@ -201,23 +61,13 @@ export const CreatePosts: React.FC<CreatePosts> = ({ categories }) => {
               </div>
             </div>
             <div className='flex flex-col gap-y-2 mx-6 mt-3'>
-              <CategorysForm
-                categories={categoryArr}
-                createCategory={createCategory}
-                editCategory={editCategory}
-                removeCategory={removeCategory}
-                setValue={setValue}
-                register={register}
-                currentCategory={currentCategory}
-                setCurrentCategory={setCurrentCategory}
-              />
+              <CategorysForm />
             </div>
             <div className='flex flex-col gap-y-2 mx-6 mt-3'>
               <h3 className=' font-bold text-1xl sm:text-2xl  '>
                 Resumo do artigo:{' '}
               </h3>
               <textarea
-                id=''
                 cols={10}
                 rows={3}
                 className={`border-2 px-2 py-2 resize-none

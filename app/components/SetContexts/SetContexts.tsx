@@ -2,7 +2,15 @@
 
 import { useGlobalContext } from '@/app/context/store';
 import useStoreZustand from '@/app/context/zustandStore';
-import { Category, Deslike, Favorite, Like, Post, User } from '@prisma/client';
+import {
+  Category,
+  Comment,
+  Deslike,
+  Favorite,
+  Like,
+  Post,
+  User,
+} from '@prisma/client';
 import { useEffect } from 'react';
 
 interface IProps {
@@ -12,6 +20,7 @@ interface IProps {
   favorites: Favorite[];
   posts: Post[];
   user: User | null;
+  comments: Comment[];
 }
 export const SetContexts: React.FC<IProps> = ({
   categories,
@@ -20,6 +29,7 @@ export const SetContexts: React.FC<IProps> = ({
   favorites,
   posts,
   user,
+  comments,
 }) => {
   const {
     setCategoriesState,
@@ -28,6 +38,7 @@ export const SetContexts: React.FC<IProps> = ({
     setPostsState,
     setLikesState,
     setCurrentUserState,
+    setCommentsState,
   } = useGlobalContext();
 
   useEffect(() => {
@@ -37,6 +48,7 @@ export const SetContexts: React.FC<IProps> = ({
     setFavoritesState(favorites);
     setPostsState(posts);
     setCurrentUserState(user);
+    setCommentsState(comments);
   }, []);
 
   return <div></div>;

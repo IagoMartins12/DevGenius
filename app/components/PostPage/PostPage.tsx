@@ -1,13 +1,7 @@
 'use client';
 
 import useDeletePostModal from '@/app/hooks/modals/useDeletePostModal';
-import {
-  Category,
-  CategoryRelationsPosts,
-  Comment,
-  Post,
-  User,
-} from '@prisma/client';
+import { CategoryRelationsPosts, Comment, Post, User } from '@prisma/client';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { IoMdCloseCircle } from 'react-icons/io';
@@ -15,7 +9,7 @@ import { MdEdit } from 'react-icons/md';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import axios, { AxiosResponse } from 'axios';
-import { RefObject, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { AuthorCard } from '../authorCard/AuthorCard';
 import { DeleteCommentModal } from '../deleteCommentModal/deleteCommentModal';
 import { CommentsSection } from '../CommentsSection/CommentsSection';
@@ -24,31 +18,22 @@ import { ReactionsComponent } from '../ReactionsComponent/ReactionsComponent';
 import { useGlobalContext } from '@/app/context/store';
 
 export const PostPage = ({
-  user,
   post,
-  posts,
   author,
-  comments,
   allUsers,
-  categories,
   categoryPosts,
 }: {
-  user: User | null;
   post: Post | null;
-  posts: Post[];
   author: User | null;
-  comments: Comment[];
   allUsers: User[];
-  categories: Category[];
   categoryPosts: CategoryRelationsPosts[];
 }) => {
   if (!post) {
     return <div>Post não encontrado</div>;
   }
 
-  const [commentState, setCommentsState] = useState(comments);
   const [postState, setPostState] = useState(post);
-  const { likeState } = useGlobalContext();
+  const { currentUserState, setCommentsState } = useGlobalContext();
 
   const router = useRouter();
   const deleteModal = useDeletePostModal();
@@ -97,23 +82,11 @@ export const PostPage = ({
     },
   });
 
-  const likeAction = () => {
-    console.log('save');
-  };
-
-  const dislikeAction = () => {
-    console.log('save');
-  };
-
   const commentAction = () => {
     commentsSectionRef.current?.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
     });
-  };
-
-  const saveAction = () => {
-    console.log('save');
   };
 
   return (
@@ -128,18 +101,10 @@ export const PostPage = ({
         minHeight: '100vh',
       }}
     >
-      <ReactionsComponent
-        likeAction={likeAction}
-        dislikeAction={dislikeAction}
-        commentAction={commentAction}
-        saveAction={saveAction}
-        commentsLenght={commentState.length}
-        postId={post.id}
-        currentUser={user}
-      />
+      <ReactionsComponent commentAction={commentAction} postId={post.id} />
 
       <div className='w-9/12 shadow-lg flex-col h-full border-2'>
-        {user?.role === 1 && (
+        {currentUserState?.role === 1 && (
           <div className='w-11/12 mx-auto h-auto my-6 flex items-center justify-end gap-1'>
             <IoMdCloseCircle
               size={28}
@@ -179,8 +144,6 @@ export const PostPage = ({
         <hr className='w-11/12 mx-auto' />
         <div className='w-11/12 mx-auto h-3/6 my-6'>
           <CommentsSection
-            comments={commentState}
-            currentUser={user}
             register={register}
             onSubmit={onSubmit}
             handleSubmit={handleSubmit}
@@ -194,10 +157,7 @@ export const PostPage = ({
           <AuthorCard author={author} />
         </div>
       </div>
-      <DeleteCommentModal
-        comments={commentState}
-        setComments={setCommentsState}
-      />
+      <DeleteCommentModal />
     </div>
   );
 };

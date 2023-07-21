@@ -14,6 +14,7 @@ import {
 } from './actions/getActionsOnPosts';
 import getPosts from './actions/getPosts';
 import { SetContexts } from './components/SetContexts/SetContexts';
+import getComments from './actions/getComments';
 
 const font = Nunito({ subsets: ['latin'] });
 
@@ -34,6 +35,7 @@ export default async function RootLayout({
   const deslikes = await getDeslikedPost();
   const favorites = await getFavoritedPosts();
   const posts = await getPosts();
+  const comments = await getComments();
   return (
     <html lang='pt-br'>
       <Head>
@@ -66,6 +68,7 @@ export default async function RootLayout({
             likes={likes}
             posts={posts}
             user={currentUser}
+            comments={comments}
           />
           <ToasterProvider />
           <ModalsProvider />

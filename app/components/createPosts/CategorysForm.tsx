@@ -1,31 +1,25 @@
+import { useGlobalContext } from '@/app/context/store';
+import { useCreatePosts } from '@/app/hooks/customHooks/useCreatePosts';
 import { Category } from '@prisma/client';
 import { ChangeEvent, useState } from 'react';
-import { FieldValues, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { IoMdAddCircle, IoMdCloseCircle } from 'react-icons/io';
 import { MdEdit } from 'react-icons/md';
 
-interface CategorysProps {
-  categories: Category[];
-  createCategory: () => void;
-  removeCategory: (category_id: string) => void;
-  editCategory: () => void;
-  register: UseFormRegister<FieldValues>;
-  setValue: UseFormSetValue<FieldValues>;
-  currentCategory: Category | undefined;
-  setCurrentCategory: (category: Category) => void;
-}
-export const CategorysForm: React.FC<CategorysProps> = ({
-  categories,
-  createCategory,
-  editCategory,
-  removeCategory,
-  register,
-  setValue,
-  currentCategory,
-  setCurrentCategory,
-}) => {
+export const CategorysForm: React.FC = ({}) => {
   const [categoryInputOpen, setCategoryInputOpen] = useState(false);
   const [editCategoryInput, setEditCategoryInput] = useState(false);
+
+  const { categoriesState } = useGlobalContext();
+
+  const {
+    register,
+    setValue,
+    removeCategory,
+    createCategory,
+    editCategory,
+    currentCategory,
+    setCurrentCategory,
+  } = useCreatePosts();
 
   const toogleCategoryInputOpen = () => {
     setCategoryInputOpen(prevCategoryInputOpen => !prevCategoryInputOpen);
@@ -48,7 +42,7 @@ export const CategorysForm: React.FC<CategorysProps> = ({
       </h3>
       <div className='flex px-2 py-2 border-2 items-center justify-between '>
         <div className='flex px-2 py-2 gap-x-5 flex-wrap '>
-          {categories.map((category: Category) => (
+          {categoriesState.map((category: Category) => (
             <div className='flex gap-x-1 items-center gap-2' key={category.id}>
               <label className='flex gap-1'>
                 <input

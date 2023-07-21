@@ -1,30 +1,25 @@
+import { useGlobalContext } from '@/app/context/store';
 import useDeleteCommentModal from '@/app/hooks/modals/useDeleteCommentModal';
 import useThemes, { Themes } from '@/app/hooks/useTheme';
-import { Comment } from '@prisma/client';
 import axios from 'axios';
 import Image from 'next/image';
-import { Dispatch, RefObject, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
 
-export const DeleteCommentModal = ({
-  comments,
-  setComments,
-}: {
-  comments: Comment[];
-  setComments: Dispatch<SetStateAction<Comment[]>>;
-}) => {
+export const DeleteCommentModal = ({}: {}) => {
   const deleteModal = useDeleteCommentModal();
+  const { setCommentsState } = useGlobalContext();
+
   const themes: Themes = useThemes().theme;
   const isOpen: boolean = deleteModal.isOpen;
 
-  const deletePost = () => {
+  const deleteComment = () => {
     const commentId = deleteModal.currentComment?.id;
     axios
       .delete(`/api/comment/${commentId}`)
       .then(() => {
         toast.success('Comentário Excluido');
         deleteModal.onClose();
-        setComments(prevComments =>
+        setCommentsState(prevComments =>
           prevComments.filter(comment => comment.id !== commentId),
         );
       })
@@ -61,7 +56,7 @@ export const DeleteCommentModal = ({
                 backgroundColor: 'red',
               }}
               onClick={() => {
-                deletePost();
+                deleteComment();
                 document.body.style.overflow = 'auto';
               }}
             >

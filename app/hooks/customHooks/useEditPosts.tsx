@@ -7,81 +7,17 @@ import { toast } from 'react-hot-toast';
 
 export const useEditPosts = ({
   post,
-  categories,
   postCategories,
 }: {
   post: Post;
-  categories: Category[];
   postCategories: CategoryRelationsPosts[] | null;
 }) => {
-  const [categoryArr, setCategoryArr] = useState<Category[]>(categories);
   const [currentCategory, setCurrentCategory] = useState<Category>();
   const [checkedCategorys, setCheckedCategorys] = useState<
     CategoryRelationsPosts[] | null
   >(postCategories);
 
   const router = useRouter();
-
-  const createCategory = async () => {
-    const categoryName = watch('category_name');
-
-    try {
-      const response: AxiosResponse<Category> = await axios.post(
-        '/api/category',
-        { category_name: categoryName },
-      );
-      await setCategoryArr(prevCategoryArr => [
-        ...prevCategoryArr,
-        response.data,
-      ]);
-
-      setValue('category_name', '');
-      toast.success('Categoria adicionada');
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const removeCategory = async (category_id: string) => {
-    try {
-      const response: AxiosResponse<Category> = await axios.delete(
-        `/api/category/${category_id}`,
-      );
-      setCategoryArr(prevCategoryArr =>
-        prevCategoryArr.filter(category => category.id !== category_id),
-      );
-      toast.success('Categoria removida');
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const editCategory = async () => {
-    const category_id = currentCategory?.id;
-    const category_name = watch('category_edit_name');
-
-    try {
-      const response: AxiosResponse<Category> = await axios.patch(
-        `/api/category/${category_id}`,
-        { category_name },
-      );
-      const updatedCategory = response.data;
-      setCategoryArr(prevCategoryArr => {
-        const updatedArr = prevCategoryArr.map(category => {
-          if (category.id === updatedCategory.id) {
-            return updatedCategory;
-          } else {
-            return category;
-          }
-        });
-        return updatedArr;
-      });
-      setValue('category_edit_name', '');
-      toast.success('Categoria atualizada');
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const onSubmit: SubmitHandler<FieldValues> = async data => {
     if (data.title === '') return toast.error('Insira um titulo!');
@@ -144,7 +80,6 @@ export const useEditPosts = ({
   const featured = watch('featured');
 
   return {
-    categoryArr,
     setCurrentCategory,
     register,
     handleSubmit,
@@ -154,9 +89,7 @@ export const useEditPosts = ({
     setCustomValue,
     handleChange,
     handleChangeResume,
-    createCategory,
-    removeCategory,
-    editCategory,
+
     currentCategory,
     checkedCategorys,
     setCheckedCategorys,

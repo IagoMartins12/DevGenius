@@ -1,23 +1,18 @@
 'use client';
 
 import ImageUpload from '@/app/components/ImageUpload';
-import { Category, CategoryRelationsPosts, Post } from '@prisma/client';
+import { CategoryRelationsPosts, Post } from '@prisma/client';
 import { CategorysForm } from './CategorysForm';
 import { Form } from 'react-bootstrap';
 import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { useEditPosts } from '@/app/hooks/customHooks/useEditPosts';
 
 interface EditPosts {
-  categories: Category[];
   post: Post | null;
   postCategories: CategoryRelationsPosts[] | null;
 }
 
-export const EditPosts: React.FC<EditPosts> = ({
-  categories,
-  post,
-  postCategories,
-}) => {
+export const EditPosts: React.FC<EditPosts> = ({ post, postCategories }) => {
   if (!post) return;
 
   const theme = useThemes();
@@ -25,23 +20,17 @@ export const EditPosts: React.FC<EditPosts> = ({
 
   const {
     checkedCategorys,
-    createCategory,
-    currentCategory,
-    editCategory,
     featured,
     handleChange,
     handleChangeResume,
     handleSubmit,
     photo_background,
     register,
-    removeCategory,
     setCheckedCategorys,
     setCustomValue,
     setValue,
-    categoryArr,
-    setCurrentCategory,
     onSubmit,
-  } = useEditPosts({ post, categories, postCategories });
+  } = useEditPosts({ post, postCategories });
 
   return (
     <>
@@ -85,16 +74,8 @@ export const EditPosts: React.FC<EditPosts> = ({
             </div>
             <div className='flex flex-col gap-y-2 mx-6 mt-3'>
               <CategorysForm
-                categories={categoryArr}
                 checkedCategorys={checkedCategorys}
                 setCheckedCategorys={setCheckedCategorys}
-                createCategory={createCategory}
-                editCategory={editCategory}
-                removeCategory={removeCategory}
-                setValue={setValue}
-                register={register}
-                currentCategory={currentCategory}
-                setCurrentCategory={setCurrentCategory}
                 post={post}
               />
             </div>

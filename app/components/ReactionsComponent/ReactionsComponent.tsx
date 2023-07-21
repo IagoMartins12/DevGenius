@@ -1,35 +1,28 @@
 'use client';
 
-import { FcLike, FcDislike } from 'react-icons/fc';
 import { FaRegComments } from 'react-icons/fa';
-import { BsBookmark, BsBookmarkFill } from 'react-icons/bs';
 import { Tooltip } from 'react-tooltip';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
-import { Deslike, Favorite, Like, User } from '@prisma/client';
 import LikedButton from './LikedButton';
 import DeslikedButton from './DeslikedButton';
 import FavoritedButton from './FavoriteButton';
 import { useGlobalContext } from '@/app/context/store';
 
 interface IReactionsComponent {
-  likeAction: () => void;
-  dislikeAction: () => void;
   commentAction: () => void;
-  saveAction: () => void;
-  commentsLenght: number;
   postId: string;
-  currentUser?: User | null;
 }
 export const ReactionsComponent: React.FC<IReactionsComponent> = ({
-  likeAction,
-  dislikeAction,
   commentAction,
-  saveAction,
-  commentsLenght,
   postId,
-  currentUser,
 }) => {
-  const { likeState, deslikeState, favoritesState } = useGlobalContext();
+  const {
+    likeState,
+    deslikeState,
+    favoritesState,
+    currentUserState,
+    commentsState,
+  } = useGlobalContext();
 
   const likedLenght = likeState.filter(liked => liked.postId === postId).length;
   const desLikedLenght = deslikeState.filter(
@@ -51,7 +44,7 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
         <LikedButton
           liked={likeState}
           postId={postId}
-          currentUser={currentUser}
+          currentUser={currentUserState}
         />
         <span>{likedLenght}</span>
       </a>
@@ -65,7 +58,7 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
         <DeslikedButton
           desLiked={deslikeState}
           postId={postId}
-          currentUser={currentUser}
+          currentUser={currentUserState}
         />
         <span>{desLikedLenght}</span>
       </a>
@@ -77,7 +70,7 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
         className='flex cursor-pointer flex-col items-center justify-center gap-y-2'
       >
         <FaRegComments size={30} onClick={commentAction} />
-        <span>{commentsLenght}</span>
+        <span>{commentsState.length}</span>
       </a>
 
       <a
@@ -89,7 +82,7 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
         <FavoritedButton
           favorited={favoritesState}
           postId={postId}
-          currentUser={currentUser}
+          currentUser={currentUserState}
         />
         <span>{favoritedLenght}</span>
       </a>

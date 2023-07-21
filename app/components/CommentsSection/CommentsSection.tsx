@@ -9,35 +9,36 @@ import {
 import Image from 'next/image';
 import { BiCommentAdd } from 'react-icons/bi';
 import { RefObject } from 'react';
+import { useGlobalContext } from '@/app/context/store';
 
 export const CommentsSection = ({
-  comments,
-  currentUser,
   register,
   onSubmit,
   handleSubmit,
   allUsers,
   commentsSectionRef,
 }: {
-  comments: Comment[];
-  currentUser: User | null;
   register: UseFormRegister<FieldValues>;
   onSubmit: SubmitHandler<FieldValues>;
   handleSubmit: UseFormHandleSubmit<FieldValues, undefined>;
   allUsers: User[];
   commentsSectionRef: RefObject<HTMLDivElement>;
 }) => {
+  const { currentUserState, commentsState } = useGlobalContext();
+
   const getUser = (id: string) => {
     const user = allUsers.find((user: User) => user.id === id);
     return user;
   };
+
+  console.log('comments', commentsState);
 
   return (
     <div className='w-full flex flex-col gap-y-4' ref={commentsSectionRef}>
       <div className='flex items-center justify-start '>
         <h1 className='font-bold text-xl'>
           Comentarios:{' '}
-          <span className='font-semibold text-lg'>{comments.length}</span>
+          <span className='font-semibold text-lg'>{commentsState.length}</span>
         </h1>
       </div>
       <div className='flex h-44'>
@@ -46,7 +47,7 @@ export const CommentsSection = ({
             <Image
               fill
               className='object-cover rounded-full h-1 w-full '
-              src={currentUser?.image ?? '/user.png'}
+              src={currentUserState?.image ?? '/user.png'}
               alt='Post'
             />
           </div>
@@ -66,14 +67,14 @@ export const CommentsSection = ({
       </div>
       <hr />
       <div className='my-8 flex flex-col gap-y-4'>
-        {comments.length > 0 ? (
-          comments.map((comment: Comment) => {
+        {commentsState.length > 0 ? (
+          commentsState.map((comment: Comment) => {
             const user = getUser(comment.userId);
             return (
               <CommentCard
                 comment={comment}
                 user={user}
-                currentUser={currentUser}
+                currentUser={currentUserState}
               />
             );
           })
