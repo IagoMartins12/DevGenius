@@ -116,7 +116,6 @@ export const PostPage = ({
     console.log('save');
   };
 
-  console.log('likeState', likeState);
   return (
     <div
       className={`w-full flex gap-x-4 px-10

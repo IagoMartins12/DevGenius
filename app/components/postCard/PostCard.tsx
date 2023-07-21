@@ -1,7 +1,7 @@
 'use client';
 
 import useThemes, { Themes } from '@/app/hooks/useTheme';
-import { CategoryRelationsPosts, Post, User } from '@prisma/client';
+import { CategoryRelationsPosts, Post } from '@prisma/client';
 import HeartButton from '../HeartButton';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';

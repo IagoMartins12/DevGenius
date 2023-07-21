@@ -26,8 +26,6 @@ const DeslikedButton: React.FC<DeslikedButtonProps> = ({
     liked => liked.postId === postId && liked.userId === currentUser?.id,
   );
 
-  console.log('userDisliked', userDisliked);
-
   return (
     <div
       onClick={e => {

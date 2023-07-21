@@ -1,5 +1,7 @@
 'use client';
+
 import { useGlobalContext } from '@/app/context/store';
+import useStoreZustand from '@/app/context/zustandStore';
 import { Category, Deslike, Favorite, Like, Post, User } from '@prisma/client';
 import { useEffect } from 'react';
 

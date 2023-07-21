@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 import { toast } from 'react-hot-toast';
 
 import useLoginModal from './modals/useLoginModal';
 import { Like, User } from '@prisma/client';
+import { useGlobalContext } from '../context/store';
+import { AddItem, RemoveItem } from '../utils/HelpersFunctions';
 
 interface IUseLiked {
   postId: string;
@@ -13,10 +14,8 @@ interface IUseLiked {
 }
 
 const useLiked = ({ postId, currentUser, liked }: IUseLiked) => {
-  const router = useRouter();
-
   const loginModal = useLoginModal();
-  const userId = currentUser?.id || null;
+  const { setLikesState } = useGlobalContext();
 
   const hasFavorited = useMemo(() => {
     const userFavorites = liked.map(liked => {
@@ -34,28 +33,24 @@ const useLiked = ({ postId, currentUser, liked }: IUseLiked) => {
         return loginModal.onOpen();
       }
 
-      const userFavorites = liked.some(liked => {
-        return liked.postId === postId;
-      });
+      const isLiked = liked.some(
+        like => like.userId === currentUser.id && like.postId === postId,
+      );
 
-      console.log(userFavorites);
       try {
-        let request;
-
-        if (userFavorites) {
-          request = () => axios.delete(`/api/like/${postId}`);
+        if (isLiked) {
+          await axios.delete(`/api/like/${postId}`);
+          RemoveItem(liked, setLikesState, currentUser, postId);
         } else {
-          request = () => axios.post(`/api/like/${postId}`);
+          const response = await axios.post(`/api/like/${postId}`);
+          AddItem(liked, response.data, setLikesState);
         }
-
-        await request();
-        router.refresh();
         toast.success('Sucesso');
       } catch (error) {
         toast.error('Algo deu errado, tente novamente');
       }
     },
-    [currentUser, hasFavorited, postId, loginModal, router],
+    [currentUser, liked, postId, loginModal],
   );
 
   return {

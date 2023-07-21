@@ -1,34 +1,29 @@
 'use client';
 
 import useThemes, { Themes } from '@/app/hooks/useTheme';
-import {
-  Category,
-  CategoryRelationsPosts,
-  Favorite,
-  Post,
-  User,
-} from '@prisma/client';
+import { CategoryRelationsPosts, Post } from '@prisma/client';
 import HeartButton from '../HeartButton';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useGlobalContext } from '@/app/context/store';
 
 export const CategoryCard = ({
   posts,
   categoriesPost,
-  categories,
-  currentUser,
-  favorites,
-  categoryName,
+  categoryId,
 }: {
   posts: Post[];
   categoriesPost: CategoryRelationsPosts[];
-  categories: Category[];
-  currentUser: User | null;
-  favorites: Favorite[];
-  categoryName: string | undefined;
+  categoryId: string;
 }) => {
   const themes: Themes = useThemes().theme;
   const router = useRouter();
+
+  const { categoriesState, currentUserState, likeState } = useGlobalContext();
+
+  const categoryName = categoriesState.find(
+    category => category.id === categoryId,
+  );
 
   const navigatePost = (postId: string) => {
     router.push(`/post/${postId}`);
@@ -74,8 +69,8 @@ export const CategoryCard = ({
                 <div className='absolute top-3 right-3'>
                   <HeartButton
                     postId={post.id}
-                    currentUser={currentUser}
-                    favorites={favorites}
+                    currentUser={currentUserState}
+                    liked={likeState}
                   />
                 </div>
               </div>
@@ -88,12 +83,12 @@ export const CategoryCard = ({
                 {categoriesPost
                   .filter(element => element.postId === post.id)
                   .filter(categoryPost =>
-                    categories.some(
+                    categoriesState.some(
                       category => category.id === categoryPost.categoryId,
                     ),
                   )
                   .map(categoryPost => {
-                    const category = categories.find(
+                    const category = categoriesState.find(
                       category => category.id === categoryPost.categoryId,
                     );
                     const categoryName = category ? category.category_name : '';

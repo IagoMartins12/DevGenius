@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 import { toast } from 'react-hot-toast';
-
 import useLoginModal from './modals/useLoginModal';
 import { Favorite, User } from '@prisma/client';
+import { useGlobalContext } from '../context/store';
+import { AddItem, RemoveItem } from '../utils/HelpersFunctions';
 
 interface IUseFavorited {
   postId: string;
@@ -13,9 +13,8 @@ interface IUseFavorited {
 }
 
 const useFavorited = ({ postId, currentUser, favorited }: IUseFavorited) => {
-  const router = useRouter();
-
   const loginModal = useLoginModal();
+  const { setFavoritesState } = useGlobalContext();
 
   const hasFavorited = useMemo(() => {
     const userFavorites = favorited.map(favorite => {
@@ -33,27 +32,25 @@ const useFavorited = ({ postId, currentUser, favorited }: IUseFavorited) => {
         return loginModal.onOpen();
       }
 
-      const userFavorited = favorited.some(favorited => {
-        return favorited.postId === postId;
+      const isFavorited = favorited.some(favorite => {
+        return favorite.postId === postId && favorite.userId === currentUser.id;
       });
 
       try {
-        let request;
-
-        if (userFavorited) {
-          request = () => axios.delete(`/api/favorite/${postId}`);
+        if (isFavorited) {
+          await axios.delete(`/api/favorite/${postId}`);
+          RemoveItem(favorited, setFavoritesState, currentUser, postId);
         } else {
-          request = () => axios.post(`/api/favorite/${postId}`);
+          const response = await axios.post(`/api/favorite/${postId}`);
+          AddItem(favorited, response.data, setFavoritesState);
         }
 
-        await request();
-        router.refresh();
         toast.success('Sucesso');
       } catch (error) {
         toast.error('Algo deu errado, tente novamente');
       }
     },
-    [currentUser, hasFavorited, postId, loginModal, router],
+    [currentUser, hasFavorited, postId, loginModal],
   );
 
   return {

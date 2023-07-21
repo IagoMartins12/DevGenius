@@ -1,6 +1,14 @@
 'use client';
 
-import { Category, Deslike, Favorite, Like, Post, User } from '@prisma/client';
+import {
+  Category,
+  Comment,
+  Deslike,
+  Favorite,
+  Like,
+  Post,
+  User,
+} from '@prisma/client';
 import { ReactNode, createContext, useContext, useState } from 'react';
 
 interface ContextProps {
@@ -16,6 +24,8 @@ interface ContextProps {
   setPostsState: React.Dispatch<React.SetStateAction<Post[]>>;
   currentUserState: User | null;
   setCurrentUserState: React.Dispatch<React.SetStateAction<User | null>>;
+  commentsState: Comment[];
+  setCommentsState: React.Dispatch<React.SetStateAction<Comment[]>>;
 }
 
 const GlobalContext = createContext<ContextProps>({
@@ -31,6 +41,8 @@ const GlobalContext = createContext<ContextProps>({
   setPostsState: () => {},
   currentUserState: null,
   setCurrentUserState: () => {},
+  commentsState: [],
+  setCommentsState: () => {},
 });
 
 export const GlobalContextProvider = ({
@@ -44,6 +56,7 @@ export const GlobalContextProvider = ({
   const [favoritesState, setFavoritesState] = useState<Favorite[]>([]);
   const [postsState, setPostsState] = useState<Post[]>([]);
   const [currentUserState, setCurrentUserState] = useState<User | null>(null);
+  const [commentsState, setCommentsState] = useState<Comment[]>([]);
 
   return (
     <GlobalContext.Provider
@@ -60,6 +73,8 @@ export const GlobalContextProvider = ({
         setPostsState,
         currentUserState,
         setCurrentUserState,
+        commentsState,
+        setCommentsState,
       }}
     >
       {children}

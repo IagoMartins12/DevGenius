@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 import { toast } from 'react-hot-toast';
-
 import useLoginModal from './modals/useLoginModal';
 import { Like, User } from '@prisma/client';
+import { useGlobalContext } from '../context/store';
+import { AddItem, RemoveItem } from '../utils/HelpersFunctions';
 
 interface IUseDesliked {
   postId: string;
@@ -13,9 +13,9 @@ interface IUseDesliked {
 }
 
 const useDesliked = ({ postId, currentUser, desLiked }: IUseDesliked) => {
-  const router = useRouter();
-
   const loginModal = useLoginModal();
+
+  const { setDeslikesState } = useGlobalContext();
 
   const hasDesliked = useMemo(() => {
     const userFavorites = desLiked.map(desliked => {
@@ -33,27 +33,25 @@ const useDesliked = ({ postId, currentUser, desLiked }: IUseDesliked) => {
         return loginModal.onOpen();
       }
 
-      const userDesliked = desLiked.some(desliked => {
-        return desliked.postId === postId;
+      const isDesliked = desLiked.some(desliked => {
+        return desliked.postId === postId && desliked.userId === currentUser.id;
       });
 
       try {
-        let request;
-
-        if (userDesliked) {
-          request = () => axios.delete(`/api/deslike/${postId}`);
+        if (isDesliked) {
+          await axios.delete(`/api/deslike/${postId}`);
+          RemoveItem(desLiked, setDeslikesState, currentUser, postId);
         } else {
-          request = () => axios.post(`/api/deslike/${postId}`);
+          const response = await axios.post(`/api/deslike/${postId}`);
+          AddItem(desLiked, response.data, setDeslikesState);
         }
 
-        await request();
-        router.refresh();
         toast.success('Sucesso');
       } catch (error) {
         toast.error('Algo deu errado, tente novamente');
       }
     },
-    [currentUser, hasDesliked, postId, loginModal, router],
+    [currentUser, hasDesliked, postId, loginModal],
   );
 
   return {

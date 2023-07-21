@@ -31,7 +31,6 @@ export const RelatedPosts = ({
     router.push(`post/${postId}`);
   };
 
-  console.log(posts);
   return (
     <div
       className={`
