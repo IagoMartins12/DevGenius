@@ -4,7 +4,7 @@ export const UserButtons = () => {
   return (
     <>
       <button
-        className='flex'
+        className='flex actionButton'
         style={{
           width: '150px',
           minWidth: 'inherit',
@@ -14,7 +14,7 @@ export const UserButtons = () => {
         <span>Capa</span>
       </button>
       <button
-        className='flex'
+        className='flex actionButton'
         style={{
           width: '150px',
           minWidth: 'inherit',

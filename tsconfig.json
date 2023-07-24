@@ -29,7 +29,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/components/registerModal3/signUp.ts",
-    "app/components/Row/index.jsx"
+    "app/components/Row/index.jsx",
+    "app/components/PanelUsers/PanelUsers.tsx"
   ],
   "exclude": ["node_modules"]
 }

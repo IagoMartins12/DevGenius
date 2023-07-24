@@ -39,6 +39,12 @@ export const NavBarUser: React.FC<navBarProps> = ({ display, user }) => {
         },
       },
       {
+        name: 'Painel',
+        action: () => {
+          router.push('/panel');
+        },
+      },
+      {
         name: 'Sair',
         action: () => {
           signOut();
