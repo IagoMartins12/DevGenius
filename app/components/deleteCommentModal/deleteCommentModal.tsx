@@ -36,7 +36,7 @@ export const DeleteCommentModal = ({}: {}) => {
         ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}`}
     >
       <div className='w-full h-1/2 '>
-        <div className='aspect-video w-full h-32 sm:h-4/5 mt-4 sm:mt-10 relative overflow-hidden rounded-xl m-1'>
+        <div className='aspect-video w-full h-full sm:h-4/5 mt-4 sm:mt-10 relative overflow-hidden rounded-xl m-1'>
           <Image
             fill
             className=' h-1 w-full group-hover:scale-110 transition'
@@ -45,11 +45,11 @@ export const DeleteCommentModal = ({}: {}) => {
           />
         </div>
       </div>
-      <div className='w-full h-1/2 items-center flex justify-center flex-col gap-y-4'>
+      <div className='w-full sm:h-1/2 items-center flex justify-center flex-col gap-y-4'>
         <div className='flex mt-4'>
           <h3 className='text-2xl font-bold'>Deletar Comentario? </h3>
         </div>
-        <div className='flex gap-2'>
+        <div className='flex gap-2 flex-col sm:flex-row'>
           <div>
             <button
               style={{

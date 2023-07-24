@@ -18,8 +18,6 @@ export const FeaturedPosts = () => {
 
   const hasFeaturedPost = postsState.some((post: Post) => post.featured === 1);
 
-  console.log(postsState);
-  console.log(hasFeaturedPost);
   return (
     <div
       className={`

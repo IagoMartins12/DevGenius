@@ -1,3 +1,4 @@
+import { useGlobalContext } from '@/app/context/store';
 import { Category, CategoryRelationsPosts, Post } from '@prisma/client';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -19,8 +20,9 @@ export const useEditPosts = ({
 
   const router = useRouter();
 
+  const { postsState, setPostsState } = useGlobalContext();
+
   const onSubmit: SubmitHandler<FieldValues> = async data => {
-    console.log(data);
     if (data.title === '') return toast.error('Insira um titulo!');
     if (data.photo_background === '') return toast.error('Insira uma foto!');
     if (data.content === '') return toast.error('Insira o conteudo!');
@@ -36,6 +38,16 @@ export const useEditPosts = ({
 
     try {
       await axios.patch(`/api/post/${post.id}`, object);
+
+      const postIndex = postsState.findIndex(p => p.id === post.id);
+      const updatedPostsState = [...postsState];
+
+      updatedPostsState[postIndex] = {
+        ...updatedPostsState[postIndex],
+        ...object,
+      };
+
+      setPostsState(updatedPostsState);
 
       toast.success('Post editado!');
       router.push(`/post/${post.id}`);

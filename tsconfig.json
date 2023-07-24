@@ -28,7 +28,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/components/registerModal3/signUp.ts"
+    "app/components/registerModal3/signUp.ts",
+    "app/components/Row/index.jsx"
   ],
   "exclude": ["node_modules"]
 }

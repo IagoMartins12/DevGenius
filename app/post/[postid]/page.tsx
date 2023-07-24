@@ -3,6 +3,7 @@ import { getPostsPerId } from '@/app/actions/getPosts';
 import { getRelatedPosts } from '@/app/actions/getRelatedPosts';
 import { getAllUsers } from '@/app/actions/getUser';
 import { PostPage } from '@/app/components/PostPage/PostPage';
+import { RelatedPosts } from '@/app/components/RelatedPosts/RelatedPosts';
 import { Footer } from '@/app/components/footer/Footer';
 import { CategoryRelationsPosts, Post } from '@prisma/client';
 
@@ -26,7 +27,6 @@ export default async function Post({ params }: { params: Iparams }) {
         allUsers={allUsers}
         categoryPosts={categoryPosts}
       />
-      <Footer />
     </>
   );
 }

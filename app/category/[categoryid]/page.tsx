@@ -1,16 +1,9 @@
-import { getFavoritedPosts } from '@/app/actions/getActionsOnPosts';
-import getCategories, {
+import {
   getPostCategories,
   getPostsByCategory,
 } from '@/app/actions/getCategories';
-import getCurrentUser from '@/app/actions/getCurrentUser';
 import { CategoryCard } from '@/app/components/CategoryCard/CategoryCard';
-import {
-  Category,
-  CategoryRelationsPosts,
-  Favorite,
-  User,
-} from '@prisma/client';
+import { CategoryRelationsPosts } from '@prisma/client';
 
 interface Iparams {
   categoryid: string;

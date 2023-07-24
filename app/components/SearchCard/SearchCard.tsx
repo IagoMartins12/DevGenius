@@ -11,23 +11,18 @@ import {
 import HeartButton from '../HeartButton';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useGlobalContext } from '@/app/context/store';
 
 export const SearchCard = ({
   posts,
   categoriesPost,
-  categories,
-  currentUser,
-  favorites,
 }: {
   posts: Post[];
   categoriesPost: CategoryRelationsPosts[];
-  categories: Category[];
-  currentUser: User | null;
-  favorites: Favorite[];
 }) => {
   const themes: Themes = useThemes().theme;
   const router = useRouter();
-
+  const { categoriesState, currentUserState, likeState } = useGlobalContext();
   const navigate = (postId: string) => {
     router.push(`/post/${postId}`);
   };
@@ -66,8 +61,8 @@ export const SearchCard = ({
                 <div className='absolute top-3 right-3'>
                   <HeartButton
                     postId={post.id}
-                    currentUser={currentUser}
-                    favorites={favorites}
+                    currentUser={currentUserState}
+                    liked={likeState}
                   />
                 </div>
               </div>
@@ -80,12 +75,12 @@ export const SearchCard = ({
                 {categoriesPost
                   .filter(element => element.postId === post.id)
                   .filter(categoryPost =>
-                    categories.some(
+                    categoriesState.some(
                       category => category.id === categoryPost.categoryId,
                     ),
                   )
                   .map(categoryPost => {
-                    const category = categories.find(
+                    const category = categoriesState.find(
                       category => category.id === categoryPost.categoryId,
                     );
                     const categoryName = category ? category.category_name : '';

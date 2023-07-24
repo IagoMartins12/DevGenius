@@ -6,21 +6,35 @@
 .dark {
   --bg-color-dark: #1c1c1c;
   --text-color-dark: #fafafa;
+  --border-color-dark: #0f0f0f;
+  --reactIcons-color-dark: rgba(0, 0, 0, 0.99);
 }
 
 .light {
   --bg-color-white: #fafafa;
   --text-color-white: #1c1c1c;
+  --border-color-white: #1d1d1d;
+  --reactIcons-color-white: hsla(0, 0%, 100%, 0.99);
 }
 
 .bg-color-dark {
   background-color: #010105;
   color: #fff;
+  border-color: var(--border-color-dark);
 }
 
 .bg-color-white {
   background-color: #fff;
   color: #010105;
+  border-color: var(--border-color-white);
+}
+
+.reactIcons-dark {
+  background-color: rgba(0, 0, 0, 0.99);
+}
+
+.reactIcons-white {
+  background-color: hsla(0, 0%, 100%, 0.99);
 }
 
 .bg-color-dark input {
@@ -47,6 +61,14 @@
   background: #fff;
   box-shadow: 0 16px 48px 8px rgba(1, 1, 5, 0.1);
   border-radius: 18px;
+}
+
+.comment-dark {
+  background: hsla(0, 0%, 100%, 0.06);
+}
+
+.comment-white {
+  background: #fff;
 }
 
 .search-dark {
@@ -345,6 +367,23 @@ input[type='submit']:hover {
   opacity: 0.8;
 }
 
+.custom-btn {
+  width: 130px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  border-radius: 5px;
+  padding: 3px 25px;
+  cursor: pointer;
+  background: rgb(96, 9, 240);
+  background: linear-gradient(
+    0deg,
+    rgba(96, 9, 240, 1) 0%,
+    rgba(129, 5, 240, 1) 100%
+  );
+}
+
 @media (max-width: 920px) {
   .carousel-inner {
     height: 45vh;
@@ -360,6 +399,14 @@ input[type='submit']:hover {
 
   .modalPosition {
     width: 90%;
+  }
+
+  .deleteModalPosition {
+    width: 80%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: fixed;
   }
 }
 
@@ -381,6 +428,11 @@ input[type='submit']:hover {
     min-height: 100vh;
   }
 
+  .deleteModalPosition {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+  }
   input.specific-input:focus {
     width: 10rem;
   }

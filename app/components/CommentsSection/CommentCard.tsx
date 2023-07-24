@@ -1,4 +1,5 @@
 import useDeleteCommentModal from '@/app/hooks/modals/useDeleteCommentModal';
+import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { Comment, User } from '@prisma/client';
 import Image from 'next/image';
 import { IoMdCloseCircle } from 'react-icons/io';
@@ -13,6 +14,7 @@ export const CommentCard = ({
   currentUser: User | null;
 }) => {
   const deleteModal = useDeleteCommentModal();
+  const themes: Themes = useThemes().theme;
 
   const handleCloseClick = () => {
     deleteModal.setCurrentComment(comment);
@@ -46,13 +48,16 @@ export const CommentCard = ({
 
     return date.toLocaleDateString('pt-BR', {
       day: '2-digit',
-      month: 'long',
+      month: 'numeric',
       year: 'numeric',
     });
   };
 
   return (
-    <div className='flex h-32 shadow-md border-2 px-2 py-2'>
+    <div
+      className={`flex h-32 shadow-md px-2 py-2 
+      ${themes === 'light' ? 'comment-white' : 'comment-dark'}`}
+    >
       <div className='lg:w-1/12 w-2/12 flex items-start justify-center'>
         <div className='aspect-video w-12 h-12 relative'>
           <Image
@@ -63,7 +68,7 @@ export const CommentCard = ({
           />
         </div>
       </div>
-      <div className='lg:w-11/12 w-10/12 flex items-center border-black  flex-col gap-y-3'>
+      <div className='lg:w-11/12 w-10/12 flex items-center flex-col gap-y-3'>
         <div className='w-full h-full py-1 px-2 flex flex-col gap-y-1'>
           <div className='flex items-center gap-x-3 justify-between'>
             <div className='flex items-center gap-x-3'>

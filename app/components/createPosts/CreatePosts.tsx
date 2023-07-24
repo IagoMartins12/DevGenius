@@ -28,6 +28,7 @@ export const CreatePosts: React.FC = () => {
   } = useCreatePosts();
 
   const { postsState, setPostsState } = useGlobalContext();
+  const themes: Themes = useThemes().theme;
 
   const onSubmit: SubmitHandler<FieldValues> = async data => {
     if (data.title === '') return toast.error('Insira um titulo!');
@@ -56,7 +57,6 @@ export const CreatePosts: React.FC = () => {
           category_id: category,
         });
       });
-      console.log(selectedCategories);
       await Promise.all(categoryRequests);
       const updatedPosts = [...postsState, response.data];
       setPostsState(updatedPosts);
@@ -67,7 +67,6 @@ export const CreatePosts: React.FC = () => {
       console.log(err);
     }
   };
-  const themes: Themes = useThemes().theme;
   return (
     <>
       <div

@@ -6,6 +6,7 @@ import HeartButton from '../HeartButton';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useGlobalContext } from '@/app/context/store';
+import { compareDesc } from 'date-fns';
 
 export const PostCard = ({
   categoriesPost,
@@ -25,6 +26,12 @@ export const PostCard = ({
   const navigateCategory = (categoryId: string) => {
     router.push(`/category/${categoryId}`);
   };
+
+  const sortedPostsState = [...postsState].sort((a, b) =>
+    compareDesc(new Date(a.createdAt), new Date(b.createdAt)),
+  );
+
+  console.log(postsState);
   return (
     <div
       className={`
@@ -41,7 +48,7 @@ export const PostCard = ({
       </div>
 
       <div className='py-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5'>
-        {postsState.map((post: Post, index: number) => (
+        {sortedPostsState.map((post: Post, index: number) => (
           <div
             className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer
             ${themes === 'light' ? 'card-white' : 'card-dark'}`}

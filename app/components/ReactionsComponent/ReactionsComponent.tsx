@@ -7,6 +7,8 @@ import LikedButton from './LikedButton';
 import DeslikedButton from './DeslikedButton';
 import FavoritedButton from './FavoriteButton';
 import { useGlobalContext } from '@/app/context/store';
+import styles from './style.module.scss';
+import useThemes, { Themes } from '@/app/hooks/useTheme';
 
 interface IReactionsComponent {
   commentAction: () => void;
@@ -25,6 +27,7 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
   } = useGlobalContext();
 
   const comments = commentsState.filter(comment => comment.postId === postId);
+  const themes: Themes = useThemes().theme;
 
   const likedLenght = likeState.filter(liked => liked.postId === postId).length;
   const desLikedLenght = deslikeState.filter(
@@ -35,7 +38,11 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
   ).length;
 
   return (
-    <div className='flex flex-col gap-y-4 fixed top-1/4 left-12'>
+    <div
+      className={`${styles.Container} ${
+        themes === 'light' ? 'reactIcons-white' : 'reactIcons-dark'
+      }`}
+    >
       <Tooltip id='my-tooltip' style={{ zIndex: '9999' }} />
       <a
         data-tooltip-id='my-tooltip'

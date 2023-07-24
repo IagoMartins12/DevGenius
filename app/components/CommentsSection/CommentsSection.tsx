@@ -44,7 +44,7 @@ export const CommentsSection = ({
         </h1>
       </div>
       <div className='flex h-44'>
-        <div className='w-1/12 flex items-start justify-center'>
+        <div className='w-2/12 sm:w-1/12 flex items-start justify-center'>
           <div className='aspect-video w-12 h-12 relative'>
             <Image
               fill
@@ -54,7 +54,7 @@ export const CommentsSection = ({
             />
           </div>
         </div>
-        <div className='w-11/12 flex items-center  flex-col gap-y-3'>
+        <div className='w-10/12 sm:w-11/12 flex items-center  flex-col gap-y-3'>
           <textarea
             className='w-full h-3/4 p-2 resize-none border-1 border-black'
             id=''
@@ -68,7 +68,7 @@ export const CommentsSection = ({
         </div>
       </div>
       <hr />
-      <div className='my-8 flex flex-col gap-y-4'>
+      <div className='mt-8 pb-20 sm:pb-12 flex flex-col gap-y-4'>
         {comments.length > 0 ? (
           comments.map((comment: Comment) => {
             const user = getUser(comment.userId);

@@ -16,6 +16,8 @@ import { CommentsSection } from '../CommentsSection/CommentsSection';
 import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { ReactionsComponent } from '../ReactionsComponent/ReactionsComponent';
 import { useGlobalContext } from '@/app/context/store';
+import { AuthorCardMobile } from '../AuthorCardMobile/AuthorCardMobile';
+import { RelatedPosts } from '../RelatedPosts/RelatedPosts';
 
 export const PostPage = ({
   post,
@@ -93,19 +95,13 @@ export const PostPage = ({
 
   return (
     <div
-      className={`w-full flex gap-x-4 px-10
-      lg:px-32
-      py-7
-      pb-16'
+      className={`w-full flex gap-x-4 sm:px-16 lg:px-32 sm:py-10 PY-0
       ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}
       `}
-      style={{
-        minHeight: '100vh',
-      }}
     >
       <ReactionsComponent commentAction={commentAction} postId={postState.id} />
 
-      <div className='w-9/12 shadow-lg flex-col h-full border-2'>
+      <div className='w-full sm:w-10/12  flex-col h-full  mx-auto'>
         {currentUserState?.role === 1 && (
           <div className='w-11/12 mx-auto h-auto my-6 flex items-center justify-end gap-1'>
             <IoMdCloseCircle
@@ -124,11 +120,11 @@ export const PostPage = ({
           </div>
         )}
 
-        <div className='w-11/12 mx-auto h-3/6 my-6'>
-          <div className='aspect-video w-full overflow-hidden rounded-xl relative'>
+        <div className='w-11/12 mx-auto my-6'>
+          <div className='aspect-video w-full  overflow-hidden rounded-xl relative'>
             <Image
               fill
-              className='object-cover h-1 w-full group-hover:scale-110 transition '
+              className='object-cover w-full group-hover:scale-110 transition '
               src={postState.photo_background ?? ''}
               alt='Post'
             />
@@ -144,7 +140,11 @@ export const PostPage = ({
         />
 
         <hr className='w-11/12 mx-auto' />
-        <div className='w-11/12 mx-auto h-3/6 my-6'>
+        <AuthorCardMobile author={author} />
+        <hr className='w-11/12 mx-auto' />
+        {/* <RelatedPosts categoriesPost={categoryPosts} currentPost={post} /> */}
+
+        <div className='w-11/12 mx-auto my-6'>
           <CommentsSection
             register={register}
             onSubmit={onSubmit}
@@ -155,11 +155,7 @@ export const PostPage = ({
           />
         </div>
       </div>
-      <div className='w-4/12 shadow-lg h-fit border-2'>
-        <div className='w-11/12 mx-auto h-2/3 my-6'>
-          <AuthorCard author={author} />
-        </div>
-      </div>
+
       <DeleteCommentModal />
     </div>
   );

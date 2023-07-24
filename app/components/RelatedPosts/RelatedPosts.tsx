@@ -1,34 +1,35 @@
 'use client';
 
+import { useGlobalContext } from '@/app/context/store';
 import useThemes, { Themes } from '@/app/hooks/useTheme';
-import { Category, CategoryRelationsPosts, Post, User } from '@prisma/client';
+import { CategoryRelationsPosts, Post } from '@prisma/client';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { Carousel } from 'react-bootstrap';
 
 export const RelatedPosts = ({
-  posts,
   categoriesPost,
-  categories,
-  currentUser,
+  currentPost,
 }: {
-  posts: Post[];
   categoriesPost: CategoryRelationsPosts[];
-  categories: Category[];
-  currentUser: User | null;
+  currentPost: Post | null;
 }) => {
-  const [index, setIndex] = useState(0);
-
-  const handleSelect = (selectedIndex: number) => {
-    setIndex(selectedIndex);
-  };
-
   const themes: Themes = useThemes().theme;
   const router = useRouter();
 
-  const navigate = (postId: string) => {
-    router.push(`post/${postId}`);
+  const { postsState, categoriesState } = useGlobalContext();
+
+  const postsIds = categoriesPost.map(categoryPost => categoryPost.postId);
+
+  const relatedPosts = postsState.filter(post => {
+    return postsIds.includes(post.id) && post.id !== currentPost?.id;
+  });
+
+  const navigatePost = (postId: string) => {
+    router.push(`/post/${postId}`);
+  };
+
+  const navigateCategory = (categoryId: string) => {
+    router.push(`/category/${categoryId}`);
   };
 
   return (
@@ -44,34 +45,57 @@ export const RelatedPosts = ({
       <div className='pt-1'>
         <h2 className='font-bold'>Artigos relacionados: </h2>
       </div>
-      {posts.length > 0 ? (
-        <Carousel
-          activeIndex={index}
-          onSelect={handleSelect}
-          slide={false}
-          variant={themes === 'light' ? '' : 'dark'}
-          className=''
-        >
-          {posts.map(
-            (post: Post) =>
-              post.featured === 1 && (
-                <Carousel.Item key={post.id}>
-                  <img
-                    className='d-block w-100 imgCarousel'
-                    src={post.photo_background}
-                    alt='Post background'
-                  />
-                  <Carousel.Caption>
-                    <h3>{post.title}</h3>
-                    <p>{post.resume}</p>
-                  </Carousel.Caption>
-                </Carousel.Item>
-              ),
-          )}
-        </Carousel>
-      ) : (
-        <h1 className='text-center'>No featured posts available.</h1>
-      )}
+      <div className='py-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5'>
+        {relatedPosts.map((post: Post) => (
+          <div
+            className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer
+            ${themes === 'light' ? 'card-white' : 'card-dark'}`}
+            key={post.id}
+            onClick={() => navigatePost(post.id)}
+          >
+            <div className='aspect-video w-full relative overflow-hidden rounded-xl'>
+              <Image
+                fill
+                className='object-cover h-1 w-full group-hover:scale-110 transition'
+                src={post.photo_background}
+                alt='Listing'
+              />
+            </div>
+
+            <div className='px-6 py-4'>
+              <div className='font-bold text-xl mb-2'>{post.title}</div>
+              <p className='text-base'>{post.resume}</p>
+            </div>
+            <div className='px-6 pt-4 pb-2'>
+              {categoriesPost
+                .filter(element => element.postId === post.id)
+                .filter(categoryPost =>
+                  categoriesState.some(
+                    category => category.id === categoryPost.categoryId,
+                  ),
+                )
+                .map(categoryPost => {
+                  const category = categoriesState.find(
+                    category => category.id === categoryPost.categoryId,
+                  );
+                  const categoryName = category ? category.category_name : '';
+                  return (
+                    <span
+                      className='inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2'
+                      key={categoryPost.id}
+                      onClick={ev => {
+                        ev.stopPropagation();
+                        navigateCategory(categoryPost.categoryId);
+                      }}
+                    >
+                      {categoryName}
+                    </span>
+                  );
+                })}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
