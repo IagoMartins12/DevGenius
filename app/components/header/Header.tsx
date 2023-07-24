@@ -1,10 +1,10 @@
 'use client';
 
-import useThemes, { Themes } from '@/app/hooks/useTheme';
+import useThemes from '@/app/hooks/useTheme';
 import { AiOutlineSearch, AiOutlineUser } from 'react-icons/ai';
 import { MdLightMode, MdDarkMode } from 'react-icons/md';
 import useLoginModal from '@/app/hooks/modals/useLoginModal';
-import { Category, User } from '@prisma/client';
+import { Category } from '@prisma/client';
 import { useEffect, useRef, useState } from 'react';
 import { NavBarUser } from '../navBarUser/NavBarUser';
 import { useRouter } from 'next/navigation';
@@ -14,11 +14,12 @@ interface NavbarProps {}
 
 export const Header: React.FC<NavbarProps> = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchFocus, setSearchFocus] = useState(false);
   const [blackHeader, setBlackHeader] = useState(false);
 
   const { currentUserState, categoriesState } = useGlobalContext();
   const theme = useThemes();
-  const themes: Themes = theme.theme;
+  const themes = theme.theme;
   const loginModal = useLoginModal();
   const router = useRouter();
 
@@ -40,6 +41,26 @@ export const Header: React.FC<NavbarProps> = () => {
     router.push(`/search/${search}`);
   };
 
+  const handleFocus = () => {
+    setSearchFocus(true);
+  };
+
+  const handleBlur = () => {
+    setSearchFocus(false);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' && searchFocus) {
+      const searchValue = event.currentTarget.value;
+      navigateToSearch(searchValue);
+    }
+  };
+
+  const handleOnClick = (value: string | undefined) => {
+    if (!value) return;
+    navigateToSearch(value);
+  };
+
   useEffect(() => {
     const scrollListener = () => {
       if (window.scrollY > 10) {
@@ -56,6 +77,22 @@ export const Header: React.FC<NavbarProps> = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      const wrapDiv = document.getElementById('wrap');
+      if (wrapDiv && !wrapDiv.contains(event.target as Node)) {
+        setSearchFocus(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, []);
+
+  console.log(searchFocus);
   return (
     <header
       className={`
@@ -114,13 +151,22 @@ export const Header: React.FC<NavbarProps> = () => {
                 placeholder='Pesquisar?'
                 autoComplete='off'
                 className='specific-input'
-                onClick={() => {
-                  console.log(inputRef.current?.value);
-                }}
+                onFocus={handleFocus}
+                onKeyDown={handleKeyDown} // Adicionando o evento onKeyDown para capturar o Enter
                 ref={inputRef}
               />
               <input id='search_submit' value='Rechercher' type='submit' />
-              <AiOutlineSearch size={28} />
+              <AiOutlineSearch
+                size={28}
+                onClick={() => {
+                  setSearchFocus(true);
+                  inputRef.current?.focus();
+                  if (searchFocus) {
+                    handleOnClick(inputRef.current?.value);
+                  }
+                }}
+                style={{ zIndex: '99999', position: 'absolute', right: '2px' }}
+              />
             </div>
           </div>
         </div>
