@@ -31,19 +31,13 @@ export const PostCard = ({
     compareDesc(new Date(a.createdAt), new Date(b.createdAt)),
   );
 
-  console.log(postsState);
   return (
     <div
-      className={`
-      flex 
-      flex-col 
-      px-10 
-      lg:px-32
-      pt-7
-      pb-16
-      ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}`}
+      className={`flex flex-col lg:!px-28 px-2 ${
+        themes === 'light' ? 'bg-color-white' : 'bg-color-dark'
+      }`}
     >
-      <div className='pt-1'>
+      <div className='py-1'>
         <h2 className='font-bold'>Posts recentes: </h2>
       </div>
 

@@ -23,12 +23,18 @@ export const AddressData: React.FC<SettingsData> = ({ user }) => {
           <SelectState onChange={setSelectedUf} user={user} />
         </div>
       </div>
-      <div className='flex sm:flex-col gap-y-4 mx-6 mt-3'>
-        <h3 className='font-bold text-1xl sm:text-2xl text-violet-500'>
-          Cidade:
-        </h3>
+      <div className='flex gap-y-4 mx-6 mt-3'>
         <div className='flex flex-col gap-y-2 w-full'>
-          <SelectCity uf={selectedUf} onChange={setSelectedCity} user={user} />
+          <h3 className='font-bold text-1xl sm:text-2xl text-violet-500'>
+            Cidade:
+          </h3>
+          <div className='flex flex-col gap-y-2 w-full'>
+            <SelectCity
+              uf={selectedUf}
+              onChange={setSelectedCity}
+              user={user}
+            />
+          </div>
         </div>
       </div>
       <div className='flex flex-col gap-y-2 mx-6 my-6 justify-center items-center'>

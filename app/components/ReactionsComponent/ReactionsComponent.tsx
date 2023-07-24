@@ -8,7 +8,8 @@ import DeslikedButton from './DeslikedButton';
 import FavoritedButton from './FavoriteButton';
 import { useGlobalContext } from '@/app/context/store';
 import styles from './style.module.scss';
-import useThemes, { Themes } from '@/app/hooks/useTheme';
+import useThemes from '@/app/hooks/useTheme';
+import useShareLinks from '@/app/hooks/modals/useShareLinks';
 
 interface IReactionsComponent {
   commentAction: () => void;
@@ -27,7 +28,8 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
   } = useGlobalContext();
 
   const comments = commentsState.filter(comment => comment.postId === postId);
-  const themes: Themes = useThemes().theme;
+  const themes = useThemes().theme;
+  const shareLink = useShareLinks();
 
   const likedLenght = likeState.filter(liked => liked.postId === postId).length;
   const desLikedLenght = deslikeState.filter(
@@ -100,9 +102,9 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
         data-tooltip-id='my-tooltip'
         data-tooltip-content='Compartilhar!'
         data-tooltip-place='right'
-        className='z-20'
+        className='z-20 flex flex-col'
       >
-        <BiDotsHorizontalRounded size={30} />
+        <BiDotsHorizontalRounded size={30} onClick={shareLink.onOpen} />
       </a>
     </div>
   );

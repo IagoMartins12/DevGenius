@@ -22,7 +22,7 @@ export const FeaturedPosts = () => {
     <div
       className={`
       ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}
-            px-10 lg:px-32 pt-6 pb-4`}
+            px-0 lg:px-32 pt-6 pb-4`}
     >
       {hasFeaturedPost ? (
         <Carousel

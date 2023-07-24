@@ -18,6 +18,7 @@ import { ReactionsComponent } from '../ReactionsComponent/ReactionsComponent';
 import { useGlobalContext } from '@/app/context/store';
 import { AuthorCardMobile } from '../AuthorCardMobile/AuthorCardMobile';
 import { RelatedPosts } from '../RelatedPosts/RelatedPosts';
+import { ShareLink } from '../ShareLink/ShareLink';
 
 export const PostPage = ({
   post,
@@ -100,10 +101,10 @@ export const PostPage = ({
       `}
     >
       <ReactionsComponent commentAction={commentAction} postId={postState.id} />
-
+      <ShareLink post={post} />
       <div className='w-full sm:w-10/12  flex-col h-full  mx-auto'>
         {currentUserState?.role === 1 && (
-          <div className='w-11/12 mx-auto h-auto my-6 flex items-center justify-end gap-1'>
+          <div className='w-11/12 mx-auto flex items-center justify-end gap-1'>
             <IoMdCloseCircle
               size={28}
               className='cursor-pointer'
