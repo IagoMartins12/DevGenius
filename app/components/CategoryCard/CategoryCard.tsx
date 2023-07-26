@@ -1,6 +1,6 @@
 'use client';
 
-import useThemes, { Themes } from '@/app/hooks/useTheme';
+import useThemes from '@/app/hooks/useTheme';
 import { CategoryRelationsPosts, Post } from '@prisma/client';
 import HeartButton from '../HeartButton';
 import Image from 'next/image';
@@ -16,7 +16,7 @@ export const CategoryCard = ({
   categoriesPost: CategoryRelationsPosts[];
   categoryId: string;
 }) => {
-  const themes: Themes = useThemes().theme;
+  const themes = useThemes().theme;
   const router = useRouter();
 
   const { categoriesState, currentUserState, likeState } = useGlobalContext();
