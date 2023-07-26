@@ -128,13 +128,13 @@ export async function DELETE(request: Request) {
       return NextResponse.error();
     }
 
-    const userDeleted = prisma.user.delete({
-      where: {
-        id: currentUser.id,
-      },
-    });
+    // const userDeleted = prisma.user.delete({
+    //   where: {
+    //     id: currentUser.id,
+    //   },
+    // });
 
-    return NextResponse.json(userDeleted);
+    // return NextResponse.json(userDeleted);
   } catch (err) {
     NextResponse.error();
   }

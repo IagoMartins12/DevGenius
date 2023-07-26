@@ -3,15 +3,14 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   MaterialReactTable,
-  type MaterialReactTableProps,
-  type MRT_Cell,
   type MRT_ColumnDef,
   type MRT_Row,
 } from 'material-react-table';
 import { Box, IconButton, Tooltip } from '@mui/material';
-import { Delete, Edit } from '@mui/icons-material';
-import { data } from './makeData';
+import { Delete } from '@mui/icons-material';
 import { User } from '@prisma/client';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 export type Person = {
   firstName: string;
@@ -19,109 +18,148 @@ export type Person = {
   email: string;
 };
 
+export type TablePerson = Pick<
+  User,
+  | 'id'
+  | 'image'
+  | 'username'
+  | 'firstName'
+  | 'secondName'
+  | 'email'
+  | 'city'
+  | 'state'
+  | 'role'
+>;
+
 const Example = ({ allUsers }: { allUsers: User[] }) => {
-  const [tableData, setTableData] = useState<
-    Pick<User, 'firstName' | 'secondName' | 'email'>[]
-  >(() => data);
+  const [tableData, setTableData] = useState<TablePerson[]>(() => []);
 
   const [validationErrors, setValidationErrors] = useState<{
     [cellId: string]: string;
   }>({});
 
-  const handleSaveRowEdits: MaterialReactTableProps<
-    Pick<User, 'firstName' | 'secondName' | 'email'>
-  >['onEditingRowSave'] = async ({ exitEditingMode, row, values }) => {
-    if (!Object.keys(validationErrors).length) {
-      tableData[row.index] = values;
-      //send/receive api updates here, then refetch or update local table data for re-render
-      setTableData([...tableData]);
-      exitEditingMode(); //required to exit editing mode and close modal
-    }
-  };
+  // const handleSaveRowEdits: MaterialReactTableProps<TablePerson>['onEditingRowSave'] =
+  //   async ({ exitEditingMode, row, values }) => {
+  //     if (!Object.keys(validationErrors).length) {
+  //       tableData[row.index] = values;
+  //       console.log(tableData[row.index]);
+  //       //send/receive api updates here, then refetch or update local table data for re-render
+  //       setTableData([...tableData]);
+  //       exitEditingMode(); //required to exit editing mode and close modal
+  //     }
+  //   };
 
   const handleCancelRowEdits = () => {
     setValidationErrors({});
   };
 
   const handleDeleteRow = useCallback(
-    (row: MRT_Row<Pick<User, 'firstName' | 'secondName' | 'email'>>) => {
-      if (
-        !confirm(`Are you sure you want to delete ${row.getValue('firstName')}`)
-      ) {
+    async (row: MRT_Row<TablePerson>) => {
+      console.log('row', row.original.id);
+      if (!confirm(`Deletar a conta do usuario ${row.getValue('email')}?`)) {
         return;
       }
-      //send api delete request here, then refetch or update local table data for re-render
+      await axios.delete(`/api/account/${row.original.id}`);
       tableData.splice(row.index, 1);
       setTableData([...tableData]);
+      toast.success('Usuario deleteado!');
     },
     [tableData],
   );
 
-  const getCommonEditTextFieldProps = useCallback(
-    (
-      cell: MRT_Cell<Pick<User, 'firstName' | 'secondName' | 'email'>>,
-    ): MRT_ColumnDef<
-      Pick<User, 'firstName' | 'secondName' | 'email'>
-    >['muiTableBodyCellEditTextFieldProps'] => {
-      return {
-        error: !!validationErrors[cell.id],
-        helperText: validationErrors[cell.id],
-        onBlur: event => {
-          const isValid =
-            cell.column.id === 'email'
-              ? validateEmail(event.target.value)
-              : cell.column.id === 'age'
-              ? validateAge(+event.target.value)
-              : validateRequired(event.target.value);
-          if (!isValid) {
-            //set validation error for cell if invalid
-            setValidationErrors({
-              ...validationErrors,
-              [cell.id]: `${cell.column.columnDef.header} is required`,
-            });
-          } else {
-            //remove validation error for cell if valid
-            delete validationErrors[cell.id];
-            setValidationErrors({
-              ...validationErrors,
-            });
-          }
-        },
-      };
-    },
-    [validationErrors],
-  );
+  // const getCommonEditTextFieldProps = useCallback(
+  //   (
+  //     cell: MRT_Cell<TablePerson>,
+  //   ): MRT_ColumnDef<TablePerson>['muiTableBodyCellEditTextFieldProps'] => {
+  //     return {
+  //       error: !!validationErrors[cell.id],
+  //       helperText: validationErrors[cell.id],
+  //       onBlur: event => {
+  //         const isValid =
+  //           cell.column.id === 'email'
+  //             ? validateEmail(event.target.value)
+  //             : validateRequired(event.target.value);
+  //         if (!isValid) {
+  //           //set validation error for cell if invalid
+  //           setValidationErrors({
+  //             ...validationErrors,
+  //             [cell.id]: `${cell.column.columnDef.header} is required`,
+  //           });
+  //         } else {
+  //           //remove validation error for cell if valid
+  //           delete validationErrors[cell.id];
+  //           setValidationErrors({
+  //             ...validationErrors,
+  //           });
+  //         }
+  //       },
+  //     };
+  //   },
+  //   [validationErrors],
+  // );
 
-  const columns = useMemo<
-    MRT_ColumnDef<Pick<User, 'firstName' | 'secondName' | 'email'>>[]
-  >(
+  const columns = useMemo<MRT_ColumnDef<TablePerson>[]>(
     () => [
+      {
+        accessorKey: 'id',
+        header: 'ID',
+      },
+      {
+        accessorKey: 'image',
+        header: 'Imagem',
+        Cell: ({ row }) => (
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '1rem',
+            }}
+          >
+            <img
+              alt='avatar'
+              height={40}
+              width={40}
+              src={row.original.image || '/user.png'}
+              loading='lazy'
+              style={{ borderRadius: '50%' }}
+            />
+          </Box>
+        ),
+      },
+      {
+        accessorKey: 'username',
+        header: 'Nome de usuario',
+      },
       {
         accessorKey: 'firstName',
         header: 'Primeiro nome',
-        size: 140,
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-        }),
       },
       {
         accessorKey: 'secondName',
         header: 'Segundo nome',
-        size: 140,
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-        }),
       },
       {
         accessorKey: 'email',
         header: 'Email',
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-          type: 'email',
-        }),
+        // muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
+        //   ...getCommonEditTextFieldProps(cell),
+        //   type: 'email',
+        // }),
+      },
+      {
+        accessorKey: 'city',
+        header: 'Cidade ',
+      },
+      {
+        accessorKey: 'state',
+        header: 'Estado',
+      },
+      {
+        accessorKey: 'role',
+        header: 'Cargo',
       },
     ],
-    [getCommonEditTextFieldProps],
+    [],
   );
 
   useEffect(() => {
@@ -143,15 +181,22 @@ const Example = ({ allUsers }: { allUsers: User[] }) => {
         editingMode='modal' //default
         enableColumnOrdering
         enableEditing
-        onEditingRowSave={handleSaveRowEdits}
+        // onEditingRowSave={handleSaveRowEdits}
         onEditingRowCancel={handleCancelRowEdits}
         renderRowActions={({ row, table }) => (
-          <Box sx={{ display: 'flex', gap: '1rem' }}>
-            <Tooltip arrow placement='left' title='Edit'>
+          <Box
+            sx={{
+              display: 'flex',
+              gap: '1rem',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            {/* <Tooltip arrow placement='left' title='Edit'>
               <IconButton onClick={() => table.setEditingRow(row)}>
                 <Edit />
               </IconButton>
-            </Tooltip>
+            </Tooltip> */}
             <Tooltip arrow placement='right' title='Delete'>
               <IconButton color='error' onClick={() => handleDeleteRow(row)}>
                 <Delete />
@@ -163,15 +208,5 @@ const Example = ({ allUsers }: { allUsers: User[] }) => {
     </>
   );
 };
-
-const validateRequired = (value: string) => !!value.length;
-const validateEmail = (email: string) =>
-  !!email.length &&
-  email
-    .toLowerCase()
-    .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-    );
-const validateAge = (age: number) => age >= 18 && age <= 50;
 
 export default Example;
