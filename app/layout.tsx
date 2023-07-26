@@ -15,6 +15,7 @@ import {
 import getPosts from './actions/getPosts';
 import { SetContexts } from './components/SetContexts/SetContexts';
 import getComments from './actions/getComments';
+import ThemeProv from './providers/ThemeProvider';
 
 const font = Nunito({ subsets: ['latin'] });
 
@@ -59,21 +60,23 @@ export default async function RootLayout({
           boxSizing: 'border-box',
         }}
       >
-        <GlobalContextProvider>
-          <Header />
-          <SetContexts
-            categories={categories}
-            deslikes={deslikes}
-            favorites={favorites}
-            likes={likes}
-            posts={posts}
-            user={currentUser}
-            comments={comments}
-          />
-          <ToasterProvider />
-          <ModalsProvider />
-          {children}
-        </GlobalContextProvider>
+        <ThemeProv>
+          <GlobalContextProvider>
+            <Header />
+            <SetContexts
+              categories={categories}
+              deslikes={deslikes}
+              favorites={favorites}
+              likes={likes}
+              posts={posts}
+              user={currentUser}
+              comments={comments}
+            />
+            <ToasterProvider />
+            <ModalsProvider />
+            {children}
+          </GlobalContextProvider>
+        </ThemeProv>
       </body>
     </html>
   );

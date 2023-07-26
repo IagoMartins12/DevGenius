@@ -4,20 +4,19 @@ import { signIn } from 'next-auth/react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import useRegisterModal from '@/app/hooks/modals/useRegisterModal';
 import useLoginModal from '@/app/hooks/modals/useLoginModal';
-import { useState } from 'react';
-import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import Image from 'next/image';
 import { IoCloseOutline } from 'react-icons/io5';
 import { StyledInput } from '../commum/StyledInput';
+import { useTheme } from 'next-themes';
 
 export const LoginModal = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
   const router = useRouter();
-  const themes: Themes = useThemes().theme;
   const isOpen: boolean = loginModal.isOpen;
+  const { theme } = useTheme();
 
   const openRegisterModal = () => {
     loginModal.onClose();
@@ -54,9 +53,9 @@ export const LoginModal = () => {
 
   return (
     <div
-      className={`modalPosition flex-col border-2 z-10
+      className={`modalPosition flex-col z-10
       ${isOpen ? 'flex' : 'hidden'}
-      ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}
+      ${theme === 'light' ? 'modal-white' : 'modal-dark'}
       `}
     >
       <div className='flex items-center justify-between ml-5 mt-2'>

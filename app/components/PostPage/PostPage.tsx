@@ -12,11 +12,9 @@ import axios, { AxiosResponse } from 'axios';
 import { useRef } from 'react';
 import { DeleteCommentModal } from '../deleteCommentModal/deleteCommentModal';
 import { CommentsSection } from '../CommentsSection/CommentsSection';
-import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { ReactionsComponent } from '../ReactionsComponent/ReactionsComponent';
 import { useGlobalContext } from '@/app/context/store';
 import { AuthorCardMobile } from '../AuthorCardMobile/AuthorCardMobile';
-import { RelatedPosts } from '../RelatedPosts/RelatedPosts';
 import { ShareLink } from '../ShareLink/ShareLink';
 import useLoginModal from '@/app/hooks/modals/useLoginModal';
 
@@ -45,7 +43,6 @@ export const PostPage = ({
   const router = useRouter();
   const deleteModal = useDeletePostModal();
   const loginModal = useLoginModal();
-  const themes: Themes = useThemes().theme;
   const commentsSectionRef = useRef<HTMLDivElement>(null);
 
   const renderPostContent = () => {
@@ -102,11 +99,7 @@ export const PostPage = ({
   };
 
   return (
-    <div
-      className={`w-full flex gap-x-4 sm:px-16 lg:px-32 sm:py-10 PY-0
-      ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}
-      `}
-    >
+    <div className={`w-full flex gap-x-4 sm:px-16 lg:px-32 sm:py-10`}>
       <ReactionsComponent commentAction={commentAction} postId={postState.id} />
       <ShareLink post={post} />
       <div className='w-full sm:w-10/12  flex-col h-full  mx-auto'>

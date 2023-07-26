@@ -1,13 +1,7 @@
 import { useGlobalContext } from '@/app/context/store';
 import { useCreatePosts } from '@/app/hooks/customHooks/useCreatePosts';
 import { Category } from '@prisma/client';
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import { IoMdAddCircle, IoMdCloseCircle } from 'react-icons/io';
 import { MdEdit } from 'react-icons/md';
 
@@ -62,7 +56,7 @@ export const CategorysForm: React.FC<props> = ({
       <h3 className=' font-bold text-1xl sm:text-2xl'>
         Selecione as categorias:{' '}
       </h3>
-      <div className='flex px-2 py-2 border-2 items-center justify-between '>
+      <div className='flex px-2 py-2 border-2 items-center justify-between'>
         <div className='flex px-2 py-2 gap-x-5 flex-wrap '>
           {categoriesState.map((category: Category) => (
             <div className='flex gap-x-1 items-center gap-2' key={category.id}>

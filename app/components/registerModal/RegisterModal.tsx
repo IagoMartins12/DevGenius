@@ -5,20 +5,19 @@ import { IoCloseOutline } from 'react-icons/io5';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import useRegisterModal from '@/app/hooks/modals/useRegisterModal';
 import useLoginModal from '@/app/hooks/modals/useLoginModal';
-import useThemes, { Themes } from '@/app/hooks/useTheme';
-import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import Image from 'next/image';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signup } from './signUp';
 import axios from 'axios';
 import { StyledInput } from '../commum/StyledInput';
+import { useTheme } from 'next-themes';
 
 export const RegisterModal = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
-  const themes: Themes = useThemes().theme;
   const isOpen: boolean = registerModal.isOpen;
+  const { theme } = useTheme();
 
   const openLoginModal = () => {
     registerModal.onClose();
@@ -60,9 +59,9 @@ export const RegisterModal = () => {
 
   return (
     <div
-      className={`modalPosition flex-col border-2 z-10
+      className={`modalPosition flex-col z-10
       ${isOpen ? 'flex' : 'hidden'}
-      ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}
+      ${theme === 'light' ? 'modal-white' : 'modal-dark'}
       `}
     >
       <div className='flex items-center justify-between ml-5 mt-2'>

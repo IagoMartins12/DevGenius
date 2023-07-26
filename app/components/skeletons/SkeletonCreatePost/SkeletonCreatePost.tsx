@@ -1,18 +1,11 @@
 'use client';
 
-import useThemes, { Themes } from '@/app/hooks/useTheme';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 export const SkeletonCreatePost = () => {
-  const themes: Themes = useThemes().theme;
-
   return (
-    <div
-      className={`flex flex-col sm:px-24 sm:py-24
-      ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}
-      `}
-    >
+    <div className={`flex flex-col sm:px-24 sm:py-24`}>
       <h3 className='sm:mx-6 mt-6 mx-6 font-bold text-3xl '>
         <Skeleton width={100} height={30} />
       </h3>

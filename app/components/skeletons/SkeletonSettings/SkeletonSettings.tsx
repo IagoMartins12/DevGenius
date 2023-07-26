@@ -1,18 +1,11 @@
 'use client';
 
-import useThemes, { Themes } from '@/app/hooks/useTheme';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 export const SkeletonSettings = () => {
-  const themes: Themes = useThemes().theme;
-
   return (
-    <div
-      className={`flex gap-y-8 lg:gap-x-8 px-6 min-h-screen pt-8 ${
-        themes === 'light' ? 'bg-color-white' : 'bg-color-dark'
-      }`}
-    >
+    <div className={`flex gap-y-8 lg:gap-x-8 px-6 min-h-screen pt-8`}>
       <div className='w-4/12 hidden lg:flex'>
         <div className='w-full h-48 sm:h-2/3 mt-4 sm:mt-10 m-1'>
           <Skeleton className='h-full' />

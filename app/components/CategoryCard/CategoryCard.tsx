@@ -1,11 +1,11 @@
 'use client';
 
-import useThemes from '@/app/hooks/useTheme';
 import { CategoryRelationsPosts, Post } from '@prisma/client';
 import HeartButton from '../HeartButton';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useGlobalContext } from '@/app/context/store';
+import { useTheme } from 'next-themes';
 
 export const CategoryCard = ({
   posts,
@@ -16,9 +16,8 @@ export const CategoryCard = ({
   categoriesPost: CategoryRelationsPosts[];
   categoryId: string;
 }) => {
-  const themes = useThemes().theme;
   const router = useRouter();
-
+  const { theme } = useTheme();
   const { categoriesState, currentUserState, likeState } = useGlobalContext();
 
   const categoryName = categoriesState.find(
@@ -41,8 +40,7 @@ export const CategoryCard = ({
       px-10 
       lg:px-32
       pt-7
-      pb-16
-      ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}`}
+      pb-16`}
       style={{ minHeight: '91vh' }}
     >
       <div className=''>
@@ -59,7 +57,7 @@ export const CategoryCard = ({
           {posts.map((post: Post, index: number) => (
             <div
               className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer
-            ${themes === 'light' ? 'card-white' : 'card-dark'}`}
+            ${theme === 'light' ? 'card-white' : 'card-dark'}`}
               key={post.id}
               onClick={() => navigatePost(post.id)}
             >

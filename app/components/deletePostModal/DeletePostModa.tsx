@@ -1,17 +1,17 @@
 import { useGlobalContext } from '@/app/context/store';
 import useDeletePostModal from '@/app/hooks/modals/useDeletePostModal';
-import useThemes, { Themes } from '@/app/hooks/useTheme';
 import axios from 'axios';
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 
 export const DeletePostModal: React.FC = () => {
   const deleteModal = useDeletePostModal();
-  const themes: Themes = useThemes().theme;
   const router = useRouter();
 
   const { setPostsState } = useGlobalContext();
+  const { theme } = useTheme();
 
   const deletePost = () => {
     const postid = deleteModal.currentPost?.id;
@@ -35,7 +35,7 @@ export const DeletePostModal: React.FC = () => {
     <div
       className={`deleteModalPosition flex-col z-10 px-5 py-3
         ${deleteModal.isOpen ? 'flex' : 'hidden'}
-        ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}`}
+        ${theme === 'light' ? 'bg-color-white' : 'bg-color-dark'}`}
     >
       <div className='w-full h-1/2 '>
         <div className='aspect-video w-full h-full sm:h-4/5 mt-4 sm:mt-10 relative overflow-hidden rounded-xl m-1'>
@@ -64,7 +64,9 @@ export const DeletePostModal: React.FC = () => {
           </div>
           <div>
             <button
-              className='modalButton'
+              className={`modalButton ${
+                theme === 'light' ? 'bg-transparent' : 'bg-slate-100'
+              }`}
               onClick={() => {
                 deleteModal.onClose();
               }}

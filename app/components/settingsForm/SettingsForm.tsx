@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { AccountData } from '../SettingsPage/accountData';
 import { PersonalData } from '../SettingsPage/personalData';
 import { PasswordData } from '../SettingsPage/passwordData';
@@ -14,12 +13,12 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { User } from '@prisma/client';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import { useTheme } from 'next-themes';
 
 interface IProps {
   currentUser: User;
 }
 export const SettingsForm: React.FC<IProps> = ({ currentUser }) => {
-  const themes: Themes = useThemes().theme;
   const { currentUserState } = useGlobalContext();
 
   const { isActive, setIsActive } = useSettingsForm();
@@ -43,16 +42,12 @@ export const SettingsForm: React.FC<IProps> = ({ currentUser }) => {
     };
 
     await axios.patch('/api/account', object);
-
     toast.success('Foto atualizada!');
   };
 
+  const { theme } = useTheme();
   return (
-    <div
-      className={`flex gap-y-8 lg:gap-x-8 px-1 min-h-screen  pt-0 sm:pt-8 ${
-        themes === 'light' ? 'bg-color-white' : 'bg-color-dark'
-      }`}
-    >
+    <div className={`flex gap-y-8 lg:gap-x-8 px-1 min-h-screen  pt-0 sm:pt-8`}>
       <div className='w-4/12 hidden lg:flex'>
         <div className='aspect-video w-full h-48 sm:h-2/3 mt-4 sm:mt-10 relative overflow-hidden rounded-xl m-1'>
           {isActive === 0 && (
@@ -100,7 +95,7 @@ export const SettingsForm: React.FC<IProps> = ({ currentUser }) => {
       <div className='flex flex-col w-full sh:w-8/12 gap-y-4'>
         <div
           className={`flex flex-col w-full lg:w-full justify-start   ${
-            themes === 'light' ? 'comment-white' : 'comment-dark'
+            theme === 'light' ? 'comment-white' : 'comment-dark'
           } shadow-sm`}
         >
           <div className='w-full flex items-center justify-center flex-col my-3 gap-3'>
@@ -153,7 +148,7 @@ export const SettingsForm: React.FC<IProps> = ({ currentUser }) => {
         </div>
         <div
           className={`flex flex-col w-full lg:w-full self-start shadow-sm ${
-            themes === 'light' ? 'comment-white' : 'comment-dark'
+            theme === 'light' ? 'comment-white' : 'comment-dark'
           }`}
         >
           {isActive === 0 && <AccountData user={currentUser} />}

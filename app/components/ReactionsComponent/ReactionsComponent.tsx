@@ -8,8 +8,8 @@ import DeslikedButton from './DeslikedButton';
 import FavoritedButton from './FavoriteButton';
 import { useGlobalContext } from '@/app/context/store';
 import styles from './style.module.scss';
-import useThemes from '@/app/hooks/useTheme';
 import useShareLinks from '@/app/hooks/modals/useShareLinks';
+import { useTheme } from 'next-themes';
 
 interface IReactionsComponent {
   commentAction: () => void;
@@ -28,8 +28,8 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
   } = useGlobalContext();
 
   const comments = commentsState.filter(comment => comment.postId === postId);
-  const themes = useThemes().theme;
   const shareLink = useShareLinks();
+  const { theme } = useTheme();
 
   const likedLenght = likeState.filter(liked => liked.postId === postId).length;
   const desLikedLenght = deslikeState.filter(
@@ -42,7 +42,7 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
   return (
     <div
       className={`${styles.Container} ${
-        themes === 'light' ? 'reactIcons-white' : 'reactIcons-dark'
+        theme === 'light' ? 'reactIcons-white' : 'reactIcons-dark'
       }`}
     >
       <Tooltip id='my-tooltip' style={{ zIndex: '9999' }} />

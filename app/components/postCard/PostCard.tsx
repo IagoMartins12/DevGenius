@@ -1,19 +1,19 @@
 'use client';
 
-import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { CategoryRelationsPosts, Post } from '@prisma/client';
 import HeartButton from '../HeartButton';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useGlobalContext } from '@/app/context/store';
 import { compareDesc } from 'date-fns';
+import { useTheme } from 'next-themes';
 
 export const PostCard = ({
   categoriesPost,
 }: {
   categoriesPost: CategoryRelationsPosts[];
 }) => {
-  const themes: Themes = useThemes().theme;
+  const { theme, setTheme } = useTheme();
   const router = useRouter();
 
   const { categoriesState, likeState, postsState, currentUserState } =
@@ -34,7 +34,7 @@ export const PostCard = ({
   return (
     <div
       className={`flex flex-col lg:!px-28 px-2 ${
-        themes === 'light' ? 'bg-color-white' : 'bg-color-dark'
+        theme === 'light' ? 'bg-color-white' : 'bg-color-dark'
       }`}
     >
       <div className='py-1'>
@@ -45,7 +45,7 @@ export const PostCard = ({
         {sortedPostsState.map((post: Post, index: number) => (
           <div
             className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer
-            ${themes === 'light' ? 'card-white' : 'card-dark'}`}
+            ${theme === 'light' ? 'card-white' : 'card-dark'}`}
             key={post.id}
             onClick={() => navigatePost(post.id)}
           >

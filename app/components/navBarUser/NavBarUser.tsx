@@ -1,7 +1,7 @@
 import { signOut } from 'next-auth/react';
-import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { User } from '@prisma/client';
 import { useRouter } from 'next/navigation';
+import { useTheme } from 'next-themes';
 
 interface navBarProps {
   display?: boolean;
@@ -16,8 +16,7 @@ interface Menu {
 export const NavBarUser: React.FC<navBarProps> = ({ display, user }) => {
   let menus: Menu[];
   const router = useRouter();
-  const themes: Themes = useThemes().theme;
-
+  const { theme } = useTheme();
   if (user.role === 1) {
     menus = [
       {
@@ -79,7 +78,6 @@ export const NavBarUser: React.FC<navBarProps> = ({ display, user }) => {
     <div
       className={`
       ${display ? 'flex' : 'hidden'}
-      ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}
       absolute 
       z-999 
       w-52
@@ -87,7 +85,7 @@ export const NavBarUser: React.FC<navBarProps> = ({ display, user }) => {
       top-20
       flex-col 
       border-radius-16 
-      hover: ${themes === 'light' ? 'bg-neutral-100' : 'bg-stone-900'}      
+      hover: ${theme === 'light' ? 'bg-neutral-100' : 'bg-stone-900'}      
       `}
     >
       {menus.map((menu: Menu, index: number) => {
@@ -96,7 +94,7 @@ export const NavBarUser: React.FC<navBarProps> = ({ display, user }) => {
             key={index}
             onClick={menu?.action}
             className={`w-full flex flex-col ${
-              themes === 'light' ? 'bg-color-white' : 'bg-color-dark'
+              theme === 'light' ? 'bg-color-white' : 'bg-color-dark'
             }`}
           >
             <p className='m-0 px-5 py-2'>{menu?.name}</p>

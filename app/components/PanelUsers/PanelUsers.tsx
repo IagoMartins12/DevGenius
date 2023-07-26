@@ -21,7 +21,6 @@ import { User } from '@prisma/client';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import Image from 'next/image';
-import useThemes from '@/app/hooks/useTheme';
 
 export type TablePerson = Pick<
   User,
@@ -42,8 +41,6 @@ const Example = ({ allUsers }: { allUsers: User[] }) => {
   const [validationErrors, setValidationErrors] = useState<{
     [cellId: string]: string;
   }>({});
-
-  const themes = useThemes().theme;
 
   const globalTheme = useTheme(); //(optional) if you already have a theme defined in your app root, you can import here
 
@@ -217,11 +214,7 @@ const Example = ({ allUsers }: { allUsers: User[] }) => {
   }, [allUsers]);
   return (
     <>
-      <div
-        className={`min-h-screen ${
-          themes === 'light' ? 'bg-color-white' : 'bg-color-dark'
-        }`}
-      >
+      <div className={`min-h-screen`}>
         <ThemeProvider theme={tableTheme}>
           <MaterialReactTable
             displayColumnDefOptions={{

@@ -1,7 +1,7 @@
 import { useGlobalContext } from '@/app/context/store';
 import useDeleteCommentModal from '@/app/hooks/modals/useDeleteCommentModal';
-import useThemes, { Themes } from '@/app/hooks/useTheme';
 import axios from 'axios';
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import { toast } from 'react-hot-toast';
 
@@ -9,9 +9,8 @@ export const DeleteCommentModal = ({}: {}) => {
   const deleteModal = useDeleteCommentModal();
   const { setCommentsState } = useGlobalContext();
 
-  const themes: Themes = useThemes().theme;
   const isOpen: boolean = deleteModal.isOpen;
-
+  const { theme } = useTheme();
   const deleteComment = () => {
     const commentId = deleteModal.currentComment?.id;
     axios
@@ -31,9 +30,9 @@ export const DeleteCommentModal = ({}: {}) => {
 
   return (
     <div
-      className={`deleteModalPosition flex-col border-2 z-10 px-5 py-3
+      className={`deleteModalPosition flex-col z-10 px-5 py-3
         ${isOpen ? 'flex' : 'hidden'}
-        ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}`}
+        ${theme === 'light' ? 'bg-color-white' : 'bg-color-dark'}`}
     >
       <div className='w-full h-1/2 '>
         <div className='aspect-video w-full h-full sm:h-4/5 mt-4 sm:mt-10 relative overflow-hidden rounded-xl m-1'>
@@ -63,7 +62,9 @@ export const DeleteCommentModal = ({}: {}) => {
           </div>
           <div>
             <button
-              className='modalButton'
+              className={`modalButton ${
+                theme === 'light' ? 'bg-transparent' : 'bg-slate-100'
+              }`}
               onClick={() => {
                 deleteModal.onClose();
                 document.body.style.overflow = 'auto';

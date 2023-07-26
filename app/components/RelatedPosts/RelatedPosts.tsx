@@ -1,8 +1,8 @@
 'use client';
 
 import { useGlobalContext } from '@/app/context/store';
-import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { CategoryRelationsPosts, Post } from '@prisma/client';
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -13,10 +13,10 @@ export const RelatedPosts = ({
   categoriesPost: CategoryRelationsPosts[];
   currentPost: Post | null;
 }) => {
-  const themes: Themes = useThemes().theme;
   const router = useRouter();
 
   const { postsState, categoriesState } = useGlobalContext();
+  const { theme } = useTheme();
 
   const postsIds = categoriesPost.map(categoryPost => categoryPost.postId);
 
@@ -33,15 +33,7 @@ export const RelatedPosts = ({
   };
 
   return (
-    <div
-      className={`
-      flex 
-      flex-col 
-      w-11/12
-      mx-auto
-      pt-8
-      ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}`}
-    >
+    <div className={`flex flex-col w-11/12 mx-auto pt-8`}>
       <div className='pt-1'>
         <h2 className='font-bold'>Artigos relacionados: </h2>
       </div>
@@ -49,7 +41,7 @@ export const RelatedPosts = ({
         {relatedPosts.map((post: Post) => (
           <div
             className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer
-            ${themes === 'light' ? 'card-white' : 'card-dark'}`}
+            ${theme === 'light' ? 'card-white' : 'card-dark'}`}
             key={post.id}
             onClick={() => navigatePost(post.id)}
           >

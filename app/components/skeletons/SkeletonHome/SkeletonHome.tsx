@@ -1,15 +1,12 @@
 'use client';
-import useThemes, { Themes } from '@/app/hooks/useTheme';
+import { useTheme } from 'next-themes';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 export const SkeletonHome = () => {
-  const themes: Themes = useThemes().theme;
-
+  const { theme } = useTheme();
   return (
-    <div
-      className={`${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}`}
-    >
+    <div>
       <div className='px-10 lg:px-32 pt-6'>
         <Skeleton className='d-block w-100 imgCarousel ' />
       </div>
@@ -19,7 +16,7 @@ export const SkeletonHome = () => {
         <div className='py-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5'>
           <div
             className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer flex flex-col 
-            ${themes === 'light' ? 'card-white' : 'card-dark'}`}
+            ${theme === 'light' ? 'card-white' : 'card-dark'}`}
           >
             <Skeleton containerClassName='d-block w-100 h-3/12' height={290} />
             <div className=''>
@@ -35,7 +32,7 @@ export const SkeletonHome = () => {
           </div>
           <div
             className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer flex flex-col 
-            ${themes === 'light' ? 'card-white' : 'card-dark'}`}
+            ${theme === 'light' ? 'card-white' : 'card-dark'}`}
           >
             <Skeleton containerClassName='d-block w-100 h-3/12' height={290} />
             <div className=''>
@@ -51,7 +48,7 @@ export const SkeletonHome = () => {
           </div>
           <div
             className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer flex flex-col 
-            ${themes === 'light' ? 'card-white' : 'card-dark'}`}
+            ${theme === 'light' ? 'card-white' : 'card-dark'}`}
           >
             <Skeleton containerClassName='d-block w-100 h-3/12' height={290} />
             <div className=''>
@@ -67,7 +64,7 @@ export const SkeletonHome = () => {
           </div>
           <div
             className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer flex flex-col 
-            ${themes === 'light' ? 'card-white' : 'card-dark'}`}
+            ${theme === 'light' ? 'card-white' : 'card-dark'}`}
           >
             <Skeleton containerClassName='d-block w-100 h-3/12' height={290} />
             <div className=''>
@@ -83,7 +80,7 @@ export const SkeletonHome = () => {
           </div>
           <div
             className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer flex flex-col 
-            ${themes === 'light' ? 'card-white' : 'card-dark'}`}
+            ${theme === 'light' ? 'card-white' : 'card-dark'}`}
           >
             <Skeleton containerClassName='d-block w-100 h-3/12' height={290} />
             <div className=''>

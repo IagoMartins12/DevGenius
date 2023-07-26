@@ -1,17 +1,11 @@
 'use client';
 
-import useThemes, { Themes } from '@/app/hooks/useTheme';
-import {
-  Category,
-  CategoryRelationsPosts,
-  Favorite,
-  Post,
-  User,
-} from '@prisma/client';
+import { CategoryRelationsPosts, Post } from '@prisma/client';
 import HeartButton from '../HeartButton';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useGlobalContext } from '@/app/context/store';
+import { useTheme } from 'next-themes';
 
 export const SearchCard = ({
   posts,
@@ -20,12 +14,13 @@ export const SearchCard = ({
   posts: Post[];
   categoriesPost: CategoryRelationsPosts[];
 }) => {
-  const themes: Themes = useThemes().theme;
   const router = useRouter();
   const { categoriesState, currentUserState, likeState } = useGlobalContext();
   const navigate = (postId: string) => {
     router.push(`/post/${postId}`);
   };
+
+  const { theme } = useTheme();
 
   return (
     <div
@@ -35,8 +30,7 @@ export const SearchCard = ({
       px-10 
       lg:px-32
       pt-7
-      pb-16
-      ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}`}
+      pb-16`}
     >
       <div className=''>
         <h2 className='text-xl font-bold'>Resultados: </h2>
@@ -47,7 +41,7 @@ export const SearchCard = ({
           {posts.map((post: Post, index: number) => (
             <div
               className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer
-            ${themes === 'light' ? 'card-white' : 'card-dark'}`}
+            ${theme === 'light' ? 'card-white' : 'card-dark'}`}
               key={post.id}
               onClick={() => navigate(post.id)}
             >

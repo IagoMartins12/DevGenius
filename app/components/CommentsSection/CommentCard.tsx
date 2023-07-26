@@ -1,6 +1,6 @@
 import useDeleteCommentModal from '@/app/hooks/modals/useDeleteCommentModal';
-import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { Comment, User } from '@prisma/client';
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import { IoMdCloseCircle } from 'react-icons/io';
 
@@ -14,7 +14,7 @@ export const CommentCard = ({
   currentUser: User | null;
 }) => {
   const deleteModal = useDeleteCommentModal();
-  const themes: Themes = useThemes().theme;
+  const { theme } = useTheme();
 
   const handleCloseClick = () => {
     deleteModal.setCurrentComment(comment);
@@ -55,8 +55,9 @@ export const CommentCard = ({
 
   return (
     <div
-      className={`flex h-32 shadow-md px-2 py-2 
-      ${themes === 'light' ? 'comment-white' : 'comment-dark'}`}
+      className={`flex h-32 shadow-md px-2 py-2 ${
+        theme === 'light' ? 'comment-white' : 'comment-dark'
+      }`}
     >
       <div className='lg:w-1/12 w-2/12 flex items-start justify-center'>
         <div className='aspect-video w-12 h-12 relative'>

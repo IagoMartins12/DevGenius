@@ -4,7 +4,6 @@ import { User } from '@prisma/client';
 import { ChangeEvent, useState } from 'react';
 import { GrEdit, GrCalendar } from 'react-icons/gr';
 import { useSettingsForm } from '@/app/hooks/customHooks/useSettingsForm';
-import useThemes, { Themes } from '@/app/hooks/useTheme';
 
 interface SettingsData {
   user: User | null;
@@ -20,7 +19,6 @@ export const PersonalData: React.FC<SettingsData> = ({ user }) => {
 
   const [fields, setFields] = useState(initialState);
   const { handleSubmit, personalSubmit, register } = useSettingsForm();
-  const themes = useThemes().theme;
 
   const handleFieldsChange = (
     ev:
@@ -89,7 +87,7 @@ export const PersonalData: React.FC<SettingsData> = ({ user }) => {
             </h3>
             <div className='relative inline-flex'>
               <select
-                className={`w-full py-2 border-2 hover:border-slate-900 rounded-xl pl-10 bg-white text-black`}
+                className={`w-full py-2 border-2 hover:border-slate-900 rounded-xl pl-10`}
                 {...register('gender')}
                 value={fields.gender}
                 onChange={handleFieldsChange}

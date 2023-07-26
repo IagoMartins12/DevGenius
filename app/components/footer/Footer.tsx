@@ -1,7 +1,7 @@
 'use client';
 
-import useThemes, { Themes } from '@/app/hooks/useTheme';
 import { darkSocialIcons, lightSocialIcons } from '@/app/utils/SocialIcons';
+import { useTheme } from 'next-themes';
 
 interface Menu {
   name: string;
@@ -9,8 +9,7 @@ interface Menu {
 }
 export const Footer = () => {
   const year = new Date().getFullYear();
-  const themes: Themes = useThemes().theme;
-
+  const { theme, setTheme } = useTheme();
   const quickLink = [
     {
       name: 'Home',
@@ -51,14 +50,9 @@ export const Footer = () => {
 
   return (
     <footer
-      className={`
-        w-full 
-        ${themes === 'light' ? 'bg-color-white' : 'bg-color-dark'}
-        pt-12`}
-      style={{
-        backgroundColor:
-          themes === 'light' ? 'rgb(218, 218, 218, 0.7)' : 'rgba(18,18,18)',
-      }}
+      className={`w-full ${
+        theme === 'light' ? 'bg-color-white' : 'bg-color-dark'
+      } pt-12 shadow-lg`}
     >
       {/* firstDiv */}
       <div
@@ -120,7 +114,7 @@ export const Footer = () => {
         </div>
         <div className='flex flex-col w-full sm:w-3/12 items-center justify-center gap-3'>
           <h4 className='pt-4'>Siga nas redes sociais: </h4>
-          {themes === 'light' ? (
+          {theme === 'light' ? (
             <div className='flex gap-3'>
               {lightSocialIcons.map(element => element)}
             </div>
