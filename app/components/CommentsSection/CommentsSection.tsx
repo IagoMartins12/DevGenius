@@ -18,6 +18,7 @@ export const CommentsSection = ({
   allUsers,
   commentsSectionRef,
   postId,
+  currentUser,
 }: {
   register: UseFormRegister<FieldValues>;
   onSubmit: SubmitHandler<FieldValues>;
@@ -25,8 +26,9 @@ export const CommentsSection = ({
   allUsers: User[];
   commentsSectionRef: RefObject<HTMLDivElement>;
   postId: string;
+  currentUser: User | null;
 }) => {
-  const { currentUserState, commentsState } = useGlobalContext();
+  const { commentsState } = useGlobalContext();
 
   const comments = commentsState.filter(comment => comment.postId === postId);
 
@@ -49,7 +51,7 @@ export const CommentsSection = ({
             <Image
               fill
               className='object-cover rounded-full h-1 w-full '
-              src={currentUserState?.image ?? '/user.png'}
+              src={currentUser?.image ?? '/user.png'}
               alt='Post'
             />
           </div>
@@ -79,7 +81,7 @@ export const CommentsSection = ({
               <CommentCard
                 comment={comment}
                 user={user}
-                currentUser={currentUserState}
+                currentUser={currentUser}
               />
             );
           })

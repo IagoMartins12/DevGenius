@@ -1,5 +1,6 @@
 import { lightSocialIcons } from '@/app/utils/SocialIcons';
 import { User } from '@prisma/client';
+import Image from 'next/image';
 import React from 'react';
 
 interface AuthorCardMobile {
@@ -10,8 +11,13 @@ export const AuthorCardMobile: React.FC<AuthorCardMobile> = ({ author }) => {
   return (
     <div className='w-full flex-col  sm:flex-row sm:w-6/12 mx-auto flex p-7 items-center justify-center gap-4'>
       <div className='w-4/12 flex justify-center'>
-        <div className='rounded-md'>
-          <img src={author?.image ?? ''} alt='' className='rounded-full' />
+        <div className='aspect-video w-28 h-28 relative'>
+          <Image
+            fill
+            className='object-cover rounded-full h-1 w-full '
+            src={author?.image ?? '/user.png'}
+            alt='Post'
+          />
         </div>
       </div>
       <div className='w-6/12 flex flex-col gap-y-2'>

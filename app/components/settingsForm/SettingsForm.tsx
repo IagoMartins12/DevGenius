@@ -9,12 +9,43 @@ import { SocialNetworkData } from '../SettingsPage/socialNetworkData';
 import { AddressData } from '../SettingsPage/addressData';
 import { useSettingsForm } from '@/app/hooks/customHooks/useSettingsForm';
 import { useGlobalContext } from '@/app/context/store';
+import ProfileImage from '../ProfileImage/ProfileImage';
+import { FieldValues, useForm } from 'react-hook-form';
+import { User } from '@prisma/client';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
-export const SettingsForm: React.FC = () => {
+interface IProps {
+  currentUser: User;
+}
+export const SettingsForm: React.FC<IProps> = ({ currentUser }) => {
   const themes: Themes = useThemes().theme;
   const { currentUserState } = useGlobalContext();
 
   const { isActive, setIsActive } = useSettingsForm();
+
+  const { watch, setValue } = useForm<FieldValues>({
+    defaultValues: {
+      userImage: currentUser.image,
+    },
+  });
+
+  const userImage = watch('userImage');
+  const setCustomValue = async (id: string, value: string) => {
+    setValue(id, value, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+
+    const object = {
+      image: value,
+    };
+
+    await axios.patch('/api/account', object);
+
+    toast.success('Foto atualizada!');
+  };
 
   return (
     <div
@@ -72,17 +103,14 @@ export const SettingsForm: React.FC = () => {
             themes === 'light' ? 'comment-white' : 'comment-dark'
           } shadow-sm`}
         >
-          <div className='w-full flex items-center justify-center flex-col my-3'>
-            <div className='rounded-full items-center justify-center w-32 mt-4 flex flex-col py-3 gap-3'>
-              <img
-                src={currentUserState?.image ? currentUserState.image : ''}
-                className='rounded-full'
-                alt=''
-              />
-              <span className='font-bold text-2xl'>
-                {currentUserState?.username}
-              </span>
-            </div>
+          <div className='w-full flex items-center justify-center flex-col my-3 gap-3'>
+            <ProfileImage
+              onChange={value => setCustomValue('userImage', value)}
+              value={userImage ?? '/user.png'}
+            />
+            <span className='font-bold text-2xl'>
+              {currentUserState?.username}
+            </span>
           </div>
           <div className='w-full flex items-center justify-center  h-11'>
             <div
@@ -128,11 +156,11 @@ export const SettingsForm: React.FC = () => {
             themes === 'light' ? 'comment-white' : 'comment-dark'
           }`}
         >
-          {isActive === 0 && <AccountData user={currentUserState} />}
-          {isActive === 1 && <PersonalData user={currentUserState} />}
-          {isActive === 2 && <AddressData user={currentUserState} />}
+          {isActive === 0 && <AccountData user={currentUser} />}
+          {isActive === 1 && <PersonalData user={currentUser} />}
+          {isActive === 2 && <AddressData user={currentUser} />}
           {isActive === 3 && <PasswordData />}
-          {isActive === 4 && <SocialNetworkData user={currentUserState} />}
+          {isActive === 4 && <SocialNetworkData user={currentUser} />}
         </div>
       </div>
     </div>

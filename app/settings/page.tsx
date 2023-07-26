@@ -11,7 +11,7 @@ export default async function Settings() {
 
   return (
     <>
-      <SettingsForm />
+      <SettingsForm currentUser={user} />
     </>
   );
 }

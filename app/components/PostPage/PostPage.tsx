@@ -25,11 +25,13 @@ export const PostPage = ({
   author,
   allUsers,
   categoryPosts,
+  currentUser,
 }: {
   post: Post | null;
   author: User | null;
   allUsers: User[];
   categoryPosts: CategoryRelationsPosts[];
+  currentUser: User | null;
 }) => {
   const { currentUserState, setCommentsState, postState, setPostState } =
     useGlobalContext();
@@ -158,6 +160,7 @@ export const PostPage = ({
             allUsers={allUsers}
             commentsSectionRef={commentsSectionRef}
             postId={postState.id}
+            currentUser={currentUser}
           />
         </div>
       </div>

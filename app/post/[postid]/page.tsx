@@ -1,4 +1,5 @@
 import getAuthor from '@/app/actions/getAuthor';
+import getCurrentUser from '@/app/actions/getCurrentUser';
 import { getPostsPerId } from '@/app/actions/getPosts';
 import { getRelatedPosts } from '@/app/actions/getRelatedPosts';
 import { getAllUsers } from '@/app/actions/getUser';
@@ -18,7 +19,7 @@ export default async function Post({ params }: { params: Iparams }) {
   const categoryPosts: CategoryRelationsPosts[] = await getRelatedPosts(
     params.postid,
   );
-
+  const currentUser = await getCurrentUser();
   return (
     <>
       <PostPage
@@ -26,6 +27,7 @@ export default async function Post({ params }: { params: Iparams }) {
         author={author}
         allUsers={allUsers}
         categoryPosts={categoryPosts}
+        currentUser={currentUser}
       />
     </>
   );

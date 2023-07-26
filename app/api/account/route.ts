@@ -8,7 +8,7 @@ interface IParams {
   secondName?: string;
   email?: string;
   password?: string;
-  photo_url?: string;
+  image?: string;
   birthday?: string;
   bio?: string;
   gender?: string;
@@ -68,7 +68,7 @@ export async function PATCH(request: Request) {
     dataToUpdate.birthday = birthday;
   }
   if (image) {
-    dataToUpdate.photo_url = image;
+    dataToUpdate.image = image;
   }
   if (email) {
     dataToUpdate.email = email;
@@ -110,7 +110,7 @@ export async function PATCH(request: Request) {
     dataToUpdate.uf = uf;
   }
 
-  const userUpdated = await prisma.user.updateMany({
+  const userUpdated = await prisma.user.update({
     where: {
       id: currentUser.id,
     },
@@ -128,13 +128,13 @@ export async function DELETE(request: Request) {
       return NextResponse.error();
     }
 
-    // const userDeleted = prisma.user.delete({
-    //   where: {
-    //     id: currentUser.id,
-    //   },
-    // });
+    const userDeleted = prisma.user.delete({
+      where: {
+        id: currentUser.id,
+      },
+    });
 
-    // return NextResponse.json(userDeleted);
+    return NextResponse.json(userDeleted);
   } catch (err) {
     NextResponse.error();
   }

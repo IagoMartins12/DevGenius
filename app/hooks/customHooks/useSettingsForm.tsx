@@ -6,7 +6,7 @@ import { toast } from 'react-hot-toast';
 
 export const useSettingsForm = () => {
   const [isActive, setIsActive] = useState<number>(0);
-  const { setCurrentUserState } = useGlobalContext();
+  const { currentUserState, setCurrentUserState } = useGlobalContext();
 
   const accountSubmit: SubmitHandler<FieldValues> = async data => {
     const object = {
@@ -142,7 +142,19 @@ export const useSettingsForm = () => {
     }
   };
 
-  const { register, handleSubmit } = useForm<FieldValues>();
+  const { register, handleSubmit, watch, setValue } = useForm<FieldValues>({
+    defaultValues: {
+      userImage: currentUserState?.image,
+    },
+  });
+  const userImage = watch('userImage');
+  const setCustomValue = (id: string, value: any) => {
+    setValue(id, value, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+  };
 
   return {
     isActive,
@@ -154,5 +166,7 @@ export const useSettingsForm = () => {
     SocialNetworkSubmit,
     register,
     handleSubmit,
+    userImage,
+    setCustomValue,
   };
 };
