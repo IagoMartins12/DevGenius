@@ -54,9 +54,7 @@ export const DeletePostModal: React.FC = () => {
         <div className='flex gap-2 flex-col sm:flex-row'>
           <div>
             <button
-              style={{
-                backgroundColor: 'red',
-              }}
+              className='modalButton bg-red-500'
               onClick={() => {
                 deletePost();
               }}
@@ -66,6 +64,7 @@ export const DeletePostModal: React.FC = () => {
           </div>
           <div>
             <button
+              className='modalButton'
               onClick={() => {
                 deleteModal.onClose();
               }}

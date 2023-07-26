@@ -48,7 +48,6 @@ export const useCreatePosts = () => {
     const category_id = currentCategory?.id;
     const category_name = watch('category_edit_name');
 
-    console.log(category_id);
     try {
       const response: AxiosResponse<Category> = await axios.patch(
         `/api/category/${category_id}`,

@@ -111,7 +111,7 @@ export const LoginModal = () => {
             </div>
             <div className='flex flex-col w-full gap-y-4'>
               <button
-                className='button bg-violet-400 flex items-center justify-center'
+                className='modalButton bg-violet-400 flex items-center justify-center'
                 onClick={handleSubmit(onSubmit)}
               >
                 Entrar
@@ -123,7 +123,7 @@ export const LoginModal = () => {
               </div>
               {/* google button */}
               <button
-                className='button'
+                className='button actionButton'
                 onClick={() => {
                   signIn('google');
                 }}
@@ -154,7 +154,7 @@ export const LoginModal = () => {
               </button>
               {/* github button */}
               <button
-                className='button2'
+                className='button2 actionButton'
                 onClick={() => {
                   signIn('github');
                 }}

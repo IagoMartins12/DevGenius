@@ -9,8 +9,7 @@ import { MdEdit } from 'react-icons/md';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import axios, { AxiosResponse } from 'axios';
-import { useRef, useState } from 'react';
-import { AuthorCard } from '../authorCard/AuthorCard';
+import { useRef } from 'react';
 import { DeleteCommentModal } from '../deleteCommentModal/deleteCommentModal';
 import { CommentsSection } from '../CommentsSection/CommentsSection';
 import useThemes, { Themes } from '@/app/hooks/useTheme';
@@ -19,6 +18,7 @@ import { useGlobalContext } from '@/app/context/store';
 import { AuthorCardMobile } from '../AuthorCardMobile/AuthorCardMobile';
 import { RelatedPosts } from '../RelatedPosts/RelatedPosts';
 import { ShareLink } from '../ShareLink/ShareLink';
+import useLoginModal from '@/app/hooks/modals/useLoginModal';
 
 export const PostPage = ({
   post,
@@ -42,6 +42,7 @@ export const PostPage = ({
 
   const router = useRouter();
   const deleteModal = useDeletePostModal();
+  const loginModal = useLoginModal();
   const themes: Themes = useThemes().theme;
   const commentsSectionRef = useRef<HTMLDivElement>(null);
 
@@ -50,6 +51,10 @@ export const PostPage = ({
   };
 
   const onSubmit: SubmitHandler<FieldValues> = async data => {
+    if (!currentUserState) {
+      loginModal.onOpen();
+      return;
+    }
     if (data.commentContent === '')
       return toast.error('Insira algo no comentario!');
 

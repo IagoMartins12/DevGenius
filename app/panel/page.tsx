@@ -1,11 +1,11 @@
 import { getAllUsers } from '../actions/getUser';
-import Example from '../components/PanelUsers/TS';
+import PanelUsers from '../components/PanelUsers/PanelUsers';
 
 export default async function SearchPage() {
   const allUser = await getAllUsers();
   return (
     <div>
-      <Example allUsers={allUser} />
+      <PanelUsers allUsers={allUser} />
     </div>
   );
 }

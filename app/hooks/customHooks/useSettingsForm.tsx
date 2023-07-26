@@ -64,7 +64,6 @@ export const useSettingsForm = () => {
 
   const addressSubmit = async (uf: string, city: string) => {
     const state = document.getElementById('state')?.innerText;
-    console.log('chamou');
     if (!state) return;
 
     const object = {

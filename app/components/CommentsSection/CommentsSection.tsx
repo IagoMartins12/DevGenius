@@ -61,7 +61,10 @@ export const CommentsSection = ({
             placeholder='Adicionar comentario...'
             {...register('commentContent')}
           />
-          <button className='button w-full' onClick={handleSubmit(onSubmit)}>
+          <button
+            className='actionButton w-full'
+            onClick={handleSubmit(onSubmit)}
+          >
             <BiCommentAdd size={25} />
             Comentar
           </button>

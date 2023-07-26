@@ -52,9 +52,7 @@ export const DeleteCommentModal = ({}: {}) => {
         <div className='flex gap-2 flex-col sm:flex-row'>
           <div>
             <button
-              style={{
-                backgroundColor: 'red',
-              }}
+              className='modalButton bg-red-500'
               onClick={() => {
                 deleteComment();
                 document.body.style.overflow = 'auto';
@@ -65,6 +63,7 @@ export const DeleteCommentModal = ({}: {}) => {
           </div>
           <div>
             <button
+              className='modalButton'
               onClick={() => {
                 deleteModal.onClose();
                 document.body.style.overflow = 'auto';

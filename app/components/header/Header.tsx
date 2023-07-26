@@ -92,7 +92,6 @@ export const Header: React.FC<NavbarProps> = () => {
     };
   }, []);
 
-  console.log(searchFocus);
   return (
     <header
       className={`

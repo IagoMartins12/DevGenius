@@ -25,8 +25,6 @@ export const CategoryCard = ({
     category => category.id === categoryId,
   );
 
-  console.log(categoryName);
-
   const navigatePost = (postId: string) => {
     router.push(`/post/${postId}`);
   };
