@@ -27,6 +27,9 @@ body {
   background-color: var(--bg-color-dark);
 }
 
+[data-theme='dark'] .MuiBox-root .css-1ag9q10 {
+  background-color: whitesmoke;
+}
 .bg-color-dark {
   background-color: #010105;
   color: #fff;
