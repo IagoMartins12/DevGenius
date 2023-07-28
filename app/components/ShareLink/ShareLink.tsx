@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTheme } from 'next-themes';
 import useShareLinks from '@/app/hooks/modals/useShareLinks';
 import { Post } from '@prisma/client';
 import styles from './style.module.scss';
@@ -11,6 +12,8 @@ interface ShareLinkProps {
 
 export const ShareLink: React.FC<ShareLinkProps> = ({ post }) => {
   const shareLink = useShareLinks();
+
+  const { theme } = useTheme();
 
   const handleCopyLink = () => {
     const currentURL = window.location.href;
@@ -39,7 +42,9 @@ export const ShareLink: React.FC<ShareLinkProps> = ({ post }) => {
 
   return (
     <div
-      className={`${shareLink.isOpen ? 'flex' : 'hidden'} ${styles.Container}`}
+      className={`${shareLink.isOpen ? 'flex' : 'hidden'} ${styles.Container} ${
+        theme === 'light' ? 'reactIcons-white' : 'reactIcons-dark'
+      } `}
     >
       <div
         className='flex items-center justify-between cursor-pointer  w-7/12 sm:w-full'

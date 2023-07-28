@@ -49,11 +49,7 @@ export const Footer = () => {
   ];
 
   return (
-    <footer
-      className={`w-full ${
-        theme === 'light' ? 'bg-color-white' : 'bg-color-dark'
-      } pt-12 shadow-lg`}
-    >
+    <footer className='w-full pt-12 shadow-lg'>
       {/* firstDiv */}
       <div
         className={`

@@ -32,11 +32,7 @@ export const PostCard = ({
   );
 
   return (
-    <div
-      className={`flex flex-col lg:!px-28 px-2 ${
-        theme === 'light' ? 'bg-color-white' : 'bg-color-dark'
-      }`}
-    >
+    <div className='flex flex-col lg:!px-28 px-2 bg-color'>
       <div className='py-1'>
         <h2 className='font-bold'>Posts recentes: </h2>
       </div>

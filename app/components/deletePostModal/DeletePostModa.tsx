@@ -33,9 +33,8 @@ export const DeletePostModal: React.FC = () => {
 
   return (
     <div
-      className={`deleteModalPosition flex-col z-10 px-5 py-3
-        ${deleteModal.isOpen ? 'flex' : 'hidden'}
-        ${theme === 'light' ? 'bg-color-white' : 'bg-color-dark'}`}
+      className={`deleteModalPosition flex-col z-10 px-5 py-3 bg-color
+        ${deleteModal.isOpen ? 'flex' : 'hidden'}`}
     >
       <div className='w-full h-1/2 '>
         <div className='aspect-video w-full h-full sm:h-4/5 mt-4 sm:mt-10 relative overflow-hidden rounded-xl m-1'>

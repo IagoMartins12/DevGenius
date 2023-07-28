@@ -22,30 +22,33 @@ body {
   background-color: var(--bg-color-white);
 }
 
-[data-theme='dark'] body {
+[data-theme='dark'] body,
+.css-6hp17o-MuiList-root-MuiMenu-list {
   color: var(--text-color-dark);
   background-color: var(--bg-color-dark);
 }
 
-[data-theme='dark'] .MuiBox-root .css-1ag9q10 {
-  background-color: whitesmoke;
-}
-.bg-color-dark {
-  background-color: #010105;
-  color: #fff;
+[data-theme='dark'] .css-6hp17o-MuiList-root-MuiMenu-list {
+  color: var(--text-color-dark);
+  background: black;
 }
 
-.bg-color-white {
+[data-theme='dark'] .css-i4bv87-MuiSvgIcon-root {
+  fill: #fff;
+}
+
+[data-theme='dark'] [data-testid='DeleteIcon'] {
+  fill: red !important;
+}
+
+.bg-color {
   background-color: #fff;
   color: #010105;
 }
 
-.reactIcons-dark {
-  background-color: rgba(0, 0, 0, 0.99);
-}
-
-.reactIcons-white {
-  background-color: hsla(0, 0%, 100%, 0.99);
+[data-theme='dark'] .bg-color {
+  background-color: #010105;
+  color: #fff;
 }
 
 .bg-color-dark input {
@@ -463,5 +466,13 @@ input[type='submit']:hover {
   }
   input.specific-input:focus {
     width: 10rem;
+  }
+
+  .reactIcons-dark {
+    background-color: rgba(0, 0, 0, 0.99) !important;
+  }
+
+  .reactIcons-white {
+    background-color: hsla(0, 0%, 100%, 0.99) !important;
   }
 }

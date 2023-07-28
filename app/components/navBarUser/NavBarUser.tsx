@@ -1,7 +1,7 @@
 import { signOut } from 'next-auth/react';
 import { User } from '@prisma/client';
 import { useRouter } from 'next/navigation';
-import { useTheme } from 'next-themes';
+import {} from 'next-themes';
 
 interface navBarProps {
   display?: boolean;
@@ -16,7 +16,6 @@ interface Menu {
 export const NavBarUser: React.FC<navBarProps> = ({ display, user }) => {
   let menus: Menu[];
   const router = useRouter();
-  const { theme } = useTheme();
   if (user.role === 1) {
     menus = [
       {
@@ -84,18 +83,14 @@ export const NavBarUser: React.FC<navBarProps> = ({ display, user }) => {
       right-0 
       top-20
       flex-col 
-      border-radius-16 
-      hover: ${theme === 'light' ? 'bg-neutral-100' : 'bg-stone-900'}      
-      `}
+      border-radius-16 `}
     >
       {menus.map((menu: Menu, index: number) => {
         return (
           <div
             key={index}
             onClick={menu?.action}
-            className={`w-full flex flex-col ${
-              theme === 'light' ? 'bg-color-white' : 'bg-color-dark'
-            }`}
+            className='w-full flex flex-col bg-color'
           >
             <p className='m-0 px-5 py-2'>{menu?.name}</p>
           </div>

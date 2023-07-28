@@ -56,7 +56,7 @@ export const CommentCard = ({
   return (
     <div
       className={`flex h-32 shadow-md px-2 py-2 ${
-        theme === 'light' ? 'comment-white' : 'comment-dark'
+        theme === 'light' ? 'comment-white' : 'card-dark'
       }`}
     >
       <div className='lg:w-1/12 w-2/12 flex items-start justify-center'>

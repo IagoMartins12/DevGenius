@@ -31,8 +31,7 @@ export const DeleteCommentModal = ({}: {}) => {
   return (
     <div
       className={`deleteModalPosition flex-col z-10 px-5 py-3
-        ${isOpen ? 'flex' : 'hidden'}
-        ${theme === 'light' ? 'bg-color-white' : 'bg-color-dark'}`}
+        ${isOpen ? 'flex' : 'hidden'} bg-color`}
     >
       <div className='w-full h-1/2 '>
         <div className='aspect-video w-full h-full sm:h-4/5 mt-4 sm:mt-10 relative overflow-hidden rounded-xl m-1'>

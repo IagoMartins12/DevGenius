@@ -37,10 +37,6 @@ const Example = ({ allUsers }: { allUsers: User[] }) => {
     setTableData,
   } = usePanelUsers();
 
-  useEffect(() => {
-    setTableData(allUsers);
-  }, [allUsers]);
-
   const globalTheme = useTheme(); //(optional) if you already have a theme defined in your app root, you can import here
 
   const tableTheme = useMemo(
@@ -51,7 +47,7 @@ const Example = ({ allUsers }: { allUsers: User[] }) => {
             default:
               globalTheme.theme === 'light'
                 ? '#fafafa' //random light yellow color for the background in light mode
-                : '#1c1c1c', //pure black table in dark mode for fun
+                : '#010105', //pure black table in dark mode for fun
           },
           text: {
             primary: globalTheme.theme === 'light' ? '#1c1c1c' : '#fafafa', //pure black text in dark mode for fun
@@ -60,6 +56,10 @@ const Example = ({ allUsers }: { allUsers: User[] }) => {
       }),
     [globalTheme],
   );
+
+  useEffect(() => {
+    setTableData(allUsers);
+  }, [allUsers]);
 
   return (
     <>
@@ -76,7 +76,7 @@ const Example = ({ allUsers }: { allUsers: User[] }) => {
             }}
             columns={columns}
             data={tableData}
-            editingMode='cell' //default
+            editingMode='modal' //default
             enableColumnOrdering
             enableEditing
             onEditingRowSave={handleSaveRowEdits}
