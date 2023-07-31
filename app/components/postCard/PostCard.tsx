@@ -7,7 +7,6 @@ import { useGlobalContext } from '@/app/context/store';
 import { compareDesc } from 'date-fns';
 import { useTheme } from 'next-themes';
 import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
-import { Tooltip } from 'react-bootstrap';
 
 interface PostCard {
   categoriesPost: CategoryRelationsPosts[];
@@ -59,21 +58,14 @@ export const PostCard: React.FC<PostCard> = ({ categoriesPost, allUsers }) => {
                   </div>
 
                   <div className='absolute top-3 left-3'>
-                    <a
-                      data-tooltip-id='my-tooltip'
-                      data-tooltip-content='Like!'
-                      data-tooltip-place='top'
-                      className='cursor-wait z-50'
-                    >
-                      <div className='aspect-video w-8 h-8 relative flex cursor-pointer'>
-                        <Image
-                          fill
-                          className='object-cover rounded-full h-1 w-full '
-                          src={author[0].image ?? '/user.png'}
-                          alt='Post'
-                        />
-                      </div>
-                    </a>
+                    <div className='aspect-video w-8 h-8 relative flex cursor-pointer'>
+                      <Image
+                        fill
+                        className='object-cover rounded-full h-1 w-full '
+                        src={author[0].image ?? '/user.png'}
+                        alt='Post'
+                      />
+                    </div>
                   </div>
                 </div>
 

@@ -16,6 +16,8 @@ import { useGlobalContext } from '@/app/context/store';
 import { AuthorCardMobile } from '../AuthorCardMobile/AuthorCardMobile';
 import { ShareLink } from '../ShareLink/ShareLink';
 import useLoginModal from '@/app/hooks/modals/useLoginModal';
+import { FeaturedCarrousel } from '../Carrousel/FeaturedCarrousel';
+import { RelatedPosts } from '../RelatedPosts/RelatedPosts';
 
 export const PostPage = ({
   post,
@@ -142,7 +144,7 @@ export const PostPage = ({
         <hr className='w-11/12 mx-auto' />
         <AuthorCardMobile author={author} />
         <hr className='w-11/12 mx-auto' />
-        {/* <RelatedPosts categoriesPost={categoryPosts} currentPost={post} /> */}
+        <RelatedPosts categoriesPost={categoryPosts} currentPost={post} />
 
         <div className='w-11/12 mx-auto my-6'>
           <CommentsSection

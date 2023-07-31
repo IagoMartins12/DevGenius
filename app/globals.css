@@ -92,6 +92,24 @@ body {
   border-bottom: 1px solid #1c1c1c;
 }
 
+/* Add these styles to the Card component to ensure each card occupies 33% width */
+.card {
+  flex: 0 0 31.75%; /* Each card occupies 30.33% of the container width */
+  max-width: 31.75%;
+}
+
+/* Add these styles to the carousel container to ensure cards are displayed in a row */
+.carousel {
+  display: flex;
+  flex-wrap: nowrap; /* Prevent cards from wrapping to the next line */
+  overflow-x: auto; /* Enable horizontal scrolling */
+}
+
+/* Add this style to hide the default scrollbar */
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
 .carousel-inner {
   height: 60vh;
   width: 100%;
@@ -496,6 +514,13 @@ input[type='submit']:hover {
     transform: translate(-50%, -50%);
     position: fixed;
   }
+
+  .card {
+    flex: 0 0 47%; /* Each card occupies 30.33% of the container width */
+    max-width: 47%;
+    height: 400px;
+    max-height: 400px;
+  }
 }
 
 @media (max-width: 620px) {
@@ -536,5 +561,10 @@ input[type='submit']:hover {
 
   .reactIcons-white {
     background-color: hsla(0, 0%, 100%, 0.99) !important;
+  }
+
+  .card {
+    flex: 0 0 97.5%; /* Each card occupies 30.33% of the container width */
+    max-width: 99%;
   }
 }
