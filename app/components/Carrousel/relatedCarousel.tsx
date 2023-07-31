@@ -8,7 +8,7 @@ export interface CarouselProps {
   categoriesPosts: CategoryRelationsPosts[];
 }
 
-export const FeaturedCarrousel: React.FC<CarouselProps> = ({
+export const RelatedCarousel: React.FC<CarouselProps> = ({
   posts,
   categoriesPosts,
 }) => {

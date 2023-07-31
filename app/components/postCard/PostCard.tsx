@@ -1,7 +1,6 @@
 'use client';
 
 import { CategoryRelationsPosts, Post, User } from '@prisma/client';
-import HeartButton from '../HeartButton';
 import Image from 'next/image';
 import { useGlobalContext } from '@/app/context/store';
 import { compareDesc } from 'date-fns';
@@ -17,8 +16,7 @@ export const PostCard: React.FC<PostCard> = ({ categoriesPost, allUsers }) => {
   const { theme } = useTheme();
   const { navigateToUrl } = useNavigate();
 
-  const { categoriesState, likeState, postsState, currentUserState } =
-    useGlobalContext();
+  const { categoriesState, postsState } = useGlobalContext();
 
   const sortedPostsState = [...postsState].sort((a, b) =>
     compareDesc(new Date(a.createdAt), new Date(b.createdAt)),
@@ -49,13 +47,6 @@ export const PostCard: React.FC<PostCard> = ({ categoriesPost, allUsers }) => {
                     src={post.photo_background}
                     alt='Listing'
                   />
-                  <div className='absolute top-3 right-3'>
-                    <HeartButton
-                      postId={post.id}
-                      currentUser={currentUserState}
-                      liked={likeState}
-                    />
-                  </div>
 
                   <div className='absolute top-3 left-3'>
                     <div className='aspect-video w-8 h-8 relative flex cursor-pointer'>

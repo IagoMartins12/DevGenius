@@ -1,11 +1,8 @@
 'use client';
 
 import { useGlobalContext } from '@/app/context/store';
-import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 import { CategoryRelationsPosts, Post } from '@prisma/client';
-import { useTheme } from 'next-themes';
-import Image from 'next/image';
-import { FeaturedCarrousel } from '../Carrousel/FeaturedCarrousel';
+import { RelatedCarousel } from '../Carrousel/relatedCarousel';
 
 export const RelatedPosts = ({
   categoriesPost,
@@ -14,9 +11,7 @@ export const RelatedPosts = ({
   categoriesPost: CategoryRelationsPosts[];
   currentPost: Post | null;
 }) => {
-  const { postsState, categoriesState } = useGlobalContext();
-  const { theme } = useTheme();
-  const { navigateToUrl } = useNavigate();
+  const { postsState } = useGlobalContext();
 
   const postsIds = categoriesPost.map(categoryPost => categoryPost.postId);
   const relatedPosts = postsState.filter(post => {
@@ -25,10 +20,7 @@ export const RelatedPosts = ({
 
   return (
     <div className={`flex flex-col w-11/12 mx-auto pt-8`}>
-      <FeaturedCarrousel
-        posts={relatedPosts}
-        categoriesPosts={categoriesPost}
-      />
+      <RelatedCarousel posts={relatedPosts} categoriesPosts={categoriesPost} />
     </div>
   );
 };

@@ -16,7 +16,6 @@ import { useGlobalContext } from '@/app/context/store';
 import { AuthorCardMobile } from '../AuthorCardMobile/AuthorCardMobile';
 import { ShareLink } from '../ShareLink/ShareLink';
 import useLoginModal from '@/app/hooks/modals/useLoginModal';
-import { FeaturedCarrousel } from '../Carrousel/FeaturedCarrousel';
 import { RelatedPosts } from '../RelatedPosts/RelatedPosts';
 
 export const PostPage = ({

@@ -98,6 +98,11 @@ body {
   max-width: 31.75%;
 }
 
+.FeaturedCard {
+  flex: 0 0 100%; /* Each card occupies 30.33% of the container width */
+  max-width: 100%;
+}
+
 /* Add these styles to the carousel container to ensure cards are displayed in a row */
 .carousel {
   display: flex;
