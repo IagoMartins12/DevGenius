@@ -21,16 +21,20 @@ export async function POST(request: Request, { params }: { params: IParams }) {
     throw new Error('Invalid ID');
   }
 
+  console.log(followerid);
+
   if (!currentUser.id || typeof currentUser.id !== 'string') {
     throw new Error('Invalid ID');
   }
 
-  const newFollowing = prisma.follows.create({
+  const newFollowing = await prisma.followers.create({
     data: {
       followerId: currentUser.id,
       followingId: followerid,
     },
   });
+
+  console.log(newFollowing);
 
   return NextResponse.json(newFollowing);
 }
@@ -51,8 +55,9 @@ export async function DELETE(
     throw new Error('Invalid ID');
   }
 
-  const removeFollower = await prisma.follows.deleteMany({
+  const removeFollower = await prisma.followers.deleteMany({
     where: {
+      followerId: currentUser.id,
       followingId: followerid,
     },
   });

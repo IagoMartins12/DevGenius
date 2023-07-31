@@ -3,7 +3,6 @@ interface InfoProps {
   info: string | null;
 }
 export const UserInfoTexts: React.FC<InfoProps> = ({ title, info }) => {
-  console.log(info);
   return (
     <>
       <div className='flex gap-x-3 items-center'>

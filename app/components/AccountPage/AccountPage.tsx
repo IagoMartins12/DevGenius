@@ -9,14 +9,45 @@ import { DeslikedPosts } from './DeslikedPosts';
 import { SavedPosts } from './SavedPosts';
 import { Comments } from './Comments';
 import { AccountMenu } from './AccountMenu';
+import { useGlobalContext } from '@/app/context/store';
+import useUsersModal from '@/app/hooks/modals/useUsersModal';
 
 export interface UserProps {
   currentUser: User;
+  allUsers?: User[];
   post?: Post;
+  isMyAccount?: boolean;
 }
-export const AccountPage: React.FC<UserProps> = ({ currentUser }) => {
+export const AccountPage: React.FC<UserProps> = ({ currentUser, allUsers }) => {
   const [isActive, setIsActive] = useState<number>(0);
-  console.log(currentUser);
+
+  const { followersState } = useGlobalContext();
+  const usersModal = useUsersModal();
+
+  //Who I follow
+  const myFollowing = followersState.filter(
+    follower => follower.followerId === currentUser.id,
+  );
+
+  const myFollowingId = myFollowing.map(follower => follower.followingId);
+
+  //Who I follow - Filtering users based on the myFollowingId
+  const myFollowingUsers = allUsers?.filter(user =>
+    myFollowingId.includes(user.id),
+  );
+
+  //Who Follows me
+  const myFollowers = followersState.filter(
+    follower => follower.followingId === currentUser.id,
+  );
+
+  const myFollowersId = myFollowers.map(follower => follower.followerId);
+
+  //Who Follows me - Filtering users based on the myFollowersId
+  const myFollowersgUsers = allUsers?.filter(user =>
+    myFollowersId.includes(user.id),
+  );
+
   return (
     <>
       <div className='flex flex-col w-full sm:w-2/6 lg:w-2/12 items-center justify-start gap-y-12'>
@@ -44,8 +75,28 @@ export const AccountPage: React.FC<UserProps> = ({ currentUser }) => {
             </span>
           </div>
           <div className='flex gap-x-2'>
-            <span> 100 Seguidores</span>
-            <span> 100 Seguindo </span>
+            <span
+              className='cursor-pointer'
+              onClick={() => {
+                usersModal.setIsCurrentUser();
+                usersModal.setRemoveFollowers();
+                usersModal.setCurrentData(myFollowersgUsers);
+                usersModal.onOpen();
+              }}
+            >
+              {myFollowers.length} Seguidores
+            </span>
+            <span
+              className='cursor-pointer'
+              onClick={() => {
+                usersModal.setIsCurrentUser();
+                usersModal.setNotRemoveFollowers();
+                usersModal.setCurrentData(myFollowingUsers);
+                usersModal.onOpen();
+              }}
+            >
+              {myFollowing.length} Seguindo
+            </span>
           </div>
         </div>
         <div className='hidden flex-row sm:flex sm:!flex-col w-full sm:w-4/5 gap-3 sm:gap-4 justify-center sm:justify-normal'>
@@ -66,31 +117,29 @@ export const AccountPage: React.FC<UserProps> = ({ currentUser }) => {
               <span className='text-lg font-extraligh text-violet-600'>
                 Biografia:
               </span>
-              <span className='text-lg font-semibold'>
-                {currentUser.bio ? (
-                  <span className='text-xl font-bold'>{currentUser.bio}</span>
-                ) : (
-                  <span className='text-base font-bold'>
-                    Informação não disponivel
-                  </span>
-                )}
-              </span>
+              {currentUser.bio ? (
+                <span className='text-sm sm:text-base font-bold'>
+                  {currentUser.bio}
+                </span>
+              ) : (
+                <span className='text-sm sm:text-base font-bold'>
+                  Informação não disponivel
+                </span>
+              )}
             </div>
             <div className='flex flex-col'>
               <span className='text-lg font-extraligh text-violet-600'>
                 Localização:
               </span>
-              <span className='text-lg font-semibold'>
-                {currentUser.city && currentUser.state ? (
-                  <span className='text-xl font-bold'>
-                    {currentUser.city}, {currentUser.state}
-                  </span>
-                ) : (
-                  <span className='text-base font-bold'>
-                    Informação não disponivel
-                  </span>
-                )}
-              </span>
+              {currentUser.city && currentUser.state ? (
+                <span className='text-base font-bold'>
+                  {currentUser.city}, {currentUser.state}
+                </span>
+              ) : (
+                <span className='text-sm sm:text-base font-bold'>
+                  Informação não disponivel
+                </span>
+              )}
             </div>
           </div>
           <div className='sm:hidden flex flex-row sm:!flex-col w-full sm:w-4/5 gap-3 sm:gap-4 justify-center sm:justify-normal'>

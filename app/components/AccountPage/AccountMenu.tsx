@@ -19,7 +19,7 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({
         onClick={() => setIsActive(0)}
       >
         <span
-          className={`text-base sm:text-xl ${
+          className={`text-sm sm:text-xl ${
             isActive === 0 ? 'font-extrabold' : 'font-medium '
           }`}
         >
@@ -32,7 +32,7 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({
         onClick={() => setIsActive(1)}
       >
         <span
-          className={`text-base sm:text-xl ${
+          className={`text-sm sm:text-xl ${
             isActive === 1 ? 'font-extrabold' : 'font-medium '
           }`}
         >
@@ -45,7 +45,7 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({
         onClick={() => setIsActive(2)}
       >
         <span
-          className={`text-base sm:text-xl ${
+          className={`text-sm sm:text-xl ${
             isActive === 2 ? 'font-extrabold' : 'font-medium '
           }`}
         >
@@ -58,7 +58,7 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({
         onClick={() => setIsActive(3)}
       >
         <span
-          className={`text-base sm:text-xl ${
+          className={`text-sm sm:text-xl ${
             isActive === 3 ? 'font-extrabold' : 'font-medium '
           }`}
         >
@@ -71,7 +71,7 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({
         onClick={() => setIsActive(4)}
       >
         <span
-          className={`text-base sm:text-xl ${
+          className={`text-sm sm:text-xl ${
             isActive === 4 ? 'font-extrabold' : 'font-medium '
           }`}
         >

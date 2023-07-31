@@ -14,6 +14,7 @@ import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 export const LoginModal = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
+  const { navigateToHome } = useNavigate();
   const isOpen: boolean = loginModal.isOpen;
   const { theme } = useTheme();
   const { refresh } = useNavigate();
@@ -41,7 +42,7 @@ export const LoginModal = () => {
     }).then(callback => {
       if (callback?.ok) {
         toast.success('Login feito com sucesso');
-        refresh();
+        navigateToHome();
         loginModal.onClose();
       }
 

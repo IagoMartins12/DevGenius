@@ -40,8 +40,8 @@ model User {
   Like      Like[]
   Deslike   Deslike[]
   Favorite  Favorite[]
-  followers Follows[]  @relation("follower")
-  following Follows[]  @relation("following")
+  followers Followers[]  @relation("follower")
+  following Followers[]  @relation("following")
 }
 
 model Account {
@@ -138,7 +138,7 @@ model Favorite {
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
 
-model Follows {
+model Followers {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
   followerId  String @db.ObjectId
   followingId String @db.ObjectId

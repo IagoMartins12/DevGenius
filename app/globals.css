@@ -73,6 +73,17 @@ body {
   border-radius: 18px;
 }
 
+.user-white {
+  background: #fff;
+  border-radius: 10px;
+}
+
+.user-dark {
+  background: #1c1c1c;
+  box-shadow: 0 16px 48px 8px rgba(1, 1, 5, 0.1);
+  border-radius: 10px;
+}
+
 .search-dark {
   border-bottom: 1px solid #fafafa;
 }
@@ -107,6 +118,14 @@ body {
 
 .deleteModalPosition {
   width: 40%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: fixed;
+}
+
+.usersModal {
+  width: 25%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -415,6 +434,40 @@ input[type='submit']:hover {
   );
 }
 
+/* search input on userModal */
+.container-input {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input {
+  width: 60%;
+  padding: 10px 0px 10px 40px;
+  border-radius: 9999px;
+  border: solid 1px #333;
+  transition: all 0.2s ease-in-out;
+  outline: none;
+  opacity: 0.8;
+}
+
+.container-input svg {
+  position: absolute;
+  top: 50%;
+  left: 23%;
+  transform: translate(0, -50%);
+  transition: left 0.2s ease-in-out;
+}
+
+.input:focus {
+  width: 100%;
+  opacity: 1;
+}
+.container-input:focus-within svg {
+  left: 3%;
+}
+
 @media (max-width: 920px) {
   .carousel-inner {
     height: 45vh;
@@ -430,6 +483,10 @@ input[type='submit']:hover {
 
   .modalPosition {
     width: 90%;
+  }
+
+  .usersModal {
+    width: 60%;
   }
 
   .deleteModalPosition {
@@ -455,6 +512,11 @@ input[type='submit']:hover {
   }
 
   .modalPosition {
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  .usersModal {
     width: 100%;
     min-height: 100vh;
   }

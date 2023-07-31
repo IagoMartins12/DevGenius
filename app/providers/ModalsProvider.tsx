@@ -1,5 +1,6 @@
 'use client';
 
+import { UsersModal } from '../components/UsersModal/UsersModal';
 import { DeleteCommentModal } from '../components/deleteCommentModal/deleteCommentModal';
 import { DeletePostModal } from '../components/deletePostModal/DeletePostModa';
 import { LoginModal } from '../components/loginModal/LoginModal';
@@ -12,6 +13,7 @@ const ModalsProvider = () => {
       <RegisterModal />
       <DeletePostModal />
       <DeleteCommentModal />
+      <UsersModal />
     </>
   );
 };

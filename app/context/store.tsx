@@ -5,6 +5,7 @@ import {
   Comment,
   Deslike,
   Favorite,
+  Followers,
   Like,
   Post,
   User,
@@ -28,6 +29,8 @@ interface ContextProps {
   setCommentsState: React.Dispatch<React.SetStateAction<Comment[]>>;
   postState: Post | null;
   setPostState: React.Dispatch<React.SetStateAction<Post | null>>;
+  followersState: Followers[];
+  setFollowersState: React.Dispatch<React.SetStateAction<Followers[]>>;
 }
 
 const GlobalContext = createContext<ContextProps>({
@@ -47,6 +50,8 @@ const GlobalContext = createContext<ContextProps>({
   setCommentsState: () => {},
   postState: null,
   setPostState: () => {},
+  followersState: [],
+  setFollowersState: () => {},
 });
 
 export const GlobalContextProvider = ({
@@ -62,6 +67,7 @@ export const GlobalContextProvider = ({
   const [currentUserState, setCurrentUserState] = useState<User | null>(null);
   const [commentsState, setCommentsState] = useState<Comment[]>([]);
   const [postState, setPostState] = useState<Post | null>(null);
+  const [followersState, setFollowersState] = useState<Followers[]>([]);
   return (
     <GlobalContext.Provider
       value={{
@@ -81,6 +87,8 @@ export const GlobalContextProvider = ({
         setCommentsState,
         postState,
         setPostState,
+        followersState,
+        setFollowersState,
       }}
     >
       {children}

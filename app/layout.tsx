@@ -16,6 +16,7 @@ import getPosts from './actions/getPosts';
 import { SetContexts } from './components/SetContexts/SetContexts';
 import getComments from './actions/getComments';
 import ThemeProv from './providers/ThemeProvider';
+import { getAllFollowers } from './actions/getFollowers';
 
 const font = Nunito({ subsets: ['latin'] });
 
@@ -37,6 +38,7 @@ export default async function RootLayout({
   const favorites = await getFavoritedPosts();
   const posts = await getPosts();
   const comments = await getComments();
+  const followers = await getAllFollowers();
   return (
     <html lang='pt-br'>
       <Head>
@@ -71,6 +73,7 @@ export default async function RootLayout({
               posts={posts}
               user={currentUser}
               comments={comments}
+              followers={followers}
             />
             <ToasterProvider />
             <ModalsProvider />

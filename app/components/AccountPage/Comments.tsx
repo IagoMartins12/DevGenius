@@ -3,7 +3,10 @@ import { UserProps } from './AccountPage';
 import { CommentCard } from '../CommentsSection/CommentCard';
 import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 
-export const Comments: React.FC<UserProps> = ({ currentUser }) => {
+export const Comments: React.FC<UserProps> = ({
+  currentUser,
+  isMyAccount = true,
+}) => {
   const { commentsState } = useGlobalContext();
 
   const { navigateToUrl } = useNavigate();
@@ -18,7 +21,6 @@ export const Comments: React.FC<UserProps> = ({ currentUser }) => {
           <h1 className='text-2xl font-bold text-center '>Comentarios:</h1>
           {commentsMade.length > 0 ? (
             commentsMade.map(comment => {
-              console.log(comment);
               return (
                 <div
                   className='flex flex-col gap-y-3 cursor-pointer'
@@ -34,9 +36,15 @@ export const Comments: React.FC<UserProps> = ({ currentUser }) => {
             })
           ) : (
             <div className='w-full flex items-center justify-center'>
-              <h1 className='font-bold text-xl text-center'>
-                Você ainda não comentou em nenhum post!
-              </h1>
+              {isMyAccount ? (
+                <h1 className='font-bold text-xl text-center'>
+                  Você ainda não comentou em nenhum post!
+                </h1>
+              ) : (
+                <h1 className='font-bold text-xl text-center'>
+                  {currentUser.username} ainda não comentou em nenhum post!
+                </h1>
+              )}
             </div>
           )}
         </div>

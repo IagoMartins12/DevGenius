@@ -13,6 +13,7 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { TablePerson } from '@/app/components/PanelUsers/PanelUsers';
 import { useNavigate } from './useNavigate';
+import { useGlobalContext } from '@/app/context/store';
 
 export const usePanelUsers = () => {
   const [tableData, setTableData] = useState<TablePerson[]>(() => []);
@@ -22,12 +23,12 @@ export const usePanelUsers = () => {
   }>({});
 
   const { navigateToUrl } = useNavigate();
+  const { currentUserState } = useGlobalContext();
 
   const handleSaveRowEdits: MaterialReactTableProps<TablePerson>['onEditingRowSave'] =
     async ({ exitEditingMode, row, values }) => {
       if (!Object.keys(validationErrors).length) {
         tableData[row.index] = values;
-        console.log(tableData[row.index]);
         setTableData([...tableData]);
         const object = {
           firstName: values.firstName as string,
@@ -48,7 +49,6 @@ export const usePanelUsers = () => {
 
   const handleDeleteRow = useCallback(
     async (row: MRT_Row<TablePerson>) => {
-      console.log('row', row.original.id);
       if (!confirm(`Deletar a conta do usuario ${row.getValue('email')}?`)) {
         return;
       }
@@ -99,7 +99,11 @@ export const usePanelUsers = () => {
                 src={row.original.image || '/user.png'}
                 alt='avatar'
                 onClick={() => {
-                  navigateToUrl('user', row.original.id);
+                  if (currentUserState?.id === row.original.id) {
+                    navigateToUrl('account');
+                  } else {
+                    navigateToUrl('user', row.original.id);
+                  }
                 }}
               />
             </div>

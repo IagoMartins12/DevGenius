@@ -7,6 +7,7 @@ import {
   Comment,
   Deslike,
   Favorite,
+  Followers,
   Like,
   Post,
   User,
@@ -21,6 +22,7 @@ interface IProps {
   posts: Post[];
   user: User | null;
   comments: Comment[];
+  followers: Followers[];
 }
 export const SetContexts: React.FC<IProps> = ({
   categories,
@@ -30,6 +32,7 @@ export const SetContexts: React.FC<IProps> = ({
   posts,
   user,
   comments,
+  followers,
 }) => {
   const {
     setCategoriesState,
@@ -39,6 +42,7 @@ export const SetContexts: React.FC<IProps> = ({
     setLikesState,
     setCurrentUserState,
     setCommentsState,
+    setFollowersState,
   } = useGlobalContext();
 
   useEffect(() => {
@@ -49,6 +53,7 @@ export const SetContexts: React.FC<IProps> = ({
     setPostsState(posts);
     setCurrentUserState(user);
     setCommentsState(comments);
+    setFollowersState(followers);
   }, []);
 
   return <div></div>;

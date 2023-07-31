@@ -2,7 +2,10 @@ import { useGlobalContext } from '@/app/context/store';
 import { UserProps } from './AccountPage';
 import { HorizontalCard } from '../HorizontalCard/HorizontalCard';
 
-export const SavedPosts: React.FC<UserProps> = ({ currentUser }) => {
+export const SavedPosts: React.FC<UserProps> = ({
+  currentUser,
+  isMyAccount = true,
+}) => {
   const { favoritesState, postsState } = useGlobalContext();
 
   const favoritePostById = favoritesState
@@ -28,9 +31,15 @@ export const SavedPosts: React.FC<UserProps> = ({ currentUser }) => {
             })
           ) : (
             <div className='w-full flex items-center justify-center'>
-              <h1 className='font-bold text-xl text-center'>
-                Você ainda não salvou nenhum post!
-              </h1>
+              {isMyAccount ? (
+                <h1 className='font-bold text-xl text-center'>
+                  Você ainda não salvou nenhum post!
+                </h1>
+              ) : (
+                <h1 className='font-bold text-xl text-center'>
+                  {currentUser.username} ainda não salvou nenhum post!
+                </h1>
+              )}
             </div>
           )}
         </div>
