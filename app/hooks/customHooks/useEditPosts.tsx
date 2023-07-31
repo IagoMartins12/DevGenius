@@ -1,10 +1,10 @@
 import { useGlobalContext } from '@/app/context/store';
 import { Category, CategoryRelationsPosts, Post } from '@prisma/client';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from './useNavigate';
 
 export const useEditPosts = ({
   post,
@@ -18,9 +18,8 @@ export const useEditPosts = ({
     CategoryRelationsPosts[] | null
   >(postCategories);
 
-  const router = useRouter();
-
   const { postsState, setPostsState } = useGlobalContext();
+  const { navigateToUrl } = useNavigate();
 
   const onSubmit: SubmitHandler<FieldValues> = async data => {
     if (data.title === '') return toast.error('Insira um titulo!');
@@ -50,7 +49,8 @@ export const useEditPosts = ({
       setPostsState(updatedPostsState);
 
       toast.success('Post editado!');
-      router.push(`/post/${post.id}`);
+
+      navigateToUrl('post', post.id);
     } catch (err) {
       toast.error('Algo deu errado, tente novamente :(');
       console.log(err);

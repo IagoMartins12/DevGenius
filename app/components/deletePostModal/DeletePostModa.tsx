@@ -1,17 +1,17 @@
 import { useGlobalContext } from '@/app/context/store';
+import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 import useDeletePostModal from '@/app/hooks/modals/useDeletePostModal';
 import axios from 'axios';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 
 export const DeletePostModal: React.FC = () => {
   const deleteModal = useDeletePostModal();
-  const router = useRouter();
 
   const { setPostsState } = useGlobalContext();
   const { theme } = useTheme();
+  const { navigateToHome } = useNavigate();
 
   const deletePost = () => {
     const postid = deleteModal.currentPost?.id;
@@ -23,7 +23,7 @@ export const DeletePostModal: React.FC = () => {
           prevPosts.filter(post => post.id !== postid),
         );
         deleteModal.onClose();
-        router.push('/');
+        navigateToHome();
       })
       .catch(error => {
         console.log(error);

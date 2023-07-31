@@ -1,15 +1,13 @@
 'use client';
 
 import { AiOutlineSearch, AiOutlineUser } from 'react-icons/ai';
-import { MdLightMode, MdDarkMode } from 'react-icons/md';
 import useLoginModal from '@/app/hooks/modals/useLoginModal';
-import { Category } from '@prisma/client';
 import { useEffect, useRef, useState } from 'react';
 import { NavBarUser } from '../navBarUser/NavBarUser';
-import { useRouter } from 'next/navigation';
 import { useGlobalContext } from '@/app/context/store';
 import { useTheme } from 'next-themes';
 import ThemeSwitch from '../ThemeSwitch/ThemeSwitch';
+import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 
 interface NavbarProps {}
 
@@ -19,22 +17,15 @@ export const Header: React.FC<NavbarProps> = () => {
   const [blackHeader, setBlackHeader] = useState(false);
   const { currentUserState, categoriesState } = useGlobalContext();
 
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
+  const { navigateToUrl, navigateToHome } = useNavigate();
+
   const loginModal = useLoginModal();
-  const router = useRouter();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
   const toggleOpen = () => {
     setIsOpen(!isOpen);
-  };
-
-  const navigate = (category: Category) => {
-    router.push(`/category/${category.id}`);
-  };
-
-  const navigateToSearch = (search: string) => {
-    router.push(`/search/${search}`);
   };
 
   const handleFocus = () => {
@@ -44,13 +35,13 @@ export const Header: React.FC<NavbarProps> = () => {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && searchFocus) {
       const searchValue = event.currentTarget.value;
-      navigateToSearch(searchValue);
+      navigateToUrl('search', searchValue);
     }
   };
 
   const handleOnClick = (value: string | undefined) => {
     if (!value) return;
-    navigateToSearch(value);
+    navigateToUrl('search', value);
   };
 
   useEffect(() => {
@@ -84,23 +75,9 @@ export const Header: React.FC<NavbarProps> = () => {
     };
   }, []);
 
-  console.log('theme', theme);
-
   return (
     <header
-      className={`
-        items-center
-        justify-between
-        gap-0
-        sm:gap-10
-        flex
-        sticky
-        top-0
-        w-full
-        z-10
-        md:px-12
-        px-6
-      `}
+      className='items-center justify-between gap-0 sm:gap-10 flex sticky top-0 w-full z-10 md:!px-12 !px-4'
       style={{
         backgroundColor:
           theme === 'dark'
@@ -116,7 +93,7 @@ export const Header: React.FC<NavbarProps> = () => {
       <div className='flex items-center gap-x-10 w-1/2 overflow-hidden'>
         <h1
           onClick={() => {
-            router.push('/');
+            navigateToHome();
           }}
           className='cursor-pointer'
         >
@@ -125,7 +102,10 @@ export const Header: React.FC<NavbarProps> = () => {
         </h1>
         <div className='w-1/2 gap-10 hidden md:flex pointer cursor-pointer'>
           {categoriesState?.map(category => (
-            <p key={category.id} onClick={() => navigate(category)}>
+            <p
+              key={category.id}
+              onClick={() => navigateToUrl('category', category.id)}
+            >
               {category.category_name}
             </p>
           ))}

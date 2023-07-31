@@ -11,35 +11,37 @@ datasource db {
 }
 
 model User {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  firstName       String?
-  secondName      String?
-  username        String?   @unique
-  email           String?   @unique
-  emailVerified   DateTime?
-  hashedPassword  String?
-  image           String?
-  createdAt       DateTime  @default(now())
-  role            Int       @default(0)
-  bio             String?
-  gender          String? 
-  birthday        String?
-  uf              String?
-  state           String?
-  city            String?
-  website         String?
-  github          String?
-  instagram       String?
-  facebook        String?
-  twitter         String?
-  youtube         String?
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  firstName      String?
+  secondName     String?
+  username       String?   @unique
+  email          String?   @unique
+  emailVerified  DateTime?
+  hashedPassword String?
+  image          String?
+  createdAt      DateTime  @default(now())
+  role           Int       @default(0)
+  bio            String?
+  gender         String?
+  birthday       String?
+  uf             String?
+  state          String?
+  city           String?
+  website        String?
+  github         String?
+  instagram      String?
+  facebook       String?
+  twitter        String?
+  youtube        String?
 
-  Post     Post[]
-  Account  Account[]
-  Comment  Comment[]
-  Like     Like[]
-  Deslike  Deslike[]
-  Favorite Favorite[]
+  Post      Post[]
+  Account   Account[]
+  Comment   Comment[]
+  Like      Like[]
+  Deslike   Deslike[]
+  Favorite  Favorite[]
+  followers Follows[]  @relation("follower")
+  following Follows[]  @relation("following")
 }
 
 model Account {
@@ -73,7 +75,7 @@ model Post {
   updatedAt        DateTime @updatedAt
   featured         Int      @default(0)
 
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   Category CategoryRelationsPosts[]
   Comment  Comment[]
@@ -82,7 +84,6 @@ model Post {
   Favorite Favorite[]
 }
 
-
 model Category {
   id            String @id @default(auto()) @map("_id") @db.ObjectId
   category_name String
@@ -90,10 +91,10 @@ model Category {
   CategoryRelationsPosts CategoryRelationsPosts[]
 }
 
-model CategoryRelationsPosts { 
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  categoryId    String    @db.ObjectId
-  postId        String    @db.ObjectId
+model CategoryRelationsPosts {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  categoryId String @db.ObjectId
+  postId     String @db.ObjectId
 
   post     Post     @relation(fields: [postId], references: [id])
   category Category @relation(fields: [categoryId], references: [id])
@@ -135,4 +136,13 @@ model Favorite {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+model Follows {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  followerId  String @db.ObjectId
+  followingId String @db.ObjectId
+  
+  follower    User   @relation("follower", fields: [followerId], references: [id])
+  following   User   @relation("following", fields: [followingId], references: [id])
 }

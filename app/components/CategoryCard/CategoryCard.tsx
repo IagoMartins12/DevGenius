@@ -3,9 +3,9 @@
 import { CategoryRelationsPosts, Post } from '@prisma/client';
 import HeartButton from '../HeartButton';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useGlobalContext } from '@/app/context/store';
 import { useTheme } from 'next-themes';
+import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 
 export const CategoryCard = ({
   posts,
@@ -16,21 +16,13 @@ export const CategoryCard = ({
   categoriesPost: CategoryRelationsPosts[];
   categoryId: string;
 }) => {
-  const router = useRouter();
+  const { navigateToUrl } = useNavigate();
   const { theme } = useTheme();
   const { categoriesState, currentUserState, likeState } = useGlobalContext();
 
   const categoryName = categoriesState.find(
     category => category.id === categoryId,
   );
-
-  const navigatePost = (postId: string) => {
-    router.push(`/post/${postId}`);
-  };
-
-  const navigateCategory = (categoryId: string) => {
-    router.push(`/category/${categoryId}`);
-  };
 
   return (
     <div
@@ -54,12 +46,12 @@ export const CategoryCard = ({
       </div>
       {posts.length > 0 ? (
         <div className='py-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5'>
-          {posts.map((post: Post, index: number) => (
+          {posts.map((post: Post) => (
             <div
               className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer
             ${theme === 'light' ? 'card-white' : 'card-dark'}`}
               key={post.id}
-              onClick={() => navigatePost(post.id)}
+              onClick={() => navigateToUrl('post', post.id)}
             >
               <div className='aspect-video w-full relative overflow-hidden rounded-xl'>
                 <Image
@@ -100,7 +92,7 @@ export const CategoryCard = ({
                         key={categoryPost.id}
                         onClick={ev => {
                           ev.stopPropagation();
-                          navigateCategory(categoryPost.categoryId);
+                          navigateToUrl('category', categoryPost.categoryId);
                         }}
                       >
                         {categoryName}

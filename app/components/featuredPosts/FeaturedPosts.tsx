@@ -16,7 +16,7 @@ export const FeaturedPosts = () => {
   const hasFeaturedPost = postsState.some((post: Post) => post.featured === 1);
 
   return (
-    <div className={`px-0 lg:px-32 pt-6 pb-4`}>
+    <div className={`px-0 lg:px-32`}>
       {hasFeaturedPost ? (
         <Carousel
           activeIndex={index}

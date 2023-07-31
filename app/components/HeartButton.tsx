@@ -31,9 +31,7 @@ const HeartButton: React.FC<HeartButtonProps> = ({
       onClick={e => {
         toggleFavorite(e);
       }}
-      className='
-        relative
-        hover:opacity-80
+      className='relative hover:opacity-80
         transition
         cursor-pointer
       '

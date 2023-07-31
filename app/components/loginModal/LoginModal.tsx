@@ -4,19 +4,19 @@ import { signIn } from 'next-auth/react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import useRegisterModal from '@/app/hooks/modals/useRegisterModal';
 import useLoginModal from '@/app/hooks/modals/useLoginModal';
-import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import Image from 'next/image';
 import { IoCloseOutline } from 'react-icons/io5';
 import { StyledInput } from '../commum/StyledInput';
 import { useTheme } from 'next-themes';
+import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 
 export const LoginModal = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
-  const router = useRouter();
   const isOpen: boolean = loginModal.isOpen;
   const { theme } = useTheme();
+  const { refresh } = useNavigate();
 
   const openRegisterModal = () => {
     loginModal.onClose();
@@ -41,7 +41,7 @@ export const LoginModal = () => {
     }).then(callback => {
       if (callback?.ok) {
         toast.success('Login feito com sucesso');
-        router.refresh();
+        refresh();
         loginModal.onClose();
       }
 
@@ -53,9 +53,8 @@ export const LoginModal = () => {
 
   return (
     <div
-      className={`modalPosition flex-col z-10
-      ${isOpen ? 'flex' : 'hidden'}
-      ${theme === 'light' ? 'modal-white' : 'modal-dark'}
+      className={`modalPosition flex-col z-10 ${isOpen ? 'flex' : 'hidden'}
+${theme === 'light' ? 'modal-white' : 'modal-dark'}
       `}
     >
       <div className='flex items-center justify-between ml-5 mt-2'>

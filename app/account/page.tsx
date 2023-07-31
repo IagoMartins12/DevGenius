@@ -1,5 +1,5 @@
 import getCurrentUser from '../actions/getCurrentUser';
-import { UserPage } from '../components/AccountPage/UserPage';
+import { AccountPage } from '../components/AccountPage/AccountPage';
 
 export default async function Account() {
   const currentUser = await getCurrentUser();
@@ -8,8 +8,8 @@ export default async function Account() {
 
   return (
     <>
-      <div className='flex w-11/12 mx-auto py-10'>
-        <UserPage currentUser={currentUser} />
+      <div className='flex flex-col sm:flex-row w-full lg:w-11/12 mx-auto py-10 gap-8 sm:gap-0'>
+        <AccountPage currentUser={currentUser} />
       </div>
     </>
   );

@@ -1,7 +1,7 @@
 import { signOut } from 'next-auth/react';
 import { User } from '@prisma/client';
-import { useRouter } from 'next/navigation';
 import {} from 'next-themes';
+import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 
 interface navBarProps {
   display?: boolean;
@@ -15,31 +15,31 @@ interface Menu {
 
 export const NavBarUser: React.FC<navBarProps> = ({ display, user }) => {
   let menus: Menu[];
-  const router = useRouter();
+  const { navigateToUrl } = useNavigate();
   if (user.role === 1) {
     menus = [
       {
         name: 'Perfil',
         action: () => {
-          router.push('/account');
+          navigateToUrl('account');
         },
       },
       {
         name: 'Configuração',
         action: () => {
-          router.push('/settings');
+          navigateToUrl('settings');
         },
       },
       {
         name: 'Criar post',
         action: () => {
-          router.push('/post/create');
+          navigateToUrl('post', 'create');
         },
       },
       {
         name: 'Painel',
         action: () => {
-          router.push('/panel');
+          navigateToUrl('panel');
         },
       },
       {
@@ -54,13 +54,13 @@ export const NavBarUser: React.FC<navBarProps> = ({ display, user }) => {
       {
         name: 'Perfil',
         action: () => {
-          router.push('/account');
+          navigateToUrl('account');
         },
       },
       {
         name: 'Configuração',
         action: () => {
-          router.push('/settings');
+          navigateToUrl('settings');
         },
       },
 

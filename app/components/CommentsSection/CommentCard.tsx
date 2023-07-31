@@ -1,3 +1,4 @@
+import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 import useDeleteCommentModal from '@/app/hooks/modals/useDeleteCommentModal';
 import { Comment, User } from '@prisma/client';
 import { useTheme } from 'next-themes';
@@ -15,11 +16,11 @@ export const CommentCard = ({
 }) => {
   const deleteModal = useDeleteCommentModal();
   const { theme } = useTheme();
+  const { navigateToUrl } = useNavigate();
 
   const handleCloseClick = () => {
     deleteModal.setCurrentComment(comment);
     deleteModal.onOpen();
-    document.body.style.overflow = 'hidden';
   };
 
   const formatDate = (date: any) => {
@@ -63,9 +64,12 @@ export const CommentCard = ({
         <div className='aspect-video w-12 h-12 relative'>
           <Image
             fill
-            className='object-cover rounded-full h-1 w-full'
+            className='object-cover rounded-full cursor-pointer w-full'
             src={user?.image ?? '/user.png'}
             alt='Post'
+            onClick={() => {
+              navigateToUrl('user', user?.id);
+            }}
           />
         </div>
       </div>
@@ -85,7 +89,10 @@ export const CommentCard = ({
                 <IoMdCloseCircle
                   size={20}
                   className='cursor-pointer'
-                  onClick={handleCloseClick} // Use a função de fechamento criada anteriormente
+                  onClick={ev => {
+                    ev.stopPropagation();
+                    handleCloseClick();
+                  }} // Use a função de fechamento criada anteriormente
                 />
               </div>
             )}

@@ -3,9 +3,9 @@
 import { CategoryRelationsPosts, Post } from '@prisma/client';
 import HeartButton from '../HeartButton';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useGlobalContext } from '@/app/context/store';
 import { useTheme } from 'next-themes';
+import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 
 export const SearchCard = ({
   posts,
@@ -14,11 +14,9 @@ export const SearchCard = ({
   posts: Post[];
   categoriesPost: CategoryRelationsPosts[];
 }) => {
-  const router = useRouter();
+  const { navigateToUrl } = useNavigate();
+
   const { categoriesState, currentUserState, likeState } = useGlobalContext();
-  const navigate = (postId: string) => {
-    router.push(`/post/${postId}`);
-  };
 
   const { theme } = useTheme();
 
@@ -43,7 +41,7 @@ export const SearchCard = ({
               className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer
             ${theme === 'light' ? 'card-white' : 'card-dark'}`}
               key={post.id}
-              onClick={() => navigate(post.id)}
+              onClick={() => navigateToUrl('post', post.id)}
             >
               <div className='aspect-video w-full relative overflow-hidden rounded-xl'>
                 <Image

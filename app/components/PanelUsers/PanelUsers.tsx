@@ -27,7 +27,7 @@ export type TablePerson = Pick<
   | 'role'
 >;
 
-const Example = ({ allUsers }: { allUsers: User[] }) => {
+const PanelUsers = ({ allUsers }: { allUsers: User[] }) => {
   const {
     columns,
     handleCancelRowEdits,
@@ -112,4 +112,4 @@ const Example = ({ allUsers }: { allUsers: User[] }) => {
   );
 };
 
-export default Example;
+export default PanelUsers;

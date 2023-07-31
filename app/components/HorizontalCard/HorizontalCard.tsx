@@ -1,31 +1,44 @@
+import { useEffect, useState } from 'react';
 import { Post } from '@prisma/client';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 
 interface HorizontalCardProps {
   post: Post;
 }
 
 export const HorizontalCard: React.FC<HorizontalCardProps> = ({ post }) => {
-  const MAX_RESUME_LENGTH = 350;
-  const resumeText = post.resume ?? '';
-  const router = useRouter();
+  const [MAX_RESUME_LENGTH, setMaxResumeLength] = useState(180); // Default value for smaller screens
 
+  const { navigateToUrl } = useNavigate();
+
+  const resumeText = post.resume ?? '';
   const truncatedResume =
     resumeText.length > MAX_RESUME_LENGTH
       ? resumeText.substring(0, MAX_RESUME_LENGTH) + '...'
       : resumeText;
 
-  const navigateToPost = (postId: string) => {
-    router.push(`post/${postId}`);
-  };
+  useEffect(() => {
+    const handleWindowSizeChange = () => {
+      const width = window.innerWidth;
+      setMaxResumeLength(width > 820 ? 350 : 150);
+    };
+
+    handleWindowSizeChange();
+
+    window.addEventListener('resize', handleWindowSizeChange);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowSizeChange);
+    };
+  }, []);
 
   return (
     <div
       className='w-full flex shadow-lg p-3 gap-3 cursor-pointer'
-      onClick={() => navigateToPost(post.id)}
+      onClick={() => navigateToUrl('post', post.id)}
     >
-      <div className='w-2/12'>
+      <div className='w-4/12 lg:w-2/12'>
         <div className='aspect-video w-full h-full relative flex cursor-pointer'>
           <Image
             fill
@@ -35,8 +48,10 @@ export const HorizontalCard: React.FC<HorizontalCardProps> = ({ post }) => {
           />
         </div>
       </div>
-      <div className='flex flex-col w-10/12'>
-        <span className='text-xl font-semibold'> {post.title}</span>
+      <div className='flex flex-col w-8/12 lg:w-10/12 gap-y-2'>
+        <span className='text-base lg:text-xl font-bold lg:font-semibold'>
+          {post.title}
+        </span>
         <span className='text-sm font-medium'> {truncatedResume}</span>
       </div>
     </div>

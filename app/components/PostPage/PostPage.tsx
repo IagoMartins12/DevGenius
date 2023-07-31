@@ -10,7 +10,6 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import axios, { AxiosResponse } from 'axios';
 import { useRef } from 'react';
-import { DeleteCommentModal } from '../deleteCommentModal/deleteCommentModal';
 import { CommentsSection } from '../CommentsSection/CommentsSection';
 import { ReactionsComponent } from '../ReactionsComponent/ReactionsComponent';
 import { useGlobalContext } from '@/app/context/store';
@@ -157,8 +156,6 @@ export const PostPage = ({
           />
         </div>
       </div>
-
-      <DeleteCommentModal />
     </div>
   );
 };

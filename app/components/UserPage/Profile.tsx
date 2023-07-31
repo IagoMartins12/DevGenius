@@ -1,5 +1,5 @@
 import { UserInfoTexts } from './UserInfoTexts';
-import { UserProps } from './AccountPage';
+import { UserProps } from './UserPage';
 
 export const Profile: React.FC<UserProps> = ({ currentUser }) => {
   return (

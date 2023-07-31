@@ -1,10 +1,10 @@
 'use client';
 
 import { useGlobalContext } from '@/app/context/store';
+import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 import { CategoryRelationsPosts, Post } from '@prisma/client';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
 export const RelatedPosts = ({
   categoriesPost,
@@ -13,24 +13,14 @@ export const RelatedPosts = ({
   categoriesPost: CategoryRelationsPosts[];
   currentPost: Post | null;
 }) => {
-  const router = useRouter();
-
   const { postsState, categoriesState } = useGlobalContext();
   const { theme } = useTheme();
+  const { navigateToUrl } = useNavigate();
 
   const postsIds = categoriesPost.map(categoryPost => categoryPost.postId);
-
   const relatedPosts = postsState.filter(post => {
     return postsIds.includes(post.id) && post.id !== currentPost?.id;
   });
-
-  const navigatePost = (postId: string) => {
-    router.push(`/post/${postId}`);
-  };
-
-  const navigateCategory = (categoryId: string) => {
-    router.push(`/category/${categoryId}`);
-  };
 
   return (
     <div className={`flex flex-col w-11/12 mx-auto pt-8`}>
@@ -43,7 +33,7 @@ export const RelatedPosts = ({
             className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer
             ${theme === 'light' ? 'card-white' : 'card-dark'}`}
             key={post.id}
-            onClick={() => navigatePost(post.id)}
+            onClick={() => navigateToUrl('post', post.id)}
           >
             <div className='aspect-video w-full relative overflow-hidden rounded-xl'>
               <Image
@@ -77,7 +67,7 @@ export const RelatedPosts = ({
                       key={categoryPost.id}
                       onClick={ev => {
                         ev.stopPropagation();
-                        navigateCategory(categoryPost.categoryId);
+                        navigateToUrl('category/', categoryPost.categoryId);
                       }}
                     >
                       {categoryName}

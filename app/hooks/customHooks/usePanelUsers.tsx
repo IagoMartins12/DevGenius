@@ -12,6 +12,7 @@ import { Box } from '@mui/material';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { TablePerson } from '@/app/components/PanelUsers/PanelUsers';
+import { useNavigate } from './useNavigate';
 
 export const usePanelUsers = () => {
   const [tableData, setTableData] = useState<TablePerson[]>(() => []);
@@ -19,6 +20,8 @@ export const usePanelUsers = () => {
   const [validationErrors, setValidationErrors] = useState<{
     [cellId: string]: string;
   }>({});
+
+  const { navigateToUrl } = useNavigate();
 
   const handleSaveRowEdits: MaterialReactTableProps<TablePerson>['onEditingRowSave'] =
     async ({ exitEditingMode, row, values }) => {
@@ -92,9 +95,12 @@ export const usePanelUsers = () => {
             <div className='aspect-video w-12 h-12 relative'>
               <Image
                 fill
-                className='object-cover rounded-full h-1 w-full '
+                className='object-cover rounded-full cursor-pointer w-full '
                 src={row.original.image || '/user.png'}
                 alt='avatar'
+                onClick={() => {
+                  navigateToUrl('user', row.original.id);
+                }}
               />
             </div>
           </Box>
