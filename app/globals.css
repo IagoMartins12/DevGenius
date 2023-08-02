@@ -1,7 +1,6 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-@import 'bootstrap/dist/css/bootstrap.min.css';
 
 .dark {
   --bg-color-dark: #1c1c1c;
@@ -563,11 +562,23 @@ input[type='submit']:hover {
   .modalPosition {
     width: 100%;
     min-height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: inherit;
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
 
   .usersModal {
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: inherit;
   }
 
   .deleteModalPosition {

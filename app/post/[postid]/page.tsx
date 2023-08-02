@@ -6,6 +6,7 @@ import { getAllUsers } from '@/app/actions/getUser';
 import { PostPage } from '@/app/components/PostPage/PostPage';
 import { RelatedPosts } from '@/app/components/RelatedPosts/RelatedPosts';
 import { Footer } from '@/app/components/footer/Footer';
+import { SkeletonPost } from '@/app/components/skeletons/SkeletonPost';
 import { CategoryRelationsPosts, Post } from '@prisma/client';
 
 interface Iparams {

@@ -31,12 +31,7 @@ export const PostCard: React.FC<PostCardProps> = ({
       key={post.id}
       onClick={() => navigateToUrl('post', post.id)}
     >
-      <div
-        className='aspect-video w-full relative overflow-hidden rounded-xl'
-        style={{
-          height: '40%',
-        }}
-      >
+      <div className='aspect-video w-full relative overflow-hidden rounded-xl h-2/5 sm:h-1/3'>
         <Image
           fill
           className='object-cover w-full group-hover:scale-110 transition'
@@ -57,12 +52,7 @@ export const PostCard: React.FC<PostCardProps> = ({
         {post.featured === 1 ? <FeaturedIcon /> : null}
       </div>
 
-      <div
-        className='flex flex-col justify-around overflow-hidden px-3'
-        style={{
-          height: '60%',
-        }}
-      >
+      <div className='flex flex-col justify-around overflow-hidden px-3 h-3/5 sm:h-2/3'>
         <div className='py-3 flex items-center flex-col justify-center gap-y-3'>
           <div
             className={`font-bold text-base ${

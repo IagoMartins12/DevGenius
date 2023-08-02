@@ -36,7 +36,7 @@ export const UserCard: React.FC<UserCardProp> = ({ user }) => {
         navigateToUrl('user', user.id);
       }}
     >
-      <div className=' w-2/12 flex items-center justify-center'>
+      <div className='w-2/12 flex items-center justify-center'>
         <div className='aspect-video w-10 h-10 relative'>
           <Image
             fill

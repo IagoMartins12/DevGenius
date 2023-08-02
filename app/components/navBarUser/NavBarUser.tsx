@@ -81,7 +81,7 @@ export const NavBarUser: React.FC<navBarProps> = ({ display, user }) => {
       z-999 
       w-52
       right-0 
-      top-20
+      top-16
       flex-col 
       border-radius-16 `}
     >

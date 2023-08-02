@@ -17,6 +17,7 @@ import { AuthorCardMobile } from '../AuthorCardMobile/AuthorCardMobile';
 import { ShareLink } from '../ShareLink/ShareLink';
 import useLoginModal from '@/app/hooks/modals/useLoginModal';
 import { RelatedPosts } from '../RelatedPosts/RelatedPosts';
+import { SkeletonPost } from '../skeletons/SkeletonPost';
 
 export const PostPage = ({
   post,
@@ -37,7 +38,7 @@ export const PostPage = ({
   setPostState(post);
 
   if (!postState) {
-    return <div>Post não encontrado</div>;
+    return <SkeletonPost />;
   }
 
   const router = useRouter();
@@ -102,7 +103,7 @@ export const PostPage = ({
     <div className={`w-full flex gap-x-4 sm:px-16 lg:px-32 sm:py-10`}>
       <ReactionsComponent commentAction={commentAction} postId={postState.id} />
       <ShareLink post={post} />
-      <div className='w-full sm:w-10/12  flex-col h-full  mx-auto'>
+      <div className='w-full sm:w-10/12  flex-col h-full mx-auto'>
         {currentUserState?.role === 1 && (
           <div className='w-11/12 mx-auto flex items-center justify-end gap-1'>
             <IoMdCloseCircle

@@ -1,9 +1,9 @@
 .Container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   position: fixed;
   background-color: transparent;
+  width: 40px;
 }
 
 @media (max-width: 620px) {
@@ -16,7 +16,7 @@
     width: 100%;
     gap: 2rem;
     padding-top: 1rem;
-    z-index: 20;
+    z-index: 9999;
     background-color: inherit;
   }
 }

@@ -11,9 +11,10 @@ import { Comments } from './Comments';
 import { AccountMenu } from './AccountMenu';
 import { useGlobalContext } from '@/app/context/store';
 import useUsersModal from '@/app/hooks/modals/useUsersModal';
+import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 
 export interface UserProps {
-  currentUser: User;
+  currentUser: User | null;
   allUsers?: User[];
   post?: Post;
   isMyAccount?: boolean;
@@ -22,8 +23,15 @@ export const AccountPage: React.FC<UserProps> = ({ currentUser, allUsers }) => {
   const [isActive, setIsActive] = useState<number>(0);
 
   const { followersState } = useGlobalContext();
+  const { navigateToHome } = useNavigate();
   const usersModal = useUsersModal();
 
+  if (!currentUser) {
+    {
+      navigateToHome();
+    }
+    return;
+  }
   //Who I follow
   const myFollowing = followersState.filter(
     follower => follower.followerId === currentUser.id,

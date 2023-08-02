@@ -20,7 +20,7 @@ export const RelatedPosts = ({
 
   return (
     <div className={`flex flex-col w-11/12 mx-auto pt-8`}>
-      <RelatedCarousel posts={relatedPosts} categoriesPosts={categoriesPost} />
+      <RelatedCarousel posts={relatedPosts} />
     </div>
   );
 };

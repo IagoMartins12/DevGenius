@@ -54,7 +54,7 @@ export const LoginModal = () => {
 
   return (
     <div
-      className={`modalPosition flex-col z-10 ${isOpen ? 'flex' : 'hidden'}
+      className={`modalPosition flex-col z-50 ${isOpen ? 'flex' : 'hidden'}
 ${theme === 'light' ? 'modal-white' : 'modal-dark'}
       `}
     >

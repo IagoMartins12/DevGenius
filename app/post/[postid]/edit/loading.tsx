@@ -1,4 +1,4 @@
-import { SkeletonSettings } from '../components/skeletons/SkeletonSettings/SkeletonSettings';
+import { SkeletonSettings } from '@/app/components/skeletons/SkeletonSettings/SkeletonSettings';
 
 const Loading = async () => {
   return (

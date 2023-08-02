@@ -5,7 +5,6 @@ const Loading = async () => {
   return (
     <>
       <SkeletonHome />
-      <Footer />
     </>
   );
 };

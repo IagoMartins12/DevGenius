@@ -1,19 +1,12 @@
 import useUsersModal from '@/app/hooks/modals/useUsersModal';
 import { UserCard } from './UserCard';
 import { IoCloseOutline } from 'react-icons/io5';
-import axios from 'axios';
-import { toast } from 'react-hot-toast';
-import { useGlobalContext } from '@/app/context/store';
-import { UnfollowerUserFunction } from '@/app/utils/HelpersFunctions';
 import { ChangeEvent, useState } from 'react';
 
 export const UsersModal = ({}: {}) => {
   const [searchValue, setSearchValue] = useState('');
 
   const userModal = useUsersModal();
-
-  const { followersState, currentUserState, setFollowersState } =
-    useGlobalContext();
 
   const isOpen = userModal.isOpen;
   const userData = userModal.currentData;
@@ -23,12 +16,12 @@ export const UsersModal = ({}: {}) => {
   };
   return (
     <div
-      className={`usersModal flex-col z-10 px-4 py-3 h-96 relative gap-y-8 
+      className={`usersModal flex-col z-10 px-4 py-3 h-96 mt-9 relative gap-y-8 
         ${isOpen ? 'flex' : 'hidden'} bg-color`}
     >
-      <div className=''>
+      <div className='mt-10 sm:pt-0'>
         <IoCloseOutline
-          className='absolute right-3 top-3 cursor-pointer'
+          className='absolute right-3 top-11 sm:top-3 cursor-pointer'
           onClick={() => userModal.onClose()}
           size={30}
         />
@@ -43,8 +36,8 @@ export const UsersModal = ({}: {}) => {
             placeholder='Pesquisar usuarios'
             name='text'
             className='input'
-            value={searchValue} // 2. Use o valor do estado para o valor do input.
-            onChange={handleSearchInputChange} // 2. Adicione o evento de alteração do input.
+            value={searchValue}
+            onChange={handleSearchInputChange}
           />
           <svg
             fill='#000000'

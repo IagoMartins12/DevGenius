@@ -1,17 +1,13 @@
 import { FiChevronRight, FiChevronLeft } from 'react-icons/fi';
 import { Card } from './Card';
-import { CategoryRelationsPosts, Post } from '@prisma/client';
+import { Post } from '@prisma/client';
 import { useRef } from 'react';
 
 export interface CarouselProps {
   posts: Post[];
-  categoriesPosts: CategoryRelationsPosts[];
 }
 
-export const RelatedCarousel: React.FC<CarouselProps> = ({
-  posts,
-  categoriesPosts,
-}) => {
+export const RelatedCarousel: React.FC<CarouselProps> = ({ posts }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = () => {
@@ -100,7 +96,7 @@ export const RelatedCarousel: React.FC<CarouselProps> = ({
         ref={carouselRef}
       >
         {posts.map(post => (
-          <Card key={post.id} post={post} categoriesPosts={categoriesPosts} />
+          <Card key={post.id} post={post} />
         ))}
       </div>
     </div>
