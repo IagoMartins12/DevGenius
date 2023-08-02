@@ -27,8 +27,7 @@ export const PostCard: React.FC<PostCardProps> = ({
     <div
       className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer sm:col-span-6 lg:col-span-3 ${
         withHeight ? 'card-height' : ''
-      }
-                ${theme === 'light' ? 'card-white' : 'card-dark'}`}
+      } ${theme === 'light' ? 'card-white' : 'card-dark'}`}
       key={post.id}
       onClick={() => navigateToUrl('post', post.id)}
     >
@@ -59,17 +58,29 @@ export const PostCard: React.FC<PostCardProps> = ({
       </div>
 
       <div
-        className='flex flex-col justify-around overflow-hidden'
+        className='flex flex-col justify-around overflow-hidden px-3'
         style={{
           height: '60%',
         }}
       >
-        <div className='px-6 py-4 flex items-center flex-col justify-center gap-y-2'>
-          <div className='font-bold text-lg'>{post.title}</div>
-          <div className='font-bold text-sm'>{truncatedResume}</div>
+        <div className='py-3 flex items-center flex-col justify-center gap-y-3'>
+          <div
+            className={`font-bold text-base ${
+              theme === 'light' ? 'text-black' : 'text-white'
+            }`}
+          >
+            {post.title}
+          </div>
+          <div
+            className={`font-semibold text-sm  ${
+              theme === 'light' ? 'text-gray-950' : 'text-white'
+            }`}
+          >
+            {truncatedResume}
+          </div>
         </div>
 
-        <div className='px-6 pt-4 pb-2'>
+        <div className='pb-2'>
           {categoriesPost
             .filter(element => element.postId === post.id)
             .map(categoryPost => {
@@ -80,7 +91,7 @@ export const PostCard: React.FC<PostCardProps> = ({
 
               return (
                 <span
-                  className='inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2'
+                  className='inline-block bg-gray-200 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 mr-2 mb-2'
                   key={categoryPost.id}
                   onClick={ev => {
                     ev.stopPropagation();

@@ -22,7 +22,7 @@ export const Card: React.FC<CardProps> = ({ post, categoriesPosts }) => {
   useEffect(() => {
     const handleWindowSizeChange = () => {
       const width = window.innerWidth;
-      setMaxResumeLength(width > 820 ? 180 : 100);
+      setMaxResumeLength(width > 820 ? 250 : 100);
     };
 
     handleWindowSizeChange();
@@ -38,10 +38,13 @@ export const Card: React.FC<CardProps> = ({ post, categoriesPosts }) => {
   const { theme } = useTheme();
 
   return (
-    <div className=' card w-[33%] m-2 rounded-lg overflow-hidden '>
+    <div
+      className={`card w-[33%] m-2 rounded-lg overflow-hidden card-height ${
+        theme === 'light' ? 'relatedCard-white' : 'relatedCard-dark'
+      }`}
+    >
       <div
-        className={`rounded h-full cursor-pointer
-            ${theme === 'light' ? 'card-white' : 'card-dark'}`}
+        className={`rounded h-full cursor-pointer`}
         key={post.id}
         onClick={() => navigateToUrl('post', post.id)}
       >
@@ -55,8 +58,20 @@ export const Card: React.FC<CardProps> = ({ post, categoriesPosts }) => {
         </div>
 
         <div className='px-6 py-4 h-3/6 flex flex-col gap-y-4'>
-          <div className='font-bold text-base'>{post.title}</div>
-          <div className='font-semibold text-base '>{truncatedResume}</div>
+          <div
+            className={`font-bold text-base ${
+              theme === 'light' ? 'text-black' : 'text-white'
+            }`}
+          >
+            {post.title}
+          </div>
+          <div
+            className={`font-semibold text-sm  ${
+              theme === 'light' ? 'text-gray-950' : 'text-white'
+            }`}
+          >
+            {truncatedResume}
+          </div>
         </div>
       </div>
     </div>

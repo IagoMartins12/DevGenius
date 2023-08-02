@@ -73,6 +73,16 @@ body {
   border-radius: 18px;
 }
 
+.relatedCard-white {
+  background: #fff;
+  border-radius: 18px;
+}
+
+.relatedCard-dark {
+  background: #1c1c1c;
+  box-shadow: 0 16px 48px 8px rgba(1, 1, 5, 0.1);
+  border-radius: 18px;
+}
 .user-white {
   background: #fff;
   border-radius: 10px;
@@ -99,8 +109,13 @@ body {
 }
 
 .card-height {
-  height: 30rem;
+  height: 29rem;
 }
+
+.carousel-height {
+  height: 29rem;
+}
+
 .FeaturedCard {
   flex: 0 0 100%; /* Each card occupies 30.33% of the container width */
   max-width: 100%;
@@ -575,5 +590,12 @@ input[type='submit']:hover {
   .card {
     flex: 0 0 97.5%; /* Each card occupies 30.33% of the container width */
     max-width: 99%;
+  }
+
+  .card-height {
+    height: 29rem;
+  }
+  .carousel-height {
+    height: 350px;
   }
 }

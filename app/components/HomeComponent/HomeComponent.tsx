@@ -24,9 +24,9 @@ export const HomeComponent: React.FC<HomeComponentProps> = ({
 
   return (
     <>
-      <div className='lg:!px-28 px-2 py-4 w-full'>
+      <div className='lg:!px-28 px-2 w-full'>
         <div className='py-10 grid grid-cols-1 sm:grid-cols-12 gap-5 max-w-full '>
-          <div className='sm:col-span-12 lg:col-span-6 card-height'>
+          <div className='sm:col-span-12 lg:col-span-6 carousel-height'>
             <FeaturedCarousel />
           </div>
           {sortedPostsState.map((post: Post, index: number) => {

@@ -10,7 +10,7 @@ interface CardProps {
 }
 
 export const Card: React.FC<CardProps> = ({ post }) => {
-  const [MAX_RESUME_LENGTH, setMaxResumeLength] = useState(180); // Default value for smaller screens
+  const [MAX_RESUME_LENGTH, setMaxResumeLength] = useState(80); // Default value for smaller screens
 
   const resumeText = post.resume ?? '';
   const truncatedResume =

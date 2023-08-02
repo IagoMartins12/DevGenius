@@ -12,7 +12,7 @@ export const FeaturedCarousel: React.FC = () => {
 
   const scrollLeft = () => {
     if (carouselRef.current) {
-      const scrollAmount = window.innerWidth / 1.06;
+      const scrollAmount = window.innerWidth / 1.03;
       const scrollLeftPos = carouselRef.current.scrollLeft;
       let currentTime = 0;
 
@@ -38,7 +38,7 @@ export const FeaturedCarousel: React.FC = () => {
 
   const scrollRight = () => {
     if (carouselRef.current) {
-      const scrollAmount = window.innerWidth / 1.06;
+      const scrollAmount = window.innerWidth / 1.03;
       const scrollLeftPos = carouselRef.current.scrollLeft;
       const maxScrollLeft =
         carouselRef.current.scrollWidth - carouselRef.current.clientWidth;
@@ -68,13 +68,13 @@ export const FeaturedCarousel: React.FC = () => {
   };
 
   return (
-    <div className='relative card-height'>
-      <div className='absolute right-0 bottom-0 z-10 '>
+    <div className='relative carousel-height'>
+      <div className='absolute right-0 bottom-0 z-30 '>
         <button onClick={scrollLeft} className='p-2 m-2 rounded-full'>
-          <FiChevronLeft size={25} />
+          <FiChevronLeft size={25} color='white' />
         </button>
         <button onClick={scrollRight} className='p-2 m-2 rounded-full'>
-          <FiChevronRight size={25} />
+          <FiChevronRight size={25} color='white' />
         </button>
       </div>
       <div

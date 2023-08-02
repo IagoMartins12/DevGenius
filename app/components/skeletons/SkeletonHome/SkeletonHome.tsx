@@ -1,99 +1,49 @@
-'use client';
-import { useTheme } from 'next-themes';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 export const SkeletonHome = () => {
-  const { theme } = useTheme();
+  const numberOfCards = [1, 2, 3, 4, 5, 6];
   return (
     <div>
-      <div className='px-10 lg:px-32 pt-6'>
-        <Skeleton className='d-block w-100 imgCarousel ' />
+      <div className='w-full '>
+        <Skeleton className='d-block w-100  h-64 sm:h-72 ' />
       </div>
 
-      <div className={`pt-4 px-10 lg:px-32 `}>
-        <Skeleton width={120} />
-        <div className='py-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5'>
-          <div
-            className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer flex flex-col 
-            ${theme === 'light' ? 'card-white' : 'card-dark'}`}
-          >
-            <Skeleton containerClassName='d-block w-100 h-3/12' height={290} />
-            <div className=''>
-              <div className='max-w-full px-6 pt-4 flex flex-col gap-y-3'>
-                <Skeleton height={20} className='w-full' />
-                <Skeleton height={50} className='w-full' />
+      <div className='lg:!px-28 px-2 w-full'>
+        <div className='py-10 grid grid-cols-1 sm:grid-cols-12 gap-5 max-w-full '>
+          <div className='sm:col-span-12 lg:col-span-6 card-height'>
+            <Skeleton className='d-block w-full h-full' />
+          </div>
+
+          {numberOfCards.map(number => (
+            <div
+              className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer sm:col-span-6 lg:col-span-3 card-height`}
+              key={number}
+            >
+              <div
+                style={{
+                  height: '40%',
+                }}
+              >
+                <Skeleton className='d-block w-full h-full' />
               </div>
-              <div className='flex items-start justify-start px-6 pt-4'>
-                <Skeleton containerClassName='rounded-full py-1 text-sm mr-2 mb-2 w-2/12' />
-                <Skeleton containerClassName='rounded-full py-1 text-sm mr-2 mb-2 w-2/12' />
+              <div
+                className='flex flex-col justify-around overflow-hidden px-3'
+                style={{
+                  height: '60%',
+                }}
+              >
+                <div className='max-w-full flex flex-col gap-y-3'>
+                  <Skeleton height={20} className='w-full' />
+                  <Skeleton height={70} className='w-full' />
+                </div>
+                <div className='flex items-start justify-start pb-2 gap-x-4 '>
+                  <Skeleton containerClassName='rounded-full py-1 w-3/12' />
+                  <Skeleton containerClassName='rounded-full py-1 w-3/12' />
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer flex flex-col 
-            ${theme === 'light' ? 'card-white' : 'card-dark'}`}
-          >
-            <Skeleton containerClassName='d-block w-100 h-3/12' height={290} />
-            <div className=''>
-              <div className='max-w-full px-6 pt-4 flex flex-col gap-y-3'>
-                <Skeleton height={20} className='w-full' />
-                <Skeleton height={50} className='w-full' />
-              </div>
-              <div className='flex items-start justify-start px-6 pt-4'>
-                <Skeleton containerClassName='rounded-full py-1 text-sm mr-2 mb-2 w-2/12' />
-                <Skeleton containerClassName='rounded-full py-1 text-sm mr-2 mb-2 w-2/12' />
-              </div>
-            </div>
-          </div>
-          <div
-            className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer flex flex-col 
-            ${theme === 'light' ? 'card-white' : 'card-dark'}`}
-          >
-            <Skeleton containerClassName='d-block w-100 h-3/12' height={290} />
-            <div className=''>
-              <div className='max-w-full px-6 pt-4 flex flex-col gap-y-3'>
-                <Skeleton height={20} className='w-full' />
-                <Skeleton height={50} className='w-full' />
-              </div>
-              <div className='flex items-start justify-start px-6 pt-4'>
-                <Skeleton containerClassName='rounded-full py-1 text-sm mr-2 mb-2 w-2/12' />
-                <Skeleton containerClassName='rounded-full py-1 text-sm mr-2 mb-2 w-2/12' />
-              </div>
-            </div>
-          </div>
-          <div
-            className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer flex flex-col 
-            ${theme === 'light' ? 'card-white' : 'card-dark'}`}
-          >
-            <Skeleton containerClassName='d-block w-100 h-3/12' height={290} />
-            <div className=''>
-              <div className='max-w-full px-6 pt-4 flex flex-col gap-y-3'>
-                <Skeleton height={20} className='w-full' />
-                <Skeleton height={50} className='w-full' />
-              </div>
-              <div className='flex items-start justify-start px-6 pt-4'>
-                <Skeleton containerClassName='rounded-full py-1 text-sm mr-2 mb-2 w-2/12' />
-                <Skeleton containerClassName='rounded-full py-1 text-sm mr-2 mb-2 w-2/12' />
-              </div>
-            </div>
-          </div>
-          <div
-            className={`rounded overflow-hidden shadow-lg px-2 py-2 cursor-pointer flex flex-col 
-            ${theme === 'light' ? 'card-white' : 'card-dark'}`}
-          >
-            <Skeleton containerClassName='d-block w-100 h-3/12' height={290} />
-            <div className=''>
-              <div className='max-w-full px-6 pt-4 flex flex-col gap-y-3'>
-                <Skeleton height={20} className='w-full' />
-                <Skeleton height={50} className='w-full' />
-              </div>
-              <div className='flex items-start justify-start px-6 pt-4'>
-                <Skeleton containerClassName='rounded-full py-1 text-sm mr-2 mb-2 w-2/12' />
-                <Skeleton containerClassName='rounded-full py-1 text-sm mr-2 mb-2 w-2/12' />
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
