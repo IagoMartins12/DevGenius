@@ -2,7 +2,8 @@ import {
   getPostCategories,
   getPostsByCategory,
 } from '@/app/actions/getCategories';
-import { CategoryCard } from '@/app/components/CategoryCard/CategoryCard';
+import { getAllUsers } from '@/app/actions/getUser';
+import { CategoryPageComponent } from '@/app/components/CategoryPageComponent/CategoryPageComponent';
 import { CategoryRelationsPosts } from '@prisma/client';
 
 interface Iparams {
@@ -14,13 +15,15 @@ export default async function CategoryPage({ params }: { params: Iparams }) {
 
   const posts = await getPostsByCategory(categoryid);
   const categoryPosts: CategoryRelationsPosts[] = await getPostCategories();
+  const allUsers = await getAllUsers();
 
   return (
     <div>
-      <CategoryCard
+      <CategoryPageComponent
         posts={posts}
         categoriesPost={categoryPosts}
         categoryId={categoryid}
+        allUsers={allUsers}
       />
     </div>
   );

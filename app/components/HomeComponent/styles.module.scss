@@ -1,0 +1,8 @@
+/* PostCard.module.css */
+
+@media (max-width: 640px) {
+  .grid-mobile {
+    grid-template-columns: 1fr; /* Set a single column for mobile */
+    grid-template-rows: 1fr; /* Set a single row for mobile */
+  }
+}

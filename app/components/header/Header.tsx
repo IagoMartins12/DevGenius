@@ -77,7 +77,7 @@ export const Header: React.FC<NavbarProps> = () => {
 
   return (
     <header
-      className='items-center justify-between gap-0 sm:gap-10 flex sticky top-0 w-full z-10 md:!px-12 !px-4'
+      className='items-center justify-between gap-0 sm:gap-10 flex sticky top-0 w-full z-50 md:!px-12 !px-4'
       style={{
         backgroundColor:
           theme === 'dark'

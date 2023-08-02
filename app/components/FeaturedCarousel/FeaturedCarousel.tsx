@@ -68,8 +68,8 @@ export const FeaturedCarousel: React.FC = () => {
   };
 
   return (
-    <div className='relative w-6/12'>
-      <div className='absolute right-0 bottom-0 z-50 '>
+    <div className='relative card-height'>
+      <div className='absolute right-0 bottom-0 z-10 '>
         <button onClick={scrollLeft} className='p-2 m-2 rounded-full'>
           <FiChevronLeft size={25} />
         </button>
@@ -79,10 +79,10 @@ export const FeaturedCarousel: React.FC = () => {
       </div>
       <div
         id='content'
-        className='carousel my-4 flex items-center justify-start overflow-x-hidden'
+        className='carousel flex items-center justify-start overflow-x-hidden h-full '
         style={{
           scrollSnapType: 'x mandatory',
-          scrollBehavior: 'smooth', // Add this style for smooth scrolling effect on arrow click
+          scrollBehavior: 'smooth',
         }}
         ref={carouselRef}
       >
