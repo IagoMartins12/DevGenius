@@ -9,11 +9,15 @@ import { useTheme } from 'next-themes';
 import ThemeSwitch from '../ThemeSwitch/ThemeSwitch';
 import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
+import useHorizontalMenu from '@/app/hooks/modals/useHorizontalMenu';
+import { HorizontalMenuModal } from '../HorizontalMenuModal/HorizontalMenuModal';
 
 interface NavbarProps {}
 
 export const Header: React.FC<NavbarProps> = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const [menuIsOpenHorizontal, setMenuIsOpenHorizontal] = useState(false);
+
   const [searchFocus, setSearchFocus] = useState(false);
   const [blackHeader, setBlackHeader] = useState(false);
   const { currentUserState, categoriesState } = useGlobalContext();
@@ -26,7 +30,12 @@ export const Header: React.FC<NavbarProps> = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const toggleOpen = () => {
-    setIsOpen(!isOpen);
+    setMenuIsOpen(!menuIsOpen);
+  };
+
+  const toggleOpenHorizontal = () => {
+    setMenuIsOpenHorizontal(!menuIsOpenHorizontal);
+    console.log(menuIsOpenHorizontal);
   };
 
   const handleFocus = () => {
@@ -96,6 +105,7 @@ export const Header: React.FC<NavbarProps> = () => {
           <BiDotsVerticalRounded
             size={22}
             className='flex sm:hidden cursor-pointer'
+            onClick={toggleOpenHorizontal}
           />
           <div>
             <h1
@@ -157,23 +167,30 @@ export const Header: React.FC<NavbarProps> = () => {
             <AiOutlineUser size={28} onClick={() => toggleOpen()} />
             <NavBarUser
               user={currentUserState}
-              display={isOpen}
-              setDisplay={setIsOpen}
+              display={menuIsOpen}
+              setDisplay={setMenuIsOpen}
+            />
+            <HorizontalMenuModal
+              isOpen={menuIsOpenHorizontal}
+              setIsOpen={setMenuIsOpenHorizontal}
             />
           </>
         ) : (
-          <AiOutlineUser size={28} onClick={() => loginModal.onOpen()} />
+          <>
+            <AiOutlineUser size={28} onClick={() => loginModal.onOpen()} />
+          </>
         )}
 
         <ThemeSwitch />
+
         <div
           className='fixed top-0 left-0 right-0 bottom-0 z-0'
           style={{
-            display: isOpen ? 'flex' : 'none',
+            display: menuIsOpen ? 'flex' : 'none',
           }}
           onClick={() => {
-            if (isOpen) {
-              setIsOpen(!isOpen);
+            if (menuIsOpen) {
+              setMenuIsOpen(!menuIsOpen);
             }
           }}
         />

@@ -89,6 +89,7 @@ export const NavBarUser: React.FC<navBarProps> = ({
       right-0 
       top-16
       flex-col 
+      bg-color
       border-radius-16 `}
     >
       {menus.map((menu: Menu, index: number) => {
@@ -99,9 +100,9 @@ export const NavBarUser: React.FC<navBarProps> = ({
               menu?.action();
               setDisplay(false);
             }}
-            className='w-full flex flex-col bg-color'
+            className='w-full flex flex-col '
           >
-            <p className='m-0 px-5 py-2'>{menu?.name}</p>
+            <p className='m-0 px-5 py-2 font-semibold'>{menu?.name}</p>
           </div>
         );
       })}

@@ -25,7 +25,7 @@ export const Card: React.FC<CardProps> = ({ post }) => {
         key={post.id}
         onClick={() => navigateToUrl('post', post.id)}
       >
-        <div className='px-6 py-4 flex flex-col gap-y-4 absolute bottom-0 z-30 w-10/12 mx-auto'>
+        <div className='px-6 py-4 flex flex-col gap-y-4 absolute bottom-0 z-10 w-10/12 mx-auto'>
           <div className='font-bold text-lg text-white'>{post.title}</div>
           <div className='font-semibold text-sm text-white'>
             {truncatedResume}
