@@ -8,6 +8,7 @@ import { RelatedPosts } from '@/app/components/RelatedPosts/RelatedPosts';
 import { Footer } from '@/app/components/Footer/Footer';
 import { SkeletonPost } from '@/app/components/Skeletons/SkeletonPost';
 import { CategoryRelationsPosts, Post } from '@prisma/client';
+import ClientOnly from '@/app/components/ClientOnly';
 
 interface Iparams {
   postid: string;
@@ -22,7 +23,7 @@ export default async function Post({ params }: { params: Iparams }) {
   );
   const currentUser = await getCurrentUser();
   return (
-    <>
+    <ClientOnly>
       <PostPage
         post={post}
         author={author}
@@ -30,6 +31,6 @@ export default async function Post({ params }: { params: Iparams }) {
         categoryPosts={categoryPosts}
         currentUser={currentUser}
       />
-    </>
+    </ClientOnly>
   );
 }

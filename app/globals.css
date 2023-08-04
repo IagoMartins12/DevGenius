@@ -509,6 +509,28 @@ input[type='submit']:hover {
   z-index: 40;
 }
 
+figure {
+  padding: 20px 0 40px;
+  width: 60%;
+  margin: 0 auto;
+}
+
+figcaption {
+  text-align: center;
+  letter-spacing: 0.1px;
+  line-height: 1.3;
+  font-size: 0.875rem;
+  padding: 15px 0 0;
+}
+
+.formatImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+/* checkbox */
+
 @media (max-width: 920px) {
   .carousel-inner {
     height: 45vh;
@@ -543,6 +565,11 @@ input[type='submit']:hover {
     max-width: 47%;
     height: 400px;
     max-height: 400px;
+  }
+
+  figure {
+    width: 100%;
+    margin: 0 auto;
   }
 }
 

@@ -1,9 +1,24 @@
+import getCurrentUser from '@/app/actions/getCurrentUser';
+import ClientOnly from '@/app/components/ClientOnly';
 import { CreatePosts } from '@/app/components/CreatePosts/CreatePosts';
+import NotAuth from '@/app/components/NotAuth';
 
 export default async function Create() {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser || currentUser.role !== 1) {
+    return (
+      <ClientOnly>
+        <NotAuth />
+      </ClientOnly>
+    );
+  }
+
   return (
     <>
-      <CreatePosts />
+      <ClientOnly>
+        <CreatePosts />
+      </ClientOnly>
     </>
   );
 }

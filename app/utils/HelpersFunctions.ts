@@ -37,10 +37,6 @@ export const UnfollowerUserFunction = (
   unfollowUserId: string,
   updateFollowers: Dispatch<SetStateAction<Followers[]>>,
 ) => {
-  console.log('seguidores', followers);
-  console.log('id do user', unfollowUserId);
-  console.log('meu id', currentUserId);
-
   const unfollowed = followers.find(
     followers =>
       followers.followerId === currentUserId &&

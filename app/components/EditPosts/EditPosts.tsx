@@ -26,29 +26,45 @@ export const EditPosts: React.FC<EditPosts> = ({ post, postCategories }) => {
     setCustomValue,
     setValue,
     onSubmit,
+    watch,
   } = useEditPosts({ post, postCategories });
 
+  const contentPost = watch('content');
+  const renderPostContent = () => {
+    return { __html: contentPost };
+  };
   return (
     <>
       <div className={`flex flex-col sm:px-24 sm:py-6`}>
         <h3 className='sm:mx-6 mt-6 mx-6 font-bold text-3xl '>Editar post</h3>
         <div className='flex flex-col lg:flex-row gap-y-8 lg:gap-x-8  mx-6 my-6 '>
-          <div className='flex flex-col w-full lg:w-4/12'>
+          <div className='flex flex-col w-full lg:w-4/12 gap-5'>
             <div>
-              <ImageUpload
-                onChange={value => setCustomValue('photo_background', value)}
-                value={photo_background}
-              />
+              <div>
+                <ImageUpload
+                  onChange={value => setCustomValue('photo_background', value)}
+                  value={photo_background}
+                />
+              </div>
+              <div className='w-full pt-3'>
+                <button
+                  className='bg-red-500	 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full w-full'
+                  onClick={() => {
+                    setCustomValue('photo_background', '');
+                  }}
+                >
+                  Excluir foto
+                </button>
+              </div>
             </div>
-            <div className='w-full pt-3'>
-              <button
-                className='bg-red-500	 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full w-full'
-                onClick={() => {
-                  setCustomValue('photo_background', '');
-                }}
-              >
-                Excluir foto
-              </button>
+            <div className=' hidden sm:flex flex-col gap-3'>
+              <span className='text-center text-xl font-bold'>
+                Previa do conteudo:
+              </span>
+              <div
+                className='w-full border-2 min-h-[300px] px-4 py-2'
+                dangerouslySetInnerHTML={renderPostContent()}
+              />
             </div>
           </div>
           <div className='flex flex-col  w-full lg:w-8/12 border-2 pb-4'>

@@ -1,17 +1,22 @@
-import { User } from '@prisma/client';
 import getCurrentUser from '../actions/getCurrentUser';
 import { SettingsForm } from '../components/SettingsForm/SettingsForm';
+import ClientOnly from '../components/ClientOnly';
+import NotAuth from '../components/NotAuth';
 
 export default async function Settings() {
-  const user: User | null = await getCurrentUser();
+  const currentUser = await getCurrentUser();
 
-  if (!user) {
-    return <>NÃO AUTORIZADO!</>;
+  if (!currentUser) {
+    return (
+      <ClientOnly>
+        <NotAuth />
+      </ClientOnly>
+    );
   }
 
   return (
-    <>
-      <SettingsForm currentUser={user} />
-    </>
+    <ClientOnly>
+      <SettingsForm currentUser={currentUser} />
+    </ClientOnly>
   );
 }

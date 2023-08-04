@@ -101,5 +101,6 @@ export const useEditPosts = ({
     checkedCategorys,
     setCheckedCategorys,
     onSubmit,
+    watch,
   };
 };
