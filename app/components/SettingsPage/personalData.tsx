@@ -1,24 +1,31 @@
 import { BsGenderAmbiguous } from 'react-icons/bs';
 import { SettingsInput } from '../commum/SettingsInput';
 import { User } from '@prisma/client';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { GrEdit, GrCalendar } from 'react-icons/gr';
 import { useSettingsForm } from '@/app/hooks/customHooks/useSettingsForm';
+import { FieldValues, useForm } from 'react-hook-form';
 
 interface SettingsData {
   user: User | null;
 }
 
 export const PersonalData: React.FC<SettingsData> = ({ user }) => {
-  const initialState = {
+  const [fields, setFields] = useState({
     firstName: user?.firstName ?? '',
     secondName: user?.secondName ?? '',
     birthday: user?.birthday ?? '',
     gender: user?.gender ?? '',
-  };
-
-  const [fields, setFields] = useState(initialState);
+  });
   const { handleSubmit, personalSubmit, register } = useSettingsForm();
+  const {} = useForm<FieldValues>({
+    defaultValues: {
+      firstName: user?.firstName,
+      secondName: user?.secondName,
+      birthday: user?.birthday,
+      gender: user?.gender,
+    },
+  });
 
   const handleFieldsChange = (
     ev:
@@ -30,6 +37,15 @@ export const PersonalData: React.FC<SettingsData> = ({ user }) => {
       ...fields,
       [ev.target.name]: ev.target.value,
     });
+
+  useEffect(() => {
+    setFields({
+      firstName: user?.firstName ?? '',
+      secondName: user?.secondName ?? '',
+      birthday: user?.birthday ?? '',
+      gender: user?.gender ?? '',
+    });
+  }, [user]);
 
   return (
     <>

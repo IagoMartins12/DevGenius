@@ -6,6 +6,8 @@ export default async function Account() {
   const currentUser = await getCurrentUser();
   const allUsers = await getAllUsers();
 
+  if (!currentUser) return;
+
   return (
     <>
       <div className='flex flex-col sm:flex-row w-full lg:w-11/12 mx-auto py-10 gap-8 sm:gap-0'>

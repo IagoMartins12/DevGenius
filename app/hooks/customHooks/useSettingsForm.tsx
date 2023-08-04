@@ -14,6 +14,9 @@ export const useSettingsForm = () => {
       username: data.username,
     };
 
+    console.log('data', data);
+    console.log('data', data);
+
     try {
       await axios.patch('/api/account', object);
       toast.success('Dados atualizados!');
@@ -142,12 +145,14 @@ export const useSettingsForm = () => {
     }
   };
 
-  const { register, handleSubmit, watch, setValue } = useForm<FieldValues>({
+  const { register, handleSubmit, setValue } = useForm<FieldValues>({
     defaultValues: {
       userImage: currentUserState?.image,
+      username: currentUserState?.username,
+      email: currentUserState?.email,
+      bio: currentUserState?.email,
     },
   });
-  const userImage = watch('userImage');
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
       shouldDirty: true,
@@ -157,6 +162,8 @@ export const useSettingsForm = () => {
   };
 
   return {
+    currentUserState,
+    setCurrentUserState,
     isActive,
     setIsActive,
     accountSubmit,
@@ -166,7 +173,6 @@ export const useSettingsForm = () => {
     SocialNetworkSubmit,
     register,
     handleSubmit,
-    userImage,
     setCustomValue,
   };
 };

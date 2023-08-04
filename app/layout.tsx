@@ -17,6 +17,7 @@ import { SetContexts } from './components/SetContexts/SetContexts';
 import getComments from './actions/getComments';
 import ThemeProv from './providers/ThemeProvider';
 import { getAllFollowers } from './actions/getFollowers';
+import { ModalsBackground } from './components/ModalsBackground/ModalsBackground';
 
 const font = Nunito({ subsets: ['latin'] });
 
@@ -77,6 +78,7 @@ export default async function RootLayout({
             />
             <ToasterProvider />
             <ModalsProvider />
+            <ModalsBackground />
             {children}
           </GlobalContextProvider>
         </ThemeProv>

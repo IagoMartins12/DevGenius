@@ -168,9 +168,9 @@ export const UserPage: React.FC<UserProps> = ({ userAccount, allUsers }) => {
             <Comments currentUser={userAccount} isMyAccount={false} />
           )}
         </div>
-        <div className='flex flex-col sm:w-11/12 mx-auto lg:w-3/12 gap-8 sm:gap-0'>
+        <div className='flex flex-col w-full sm:w-11/12 lg:w-3/12 gap-8 sm:gap-0'>
           <div className='flex flex-col gap-y-6'>
-            <div className='flex flex-col '>
+            <div className='flex flex-col justify-start items-start'>
               <span className='text-lg font-extraligh text-violet-600'>
                 Biografia:
               </span>
@@ -189,8 +189,8 @@ export const UserPage: React.FC<UserProps> = ({ userAccount, allUsers }) => {
                 Localização:
               </span>
               {userAccount.city && userAccount.state ? (
-                <span className='text-sm sm:text-base font-bold'>
-                  {userAccount.city} {userAccount.state}
+                <span className='text-base font-bold'>
+                  {userAccount.city}, {userAccount.state}
                 </span>
               ) : (
                 <span className='text-sm sm:text-base font-bold'>

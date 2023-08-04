@@ -2,7 +2,7 @@ import { FieldValues, UseFormRegister } from 'react-hook-form';
 import { GrDocumentUser, GrEdit, GrMailOption } from 'react-icons/gr';
 import { SettingsInput } from '../commum/SettingsInput';
 import { User } from '@prisma/client';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useSettingsForm } from '@/app/hooks/customHooks/useSettingsForm';
 
 interface SettingsData {
@@ -10,15 +10,13 @@ interface SettingsData {
 }
 
 export const AccountData: React.FC<SettingsData> = ({ user }) => {
-  const initialState = {
-    username: user?.username ?? '',
-    bio: user?.bio ?? '',
-    email: user?.email ?? '',
-  };
-
   const { handleSubmit, accountSubmit, register } = useSettingsForm();
 
-  const [fields, setFields] = useState(initialState);
+  const [fields, setFields] = useState({
+    username: '',
+    bio: '',
+    email: '',
+  });
 
   const handleFieldsChange = (
     ev: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
@@ -28,6 +26,13 @@ export const AccountData: React.FC<SettingsData> = ({ user }) => {
       [ev.target.name]: ev.target.value,
     });
 
+  useEffect(() => {
+    setFields({
+      username: user?.username ?? '',
+      bio: user?.bio ?? '',
+      email: user?.email ?? '',
+    });
+  }, [user]);
   return (
     <>
       <div className='flex flex-col sm:flex-row gap-4 mx-6 mt-3'>

@@ -1,9 +1,9 @@
-import { SkeletonSettings } from '@/app/components/skeletons/SkeletonSettings/SkeletonSettings';
+import { SkeletonCreatePost } from '@/app/components/skeletons/SkeletonCreatePost/SkeletonCreatePost';
 
 const Loading = async () => {
   return (
     <>
-      <SkeletonSettings />
+      <SkeletonCreatePost />
     </>
   );
 };

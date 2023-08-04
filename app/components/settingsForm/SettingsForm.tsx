@@ -19,13 +19,13 @@ interface IProps {
   currentUser: User;
 }
 export const SettingsForm: React.FC<IProps> = ({ currentUser }) => {
-  const { currentUserState } = useGlobalContext();
+  const { currentUserState, setCurrentUserState } = useGlobalContext();
 
   const { isActive, setIsActive } = useSettingsForm();
 
   const { watch, setValue } = useForm<FieldValues>({
     defaultValues: {
-      userImage: currentUser.image,
+      userImage: currentUser?.image,
     },
   });
 
@@ -104,7 +104,7 @@ export const SettingsForm: React.FC<IProps> = ({ currentUser }) => {
               value={userImage ?? '/user.png'}
             />
             <span className='font-bold text-2xl'>
-              {currentUserState?.username}
+              @{currentUserState?.username}
             </span>
           </div>
           <div className='w-full flex items-center justify-center  h-11'>
@@ -151,11 +151,11 @@ export const SettingsForm: React.FC<IProps> = ({ currentUser }) => {
             theme === 'light' ? 'comment-white' : 'comment-dark'
           }`}
         >
-          {isActive === 0 && <AccountData user={currentUser} />}
-          {isActive === 1 && <PersonalData user={currentUser} />}
-          {isActive === 2 && <AddressData user={currentUser} />}
+          {isActive === 0 && <AccountData user={currentUserState} />}
+          {isActive === 1 && <PersonalData user={currentUserState} />}
+          {isActive === 2 && <AddressData user={currentUserState} />}
           {isActive === 3 && <PasswordData />}
-          {isActive === 4 && <SocialNetworkData user={currentUser} />}
+          {isActive === 4 && <SocialNetworkData user={currentUserState} />}
         </div>
       </div>
     </div>

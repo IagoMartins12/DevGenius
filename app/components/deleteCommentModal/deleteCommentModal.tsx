@@ -30,7 +30,7 @@ export const DeleteCommentModal = ({}: {}) => {
 
   return (
     <div
-      className={`deleteModalPosition flex-col z-10 px-5 py-3
+      className={`deleteModalPosition flex-col z-50 px-5 py-3
         ${isOpen ? 'flex' : 'hidden'} bg-color`}
     >
       <div className='w-full h-1/2 '>

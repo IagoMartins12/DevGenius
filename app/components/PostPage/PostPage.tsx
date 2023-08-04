@@ -123,7 +123,7 @@ export const PostPage = ({
         )}
 
         <div className='w-11/12 mx-auto my-6'>
-          <div className='aspect-video w-full  overflow-hidden rounded-xl relative'>
+          <div className=' w-full  aspectRatio overflow-hidden rounded-xl relative'>
             <Image
               fill
               className='object-cover w-full group-hover:scale-110 transition '

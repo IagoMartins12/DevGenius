@@ -16,7 +16,7 @@ export const HomeComponent: React.FC<HomeComponentProps> = ({
   allUsers,
 }) => {
   const { postsState } = useGlobalContext();
-  const MAX_RESUME_LENGTH = 180;
+  const MAX_RESUME_LENGTH = 250;
 
   const sortedPostsState = [...postsState].sort((a, b) =>
     compareDesc(new Date(a.createdAt), new Date(b.createdAt)),

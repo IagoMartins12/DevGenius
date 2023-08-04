@@ -3,7 +3,7 @@ import { UserCard } from './UserCard';
 import { IoCloseOutline } from 'react-icons/io5';
 import { ChangeEvent, useState } from 'react';
 
-export const UsersModal = ({}: {}) => {
+export const UsersModal = () => {
   const [searchValue, setSearchValue] = useState('');
 
   const userModal = useUsersModal();
@@ -16,7 +16,7 @@ export const UsersModal = ({}: {}) => {
   };
   return (
     <div
-      className={`usersModal flex-col z-10 px-4 py-3 h-96 mt-9 relative gap-y-8 
+      className={`usersModal flex-col z-10 px-4 py-3 h-96 mt-9 relative gap-y-8 overflow-auto
         ${isOpen ? 'flex' : 'hidden'} bg-color`}
     >
       <div className='mt-10 sm:pt-0'>

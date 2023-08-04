@@ -30,7 +30,7 @@ export const SkeletonPost = () => {
       </div>
       <div className='w-full sm:w-10/12 flex-col h-full mx-auto'>
         <div className='w-11/12 mx-auto my-6'>
-          <div className='aspect-video w-full  overflow-hidden rounded-xl relative'>
+          <div className='w-full overflow-hidden rounded-xl relative aspectRatio'>
             <Skeleton className='w-full h-full' />
           </div>
         </div>

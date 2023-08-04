@@ -2,10 +2,12 @@ import { signOut } from 'next-auth/react';
 import { User } from '@prisma/client';
 import {} from 'next-themes';
 import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
+import { Dispatch, SetStateAction } from 'react';
 
 interface navBarProps {
   display?: boolean;
   user: User;
+  setDisplay: Dispatch<SetStateAction<boolean>>;
 }
 
 interface Menu {
@@ -13,7 +15,11 @@ interface Menu {
   action: () => void;
 }
 
-export const NavBarUser: React.FC<navBarProps> = ({ display, user }) => {
+export const NavBarUser: React.FC<navBarProps> = ({
+  display,
+  user,
+  setDisplay,
+}) => {
   let menus: Menu[];
   const { navigateToUrl } = useNavigate();
   if (user.role === 1) {
@@ -78,7 +84,7 @@ export const NavBarUser: React.FC<navBarProps> = ({ display, user }) => {
       className={`
       ${display ? 'flex' : 'hidden'}
       absolute 
-      z-999 
+      z-20 
       w-52
       right-0 
       top-16
@@ -89,7 +95,10 @@ export const NavBarUser: React.FC<navBarProps> = ({ display, user }) => {
         return (
           <div
             key={index}
-            onClick={menu?.action}
+            onClick={() => {
+              menu?.action();
+              setDisplay(false);
+            }}
             className='w-full flex flex-col bg-color'
           >
             <p className='m-0 px-5 py-2'>{menu?.name}</p>

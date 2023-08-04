@@ -8,6 +8,7 @@ import { useGlobalContext } from '@/app/context/store';
 import { useTheme } from 'next-themes';
 import ThemeSwitch from '../ThemeSwitch/ThemeSwitch';
 import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
+import { BiDotsVerticalRounded } from 'react-icons/bi';
 
 interface NavbarProps {}
 
@@ -77,7 +78,7 @@ export const Header: React.FC<NavbarProps> = () => {
 
   return (
     <header
-      className='items-center justify-between gap-0 sm:gap-10 flex sticky top-0 w-full z-50 md:!px-12 !px-4'
+      className='items-center justify-between gap-0 sm:gap-10 flex sticky top-0 w-full z-30 md:!px-12 !px-4'
       style={{
         backgroundColor:
           theme === 'dark'
@@ -91,15 +92,24 @@ export const Header: React.FC<NavbarProps> = () => {
       }}
     >
       <div className='flex items-center gap-x-10 w-1/2 overflow-hidden'>
-        <h1
-          onClick={() => {
-            navigateToHome();
-          }}
-          className='cursor-pointer'
-        >
-          <span className='font-bold text-xl'>Dev</span>
-          <span className=' text-violet-500	text-xl'>Genius</span>
-        </h1>
+        <div className='flex gap-2 items-center justify-center'>
+          <BiDotsVerticalRounded
+            size={22}
+            className='flex sm:hidden cursor-pointer'
+          />
+          <div>
+            <h1
+              onClick={() => {
+                navigateToHome();
+              }}
+              className='cursor-pointer'
+            >
+              <span className='font-bold text-xl'>Dev</span>
+              <span className=' text-violet-500	text-xl'>Genius</span>
+            </h1>
+          </div>
+        </div>
+
         <div className='w-1/2 gap-10 hidden md:flex pointer cursor-pointer'>
           {categoriesState?.map(category => (
             <p
@@ -145,13 +155,28 @@ export const Header: React.FC<NavbarProps> = () => {
         {currentUserState ? (
           <>
             <AiOutlineUser size={28} onClick={() => toggleOpen()} />
-            <NavBarUser user={currentUserState} display={isOpen} />
+            <NavBarUser
+              user={currentUserState}
+              display={isOpen}
+              setDisplay={setIsOpen}
+            />
           </>
         ) : (
           <AiOutlineUser size={28} onClick={() => loginModal.onOpen()} />
         )}
 
         <ThemeSwitch />
+        <div
+          className='fixed top-0 left-0 right-0 bottom-0 z-0'
+          style={{
+            display: isOpen ? 'flex' : 'none',
+          }}
+          onClick={() => {
+            if (isOpen) {
+              setIsOpen(!isOpen);
+            }
+          }}
+        />
       </div>
     </header>
   );

@@ -7,7 +7,6 @@ import LikedButton from './LikedButton';
 import DeslikedButton from './DeslikedButton';
 import FavoritedButton from './FavoriteButton';
 import { useGlobalContext } from '@/app/context/store';
-import styles from './style.module.scss';
 import useShareLinks from '@/app/hooks/modals/useShareLinks';
 import { useTheme } from 'next-themes';
 
@@ -41,7 +40,7 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
 
   return (
     <div
-      className={`${styles.Container} ${
+      className={`Container ${
         theme === 'light' ? 'reactIcons-white' : 'reactIcons-dark'
       }`}
     >

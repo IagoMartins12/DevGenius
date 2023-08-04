@@ -1,7 +1,5 @@
 import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 import { Post } from '@prisma/client';
-import { useTheme } from 'next-themes';
-import Image from 'next/image';
 import { useState } from 'react';
 import { FeaturedIcon } from '../FeaturedIcon';
 
@@ -10,7 +8,7 @@ interface CardProps {
 }
 
 export const Card: React.FC<CardProps> = ({ post }) => {
-  const [MAX_RESUME_LENGTH, setMaxResumeLength] = useState(80); // Default value for smaller screens
+  const [MAX_RESUME_LENGTH, setMaxResumeLength] = useState(100); // Default value for smaller screens
 
   const resumeText = post.resume ?? '';
   const truncatedResume =

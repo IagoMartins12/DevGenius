@@ -14,19 +14,20 @@ import useUsersModal from '@/app/hooks/modals/useUsersModal';
 import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 
 export interface UserProps {
-  currentUser: User | null;
+  currentUser: User;
   allUsers?: User[];
   post?: Post;
   isMyAccount?: boolean;
 }
-export const AccountPage: React.FC<UserProps> = ({ currentUser, allUsers }) => {
+export const AccountPage: React.FC<UserProps> = ({ allUsers }) => {
   const [isActive, setIsActive] = useState<number>(0);
 
+  const { currentUserState } = useGlobalContext();
   const { followersState } = useGlobalContext();
   const { navigateToHome } = useNavigate();
   const usersModal = useUsersModal();
 
-  if (!currentUser) {
+  if (!currentUserState) {
     {
       navigateToHome();
     }
@@ -34,7 +35,7 @@ export const AccountPage: React.FC<UserProps> = ({ currentUser, allUsers }) => {
   }
   //Who I follow
   const myFollowing = followersState.filter(
-    follower => follower.followerId === currentUser.id,
+    follower => follower.followerId === currentUserState.id,
   );
 
   const myFollowingId = myFollowing.map(follower => follower.followingId);
@@ -46,7 +47,7 @@ export const AccountPage: React.FC<UserProps> = ({ currentUser, allUsers }) => {
 
   //Who Follows me
   const myFollowers = followersState.filter(
-    follower => follower.followingId === currentUser.id,
+    follower => follower.followingId === currentUserState?.id,
   );
 
   const myFollowersId = myFollowers.map(follower => follower.followerId);
@@ -64,14 +65,14 @@ export const AccountPage: React.FC<UserProps> = ({ currentUser, allUsers }) => {
             <Image
               fill
               className='object-cover rounded-full h-1 w-full '
-              src={currentUser.image ?? '/user.png'}
+              src={currentUserState.image ?? '/user.png'}
               alt='Post'
             />
           </div>
           <div className='flex flex-col'>
-            {currentUser.firstName && currentUser.secondName ? (
+            {currentUserState.firstName && currentUserState.secondName ? (
               <span className='text-xl font-bold'>
-                {currentUser.firstName} {currentUser.secondName}
+                {currentUserState.firstName} {currentUserState.secondName}
               </span>
             ) : (
               <span className='text-base font-bold'>
@@ -79,7 +80,7 @@ export const AccountPage: React.FC<UserProps> = ({ currentUser, allUsers }) => {
               </span>
             )}
             <span className='text-sm font-semibold text-center'>
-              @{currentUser.username}
+              @{currentUserState.username}
             </span>
           </div>
           <div className='flex gap-x-2'>
@@ -113,21 +114,21 @@ export const AccountPage: React.FC<UserProps> = ({ currentUser, allUsers }) => {
       </div>
       <div className='flex flex-col-reverse justify-start gap-y-12 lg:flex-row w-11/12 mx-auto sm:w-4/6 lg:w-9/12 sm:gap-x-2'>
         <div className='w-full lg:w-9/12 '>
-          {isActive === 0 && <Profile currentUser={currentUser} />}
-          {isActive === 1 && <LikedPosts currentUser={currentUser} />}
-          {isActive === 2 && <DeslikedPosts currentUser={currentUser} />}
-          {isActive === 3 && <SavedPosts currentUser={currentUser} />}
-          {isActive === 4 && <Comments currentUser={currentUser} />}
+          {isActive === 0 && <Profile currentUser={currentUserState} />}
+          {isActive === 1 && <LikedPosts currentUser={currentUserState} />}
+          {isActive === 2 && <DeslikedPosts currentUser={currentUserState} />}
+          {isActive === 3 && <SavedPosts currentUser={currentUserState} />}
+          {isActive === 4 && <Comments currentUser={currentUserState} />}
         </div>
-        <div className='flex flex-col sm:w-11/12 mx-auto lg:w-3/12 gap-8 sm:gap-0'>
+        <div className='flex flex-col w-full sm:w-11/12 mx-auto lg:w-3/12 gap-8 sm:gap-0'>
           <div className='flex flex-col gap-y-6'>
             <div className='flex flex-col '>
               <span className='text-lg font-extraligh text-violet-600'>
                 Biografia:
               </span>
-              {currentUser.bio ? (
+              {currentUserState.bio ? (
                 <span className='text-sm sm:text-base font-bold'>
-                  {currentUser.bio}
+                  {currentUserState.bio}
                 </span>
               ) : (
                 <span className='text-sm sm:text-base font-bold'>
@@ -139,9 +140,9 @@ export const AccountPage: React.FC<UserProps> = ({ currentUser, allUsers }) => {
               <span className='text-lg font-extraligh text-violet-600'>
                 Localização:
               </span>
-              {currentUser.city && currentUser.state ? (
+              {currentUserState.city && currentUserState.state ? (
                 <span className='text-base font-bold'>
-                  {currentUser.city}, {currentUser.state}
+                  {currentUserState.city}, {currentUserState.state}
                 </span>
               ) : (
                 <span className='text-sm sm:text-base font-bold'>
