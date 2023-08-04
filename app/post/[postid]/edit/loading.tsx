@@ -1,4 +1,4 @@
-import { SkeletonCreatePost } from '@/app/components/skeletons/SkeletonCreatePost/SkeletonCreatePost';
+import { SkeletonCreatePost } from '@/app/components/Skeletons/SkeletonCreatePost/SkeletonCreatePost';
 
 const Loading = async () => {
   return (

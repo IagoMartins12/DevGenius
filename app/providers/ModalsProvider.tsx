@@ -1,10 +1,10 @@
 'use client';
 
 import { UsersModal } from '../components/UsersModal/UsersModal';
-import { DeleteCommentModal } from '../components/deleteCommentModal/deleteCommentModal';
-import { DeletePostModal } from '../components/deletePostModal/DeletePostModa';
-import { LoginModal } from '../components/loginModal/LoginModal';
-import { RegisterModal } from '../components/registerModal/RegisterModal';
+import { DeleteCommentModal } from '../components/DeleteCommentModal/deleteCommentModal';
+import { DeletePostModal } from '../components/DeletePostModal/DeletePostModa';
+import { LoginModal } from '../components/LoginModal/LoginModal';
+import { RegisterModal } from '../components/RegisterModal/RegisterModal';
 
 const ModalsProvider = () => {
   return (

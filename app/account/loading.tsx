@@ -1,4 +1,4 @@
-import { SkeletonAccount } from '../components/skeletons/SkeletonAccount';
+import { SkeletonAccount } from '../components/Skeletons/SkeletonAccount';
 
 const Loading = async () => {
   return (

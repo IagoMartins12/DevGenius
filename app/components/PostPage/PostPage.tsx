@@ -17,7 +17,7 @@ import { AuthorCardMobile } from '../AuthorCardMobile/AuthorCardMobile';
 import { ShareLink } from '../ShareLink/ShareLink';
 import useLoginModal from '@/app/hooks/modals/useLoginModal';
 import { RelatedPosts } from '../RelatedPosts/RelatedPosts';
-import { SkeletonPost } from '../skeletons/SkeletonPost';
+import { SkeletonPost } from '../Skeletons/SkeletonPost';
 
 export const PostPage = ({
   post,

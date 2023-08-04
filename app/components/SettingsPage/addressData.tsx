@@ -1,7 +1,7 @@
 import { User } from '@prisma/client';
 import { useState } from 'react';
-import { SelectState } from '../selects/SelectState';
-import { SelectCity } from '../selects/SelectCity';
+import { SelectState } from '../Selects/SelectState';
+import { SelectCity } from '../Selects/SelectCity';
 import { useSettingsForm } from '@/app/hooks/customHooks/useSettingsForm';
 
 interface SettingsData {

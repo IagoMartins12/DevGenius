@@ -3,7 +3,7 @@ import { Nunito } from 'next/font/google';
 import ToasterProvider from './providers/ToasterProvider';
 import ModalsProvider from './providers/ModalsProvider';
 import getCurrentUser from './actions/getCurrentUser';
-import { Header } from './components/header/Header';
+import { Header } from './components/Header/Header';
 import getCategories from './actions/getCategories';
 import Head from 'next/head';
 import { GlobalContextProvider } from './context/store';

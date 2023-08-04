@@ -1,5 +1,5 @@
 import { BsGenderAmbiguous } from 'react-icons/bs';
-import { SettingsInput } from '../commum/SettingsInput';
+import { SettingsInput } from '../Common/SettingsInput';
 import { User } from '@prisma/client';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { GrEdit, GrCalendar } from 'react-icons/gr';

@@ -3,7 +3,7 @@
 import { AiOutlineSearch, AiOutlineUser } from 'react-icons/ai';
 import useLoginModal from '@/app/hooks/modals/useLoginModal';
 import { useEffect, useRef, useState } from 'react';
-import { NavBarUser } from '../navBarUser/NavBarUser';
+import { NavBarUser } from '../NavBarUser/NavBarUser';
 import { useGlobalContext } from '@/app/context/store';
 import { useTheme } from 'next-themes';
 import ThemeSwitch from '../ThemeSwitch/ThemeSwitch';

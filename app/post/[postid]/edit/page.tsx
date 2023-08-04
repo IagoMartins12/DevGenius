@@ -1,6 +1,6 @@
 import { getCategoriesPerId } from '@/app/actions/getCategories';
 import { getPostsPerId } from '@/app/actions/getPosts';
-import { EditPosts } from '@/app/components/editPosts/EditPosts';
+import { EditPosts } from '@/app/components/EditPosts/EditPosts';
 import { CategoryRelationsPosts } from '@prisma/client';
 
 interface Iparams {

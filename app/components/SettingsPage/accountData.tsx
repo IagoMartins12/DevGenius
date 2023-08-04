@@ -1,6 +1,6 @@
 import { FieldValues, UseFormRegister } from 'react-hook-form';
 import { GrDocumentUser, GrEdit, GrMailOption } from 'react-icons/gr';
-import { SettingsInput } from '../commum/SettingsInput';
+import { SettingsInput } from '../Common/SettingsInput';
 import { User } from '@prisma/client';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useSettingsForm } from '@/app/hooks/customHooks/useSettingsForm';

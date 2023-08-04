@@ -1,5 +1,5 @@
 import { useSettingsForm } from '@/app/hooks/customHooks/useSettingsForm';
-import { SettingsInput } from '../commum/SettingsInput';
+import { SettingsInput } from '../Common/SettingsInput';
 import { GrKey } from 'react-icons/gr';
 
 export const PasswordData: React.FC = () => {

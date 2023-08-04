@@ -1,4 +1,4 @@
-import { Footer } from './components/footer/Footer';
+import { Footer } from './components/Footer/Footer';
 import { HomeComponent } from './components/HomeComponent/HomeComponent';
 import { getPostCategories } from './actions/getCategories';
 import { getAllUsers } from './actions/getUser';

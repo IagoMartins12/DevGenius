@@ -1,5 +1,5 @@
-import { Footer } from '@/app/components/footer/Footer';
-import { SkeletonCreatePost } from '@/app/components/skeletons/SkeletonCreatePost/SkeletonCreatePost';
+import { Footer } from '@/app/components/Footer/Footer';
+import { SkeletonCreatePost } from '@/app/components/Skeletons/SkeletonCreatePost/SkeletonCreatePost';
 
 const Loading = async () => {
   return (

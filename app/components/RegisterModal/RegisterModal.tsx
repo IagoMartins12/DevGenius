@@ -10,7 +10,7 @@ import Image from 'next/image';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signup } from './signUp';
 import axios from 'axios';
-import { StyledInput } from '../commum/StyledInput';
+import { StyledInput } from '../Common/StyledInput';
 import { useTheme } from 'next-themes';
 
 export const RegisterModal = () => {

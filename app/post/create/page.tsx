@@ -1,4 +1,4 @@
-import { CreatePosts } from '@/app/components/createPosts/CreatePosts';
+import { CreatePosts } from '@/app/components/CreatePosts/CreatePosts';
 
 export default async function Create() {
   return (

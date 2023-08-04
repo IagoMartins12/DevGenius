@@ -7,7 +7,7 @@ import useLoginModal from '@/app/hooks/modals/useLoginModal';
 import { toast } from 'react-hot-toast';
 import Image from 'next/image';
 import { IoCloseOutline } from 'react-icons/io5';
-import { StyledInput } from '../commum/StyledInput';
+import { StyledInput } from '../Common/StyledInput';
 import { useTheme } from 'next-themes';
 import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 
