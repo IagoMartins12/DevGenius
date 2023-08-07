@@ -1,6 +1,7 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+@import 'highlight.js/styles/default.css';
 
 .dark {
   --bg-color-dark: #1c1c1c;
@@ -528,8 +529,16 @@ figcaption {
   height: 100%;
   margin: 0 auto;
 }
-/* checkbox */
+pre {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+code {
+  margin: 0 auto;
+  padding: 5rem 0;
+}
 @media (max-width: 920px) {
   .carousel-inner {
     height: 45vh;

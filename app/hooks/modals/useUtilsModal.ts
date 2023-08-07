@@ -1,15 +1,15 @@
 import { create } from 'zustand';
 
-interface HorizontalMenu {
+interface UtilsModal {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
 }
 
-const useHorizontalMenu = create<HorizontalMenu>(set => ({
+const useUtilsModal = create<UtilsModal>(set => ({
   isOpen: false,
   onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),
 }));
 
-export default useHorizontalMenu;
+export default useUtilsModal;
