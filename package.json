@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -55,6 +55,6 @@
     "@types/bcrypt": "^5.0.0",
     "@types/react-syntax-highlighter": "^15.5.7",
     "@types/react-table": "^7.7.14",
-    "prisma": "^4.15.0"
+    "prisma": "^5.1.1"
   }
 }
