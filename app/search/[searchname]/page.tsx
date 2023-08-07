@@ -11,11 +11,11 @@ interface Iparams {
   searchname: string;
 }
 
-export const metadata = {
-  title: 'DevGenius | Pesquisar',
-  description:
-    'Blog criado para lhe manter atualizado das mais novas tecnologias do mercado!',
-};
+// export const metadata = {
+//   title: 'DevGenius | Pesquisar',
+//   description:
+//     'Blog criado para lhe manter atualizado das mais novas tecnologias do mercado!',
+// };
 
 export default async function SearchPage({ params }: { params: Iparams }) {
   const { searchname } = params;
@@ -26,11 +26,6 @@ export default async function SearchPage({ params }: { params: Iparams }) {
 
   return (
     <ClientOnly>
-      <Head>
-        <title>Pesquisar {searchname}</title>
-        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
-        <meta name='keywords' content='some contents' />
-      </Head>
       <SearchPageComponent
         posts={posts}
         categoriesPost={categoryPosts}

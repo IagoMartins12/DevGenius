@@ -19,6 +19,11 @@ import { getAllFollowers } from './actions/getFollowers';
 import { ModalsBackground } from './components/ModalsBackground/ModalsBackground';
 
 const font = Nunito({ subsets: ['latin'] });
+export const metadata = {
+  title: 'DevGenius | Iago Martins',
+  description:
+    'Blog criado para lhe manter atualizado das mais novas tecnologias do mercado!',
+};
 
 export default async function RootLayout({
   children,
@@ -33,6 +38,7 @@ export default async function RootLayout({
   const posts = await getPosts();
   const comments = await getComments();
   const followers = await getAllFollowers();
+
   return (
     <html lang='pt-br'>
       <body className={`${font.className} m-o p-0 box-content`}>

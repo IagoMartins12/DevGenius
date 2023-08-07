@@ -9,7 +9,6 @@ import { useTheme } from 'next-themes';
 import ThemeSwitch from '../ThemeSwitch/ThemeSwitch';
 import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
-import useHorizontalMenu from '@/app/hooks/modals/useHorizontalMenu';
 import { HorizontalMenuModal } from '../HorizontalMenuModal/HorizontalMenuModal';
 
 interface NavbarProps {}

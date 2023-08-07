@@ -15,11 +15,13 @@ import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 
 export interface UserProps {
   currentUser: User;
-  allUsers?: User[];
-  post?: Post;
   isMyAccount?: boolean;
 }
-export const AccountPage: React.FC<UserProps> = ({ allUsers }) => {
+
+interface AccountProps {
+  allUsers?: User[];
+}
+export const AccountPage: React.FC<AccountProps> = ({ allUsers }) => {
   const [isActive, setIsActive] = useState<number>(0);
 
   const { currentUserState } = useGlobalContext();

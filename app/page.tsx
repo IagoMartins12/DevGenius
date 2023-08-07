@@ -6,11 +6,6 @@ import { Banner } from './components/Banner';
 import ClientOnly from './components/ClientOnly';
 import Head from 'next/head';
 
-export const metadata = {
-  title: 'DevGenius | Iago Martins',
-  description:
-    'Blog criado para lhe manter atualizado das mais novas tecnologias do mercado!',
-};
 
 export default async function Home() {
   const categoryPosts = await getPostCategories();

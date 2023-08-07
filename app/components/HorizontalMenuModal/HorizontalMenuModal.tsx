@@ -1,6 +1,5 @@
 import { useGlobalContext } from '@/app/context/store';
 import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
-import useHorizontalMenu from '@/app/hooks/modals/useHorizontalMenu';
 import { Category } from '@prisma/client';
 import { Dispatch, SetStateAction } from 'react';
 
