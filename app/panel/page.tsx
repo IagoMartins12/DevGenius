@@ -4,7 +4,7 @@ import ClientOnly from '../components/ClientOnly';
 import NotAuth from '../components/NotAuth';
 import PanelUsers from '../components/PanelUsers/PanelUsers';
 
-export default async function SearchPage() {
+export default async function PanelPage() {
   const allUser = await getAllUsers();
   const currentUser = await getCurrentUser();
 

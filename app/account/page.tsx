@@ -2,7 +2,7 @@ import getCurrentUser from '../actions/getCurrentUser';
 import { getAllUsers } from '../actions/getUser';
 import { AccountPage } from '../components/AccountPage/AccountPage';
 import ClientOnly from '../components/ClientOnly';
-import NotAuth from '../components/NotAuth';
+import UserNotAuth from '../components/UserNotAuth';
 
 export default async function Account() {
   const currentUser = await getCurrentUser();
@@ -11,7 +11,7 @@ export default async function Account() {
   if (!currentUser) {
     return (
       <ClientOnly>
-        <NotAuth />
+        <UserNotAuth />
       </ClientOnly>
     );
   }

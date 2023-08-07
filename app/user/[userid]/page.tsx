@@ -1,6 +1,5 @@
 import { getAllUsers, getUserPerId } from '@/app/actions/getUser';
 import ClientOnly from '@/app/components/ClientOnly';
-import NotAuth from '@/app/components/NotAuth';
 import { UserPage } from '@/app/components/UserPage/UserPage';
 
 interface Iparams {

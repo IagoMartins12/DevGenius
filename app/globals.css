@@ -1,6 +1,7 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+@import 'highlight.js/styles/default.css';
 
 .dark {
   --bg-color-dark: #1c1c1c;
@@ -158,7 +159,6 @@ body {
 }
 
 .deleteModalPosition {
-  width: 40%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -529,8 +529,16 @@ figcaption {
   height: 100%;
   margin: 0 auto;
 }
-/* checkbox */
+pre {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+code {
+  margin: 0 auto;
+  padding: 5rem 0;
+}
 @media (max-width: 920px) {
   .carousel-inner {
     height: 45vh;
@@ -550,14 +558,6 @@ figcaption {
 
   .usersModal {
     width: 60%;
-  }
-
-  .deleteModalPosition {
-    width: 80%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    position: fixed;
   }
 
   .card {
@@ -596,6 +596,7 @@ figcaption {
     transform: inherit;
     overflow-y: scroll;
     overflow-x: hidden;
+    border-radius: 0;
   }
 
   .usersModal {
@@ -608,11 +609,6 @@ figcaption {
     transform: inherit;
   }
 
-  .deleteModalPosition {
-    width: 100%;
-    height: 100vh;
-    position: fixed;
-  }
   input.specific-input:focus {
     width: 10rem;
   }
