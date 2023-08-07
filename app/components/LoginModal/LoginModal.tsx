@@ -42,7 +42,6 @@ export const LoginModal = () => {
     }).then(callback => {
       if (callback?.ok) {
         toast.success('Login feito com sucesso');
-        console.log(callback);
         loginModal.onClose();
       }
 

@@ -4,12 +4,6 @@ import ClientOnly from '../components/ClientOnly';
 import UserNotAuth from '../components/UserNotAuth';
 import { Footer } from '../components/Footer/Footer';
 
-// export const metadata = {
-//   title: 'DevGenius | Configuração',
-//   description:
-//     'Blog criado para lhe manter atualizado das mais novas tecnologias do mercado!',
-// };
-
 export default async function Settings() {
   const currentUser = await getCurrentUser();
 

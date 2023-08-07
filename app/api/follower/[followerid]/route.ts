@@ -21,8 +21,6 @@ export async function POST(request: Request, { params }: { params: IParams }) {
     throw new Error('Invalid ID');
   }
 
-  console.log(followerid);
-
   if (!currentUser.id || typeof currentUser.id !== 'string') {
     throw new Error('Invalid ID');
   }
@@ -33,8 +31,6 @@ export async function POST(request: Request, { params }: { params: IParams }) {
       followingId: followerid,
     },
   });
-
-  console.log(newFollowing);
 
   return NextResponse.json(newFollowing);
 }

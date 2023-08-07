@@ -14,9 +14,6 @@ export const useSettingsForm = () => {
       username: data.username,
     };
 
-    console.log('data', data);
-    console.log('data', data);
-
     try {
       await axios.patch('/api/account', object);
       toast.success('Dados atualizados!');

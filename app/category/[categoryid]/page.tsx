@@ -12,12 +12,6 @@ interface Iparams {
   categoryid: string;
 }
 
-// export const metadata = {
-//   title: 'DevGenius | Categorias',
-//   description:
-//     'Blog criado para lhe manter atualizado das mais novas tecnologias do mercado!',
-// };
-
 export default async function CategoryPage({ params }: { params: Iparams }) {
   const { categoryid } = params;
 

@@ -10,12 +10,6 @@ interface Iparams {
   postid: string;
 }
 
-// export const metadata = {
-//   title: 'DevGenius | Editar',
-//   description:
-//     'Blog criado para lhe manter atualizado das mais novas tecnologias do mercado!',
-// };
-
 export default async function EditPost({ params }: { params: Iparams }) {
   const post = await getPostsPerId(params.postid);
   const postCategories = await getCategoriesPerId(params.postid);

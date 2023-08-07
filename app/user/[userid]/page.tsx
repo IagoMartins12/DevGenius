@@ -6,12 +6,6 @@ interface Iparams {
   userid: string;
 }
 
-// export const metadata = {
-//   title: 'DevGenius | Usuário',
-//   description:
-//     'Blog criado para lhe manter atualizado das mais novas tecnologias do mercado!',
-// };
-
 export default async function User({ params }: { params: Iparams }) {
   const user = await getUserPerId(params.userid);
   const allUsers = await getAllUsers();
