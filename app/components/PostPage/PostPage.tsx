@@ -9,7 +9,7 @@ import { MdEdit } from 'react-icons/md';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import axios, { AxiosResponse } from 'axios';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import { CommentsSection } from '../CommentsSection/CommentsSection';
 import { ReactionsComponent } from '../ReactionsComponent/ReactionsComponent';
 import { useGlobalContext } from '@/app/context/store';
@@ -19,18 +19,19 @@ import useLoginModal from '@/app/hooks/modals/useLoginModal';
 import { RelatedPosts } from '../RelatedPosts/RelatedPosts';
 import { SkeletonPost } from '../Skeletons/SkeletonPost';
 
-export const PostPage = ({
-  post,
-  author,
-  allUsers,
-  categoryPosts,
-  currentUser,
-}: {
+interface PostProps {
   post: Post | null;
   author: User | null;
   allUsers: User[];
   categoryPosts: CategoryRelationsPosts[];
   currentUser: User | null;
+}
+export const PostPage: React.FC<PostProps> = ({
+  post,
+  author,
+  allUsers,
+  categoryPosts,
+  currentUser,
 }) => {
   const { currentUserState, setCommentsState, postState, setPostState } =
     useGlobalContext();

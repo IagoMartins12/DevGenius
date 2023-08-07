@@ -15,17 +15,15 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useTheme } from 'next-themes';
 
-interface IProps {
-  currentUser: User;
-}
-export const SettingsForm: React.FC<IProps> = ({ currentUser }) => {
+export const SettingsForm: React.FC = ({}) => {
   const { currentUserState, setCurrentUserState } = useGlobalContext();
 
+  if (!currentUserState) return;
   const { isActive, setIsActive } = useSettingsForm();
 
   const { watch, setValue } = useForm<FieldValues>({
     defaultValues: {
-      userImage: currentUser?.image,
+      userImage: currentUserState?.image,
     },
   });
 
@@ -42,6 +40,7 @@ export const SettingsForm: React.FC<IProps> = ({ currentUser }) => {
     };
 
     await axios.patch('/api/account', object);
+    setCurrentUserState({ ...currentUserState, image: value });
     toast.success('Foto atualizada!');
   };
 

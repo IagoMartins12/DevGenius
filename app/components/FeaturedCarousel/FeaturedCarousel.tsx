@@ -9,6 +9,7 @@ export const FeaturedCarousel: React.FC = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const { postsState } = useGlobalContext();
   const featuredPosts = postsState.filter(post => post.featured !== 0);
+  console.log(postsState);
 
   const scrollLeft = () => {
     if (carouselRef.current) {

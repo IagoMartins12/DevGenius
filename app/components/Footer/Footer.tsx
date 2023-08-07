@@ -1,7 +1,4 @@
-'use client';
-
-import { darkSocialIcons, lightSocialIcons } from '@/app/utils/SocialIcons';
-import { useTheme } from 'next-themes';
+import { lightSocialIcons } from '@/app/utils/SocialIcons';
 
 interface Menu {
   name: string;
@@ -11,7 +8,7 @@ export const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className='w-full pt-12 shadow-lg flex flex-col justify-center items-center gap-4'>
+    <footer className='w-full pt-12 pb-20 sm:pb-0 shadow-lg flex flex-col justify-center items-center gap-4'>
       <div className='flex gap-3'>
         {lightSocialIcons.map(element => element)}
       </div>

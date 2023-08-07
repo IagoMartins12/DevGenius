@@ -3,27 +3,20 @@
 import { CategoryRelationsPosts, Post, User } from '@prisma/client';
 import { PostCard } from '../PostCard/PostCard';
 
-export const SearchPageComponent = ({
-  posts,
-  categoriesPost,
-  allUsers,
-}: {
+interface SearchProps {
   posts: Post[];
   categoriesPost: CategoryRelationsPosts[];
   allUsers: User[];
+}
+export const SearchPageComponent: React.FC<SearchProps> = ({
+  posts,
+  categoriesPost,
+  allUsers,
 }) => {
   const MAX_RESUME_LENGTH = 180;
 
   return (
-    <div
-      className={`
-      flex 
-      flex-col 
-      px-10 
-      lg:px-32
-      pt-7
-      pb-16`}
-    >
+    <div className='flex flex-col px-10 lg:px-32 pt-7 pb-16'>
       <div className=''>
         <h2 className='text-xl font-bold'>Resultados: </h2>
       </div>
@@ -48,7 +41,7 @@ export const SearchPageComponent = ({
           })}
         </div>
       ) : (
-        <div className='w-full flex items-center justify-center'>
+        <div className='w-full flex items-center justify-center my-12'>
           <h1 className='text-2xl font-bold text-center'>
             Nenhum artigo encontrado!
           </h1>

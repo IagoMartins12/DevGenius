@@ -34,9 +34,11 @@ export const SkeletonPost = () => {
             <Skeleton className='w-full h-full' />
           </div>
         </div>
-        <div className='w-11/12 mx-auto h-auto my-6'>
-          <Skeleton className='w-full h-full' />
+        <div className='w-11/12 mx-auto h-auto my-6 flex flex-col'>
+          <Skeleton containerClassName='w-11/12 sm:w-full' height={10} />
+          <Skeleton containerClassName='w-10/12 sm:w-8/12' height={10} />
         </div>
+
         <div className='w-11/12 mx-auto h-auto my-6'>
           <Skeleton className='w-full h-full' height={700} />
         </div>

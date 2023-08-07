@@ -1,4 +1,5 @@
 import { useGlobalContext } from '@/app/context/store';
+import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 import useHorizontalMenu from '@/app/hooks/modals/useHorizontalMenu';
 import { Category } from '@prisma/client';
 import { Dispatch, SetStateAction } from 'react';
@@ -12,6 +13,7 @@ export const HorizontalMenuModal: React.FC<HorizontalMenuProps> = ({
   setIsOpen,
 }) => {
   const { categoriesState } = useGlobalContext();
+  const { navigateToUrl } = useNavigate();
   return (
     <div
       className={`
@@ -30,13 +32,17 @@ export const HorizontalMenuModal: React.FC<HorizontalMenuProps> = ({
         Categorias:{' '}
       </span>
       <div className='flex flex-col'>
-        {categoriesState.map((categories: Category) => {
+        {categoriesState.map((category: Category) => {
           return (
             <span
               className='px-5 py-2 text-base font-medium '
-              key={categories.id}
+              key={category.id}
+              onClick={() => {
+                navigateToUrl('category', category.id);
+                setIsOpen(false);
+              }}
             >
-              {categories.category_name}
+              {category.category_name}
             </span>
           );
         })}

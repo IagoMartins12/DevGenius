@@ -10,14 +10,15 @@ import { IoCloseOutline } from 'react-icons/io5';
 import { StyledInput } from '../Common/StyledInput';
 import { useTheme } from 'next-themes';
 import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
+import { useGlobalContext } from '@/app/context/store';
 
 export const LoginModal = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
-  const { navigateToHome } = useNavigate();
   const isOpen: boolean = loginModal.isOpen;
   const { theme } = useTheme();
   const { refresh } = useNavigate();
+  const { setCurrentUserState } = useGlobalContext();
 
   const openRegisterModal = () => {
     loginModal.onClose();
@@ -38,11 +39,10 @@ export const LoginModal = () => {
   const onSubmit: SubmitHandler<FieldValues> = data => {
     signIn('credentials', {
       ...data,
-      redirect: false,
     }).then(callback => {
       if (callback?.ok) {
         toast.success('Login feito com sucesso');
-        navigateToHome();
+        console.log(callback);
         loginModal.onClose();
       }
 

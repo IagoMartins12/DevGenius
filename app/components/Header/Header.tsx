@@ -17,14 +17,12 @@ interface NavbarProps {}
 export const Header: React.FC<NavbarProps> = () => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [menuIsOpenHorizontal, setMenuIsOpenHorizontal] = useState(false);
-
   const [searchFocus, setSearchFocus] = useState(false);
   const [blackHeader, setBlackHeader] = useState(false);
-  const { currentUserState, categoriesState } = useGlobalContext();
 
+  const { currentUserState, categoriesState } = useGlobalContext();
   const { theme } = useTheme();
   const { navigateToUrl, navigateToHome } = useNavigate();
-
   const loginModal = useLoginModal();
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -35,7 +33,6 @@ export const Header: React.FC<NavbarProps> = () => {
 
   const toggleOpenHorizontal = () => {
     setMenuIsOpenHorizontal(!menuIsOpenHorizontal);
-    console.log(menuIsOpenHorizontal);
   };
 
   const handleFocus = () => {
@@ -178,6 +175,10 @@ export const Header: React.FC<NavbarProps> = () => {
         ) : (
           <>
             <AiOutlineUser size={28} onClick={() => loginModal.onOpen()} />
+            <HorizontalMenuModal
+              isOpen={menuIsOpenHorizontal}
+              setIsOpen={setMenuIsOpenHorizontal}
+            />
           </>
         )}
 

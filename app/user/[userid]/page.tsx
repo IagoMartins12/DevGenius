@@ -1,11 +1,16 @@
 import { getAllUsers, getUserPerId } from '@/app/actions/getUser';
 import ClientOnly from '@/app/components/ClientOnly';
-import NotAuth from '@/app/components/NotAuth';
 import { UserPage } from '@/app/components/UserPage/UserPage';
 
 interface Iparams {
   userid: string;
 }
+
+export const metadata = {
+  title: 'DevGenius | Usuário',
+  description:
+    'Blog criado para lhe manter atualizado das mais novas tecnologias do mercado!',
+};
 
 export default async function User({ params }: { params: Iparams }) {
   const user = await getUserPerId(params.userid);

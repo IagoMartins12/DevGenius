@@ -3,7 +3,6 @@ import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 import useDeletePostModal from '@/app/hooks/modals/useDeletePostModal';
 import axios from 'axios';
 import { useTheme } from 'next-themes';
-import Image from 'next/image';
 import { toast } from 'react-hot-toast';
 
 export const DeletePostModal: React.FC = () => {
@@ -36,16 +35,6 @@ export const DeletePostModal: React.FC = () => {
       className={`deleteModalPosition flex-col z-50 px-5 py-3 bg-color
         ${deleteModal.isOpen ? 'flex' : 'hidden'}`}
     >
-      <div className='w-full h-1/2 '>
-        <div className='aspect-video w-full h-full sm:h-4/5 mt-4 sm:mt-10 relative overflow-hidden rounded-xl m-1'>
-          <Image
-            fill
-            className=' h-1 w-full group-hover:scale-110 transition'
-            src='/thinking.svg'
-            alt='Listing'
-          />
-        </div>
-      </div>
       <div className='w-full sm:h-1/2 items-center flex justify-center flex-col gap-y-4'>
         <div className='flex mt-4'>
           <h3 className='text-2xl font-bold'>Deletar post? </h3>

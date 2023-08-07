@@ -4,6 +4,12 @@ import ClientOnly from '../components/ClientOnly';
 import NotAuth from '../components/NotAuth';
 import PanelUsers from '../components/PanelUsers/PanelUsers';
 
+export const metadata = {
+  title: 'DevGenius | Painel',
+  description:
+    'Blog criado para lhe manter atualizado das mais novas tecnologias do mercado!',
+};
+
 export default async function SearchPage() {
   const allUser = await getAllUsers();
   const currentUser = await getCurrentUser();

@@ -58,7 +58,7 @@ export const CommentsSection = ({
         </div>
         <div className='w-10/12 sm:w-11/12 flex items-center  flex-col gap-y-3'>
           <textarea
-            className='w-full h-3/4 p-2 resize-none border-1 border-black'
+            className='w-full h-3/4 p-2 resize-none border-2 border-black'
             id=''
             placeholder='Adicionar comentario...'
             {...register('commentContent')}

@@ -57,11 +57,13 @@ export async function getPostBySearch(search: string) {
         OR: [
           {
             content: {
+              mode: 'insensitive',
               contains: search,
             },
           },
           {
             title: {
+              mode: 'insensitive',
               contains: search,
             },
           },

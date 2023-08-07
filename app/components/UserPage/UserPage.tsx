@@ -19,6 +19,7 @@ import { SavedPosts } from '../AccountPage/SavedPosts';
 import { Comments } from '../AccountPage/Comments';
 import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
 import useUsersModal from '@/app/hooks/modals/useUsersModal';
+import useLoginModal from '@/app/hooks/modals/useLoginModal';
 export interface UserProps {
   userAccount: User;
   allUsers?: User[];
@@ -30,17 +31,20 @@ export const UserPage: React.FC<UserProps> = ({ userAccount, allUsers }) => {
 
   const { followersState, currentUserState, setFollowersState } =
     useGlobalContext();
+  const loginModal = useLoginModal();
 
   const { navigateToUrl } = useNavigate();
   const usersModal = useUsersModal();
 
   const followUser = async () => {
+    if (!currentUserState) return loginModal.onOpen();
     const response = await axios.post(`/api/follower/${userAccount.id}`);
     FollowUserFunction(followersState, response.data, setFollowersState);
     toast.success('Seguindo');
   };
 
   const unFollowUser = async () => {
+    if (!currentUserState) return loginModal.onOpen();
     await axios.delete(`/api/follower/${userAccount.id}`);
     UnfollowerUserFunction(
       followersState,
