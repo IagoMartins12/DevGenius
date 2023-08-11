@@ -165,6 +165,14 @@ body {
   position: fixed;
 }
 
+.ForgetModalPosition {
+  width: 35%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: fixed;
+}
+
 .usersModal {
   width: 25%;
   top: 50%;
@@ -552,7 +560,8 @@ code {
     width: 45%;
   }
 
-  .modalPosition {
+  .modalPosition,
+  .ForgetModalPosition {
     width: 90%;
   }
 
@@ -586,7 +595,8 @@ code {
     width: 100%;
   }
 
-  .modalPosition {
+  .modalPosition,
+  .ForgetModalPosition {
     width: 100%;
     min-height: 100vh;
     top: 0;

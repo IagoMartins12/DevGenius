@@ -9,22 +9,24 @@ import Image from 'next/image';
 import { IoCloseOutline } from 'react-icons/io5';
 import { StyledInput } from '../Common/StyledInput';
 import { useTheme } from 'next-themes';
-import { useNavigate } from '@/app/hooks/customHooks/useNavigate';
-import { useGlobalContext } from '@/app/context/store';
+import useForgetPasswordModal from '@/app/hooks/modals/useForgetPassword';
 
 export const LoginModal = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
+  const forgetPasswordModal = useForgetPasswordModal();
   const isOpen: boolean = loginModal.isOpen;
   const { theme } = useTheme();
-  const { refresh } = useNavigate();
-  const { setCurrentUserState } = useGlobalContext();
 
-  const openRegisterModal = () => {
+  const handleOpenRegisterModal = () => {
     loginModal.onClose();
     registerModal.onOpen();
   };
 
+  const handleOpenForgetPasswordModal = () => {
+    loginModal.onClose();
+    forgetPasswordModal.onOpen();
+  };
   const {
     register,
     handleSubmit,
@@ -78,7 +80,7 @@ ${theme === 'light' ? 'modal-white' : 'modal-dark'}
               <span
                 className='text-violet-500 text-xl cursor-pointer underline'
                 onClick={() => {
-                  openRegisterModal();
+                  handleOpenRegisterModal();
                 }}
               >
                 Crie sua conta
@@ -103,7 +105,10 @@ ${theme === 'light' ? 'modal-white' : 'modal-dark'}
               register={register}
             />
             <div className='flex justify-end'>
-              <span className='text-violet-500 text-base cursor-pointer underline'>
+              <span
+                className='text-violet-500 text-base cursor-pointer underline'
+                onClick={handleOpenForgetPasswordModal}
+              >
                 Esqueci minha senha
               </span>
             </div>

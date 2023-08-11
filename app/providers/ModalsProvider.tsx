@@ -5,6 +5,8 @@ import { DeleteCommentModal } from '../components/DeleteCommentModal/deleteComme
 import { DeletePostModal } from '../components/DeletePostModal/DeletePostModa';
 import { LoginModal } from '../components/LoginModal/LoginModal';
 import { RegisterModal } from '../components/RegisterModal/RegisterModal';
+import { ForgetPasswordModal } from '../components/ForgetPasswordModal/ForgetPasswordModal';
+import { ChangePasswordModal } from '../components/ChangePasswordModal/ChangePasswordModal';
 
 const ModalsProvider = () => {
   return (
@@ -13,6 +15,8 @@ const ModalsProvider = () => {
       <RegisterModal />
       <DeletePostModal />
       <DeleteCommentModal />
+      <ForgetPasswordModal />
+      <ChangePasswordModal />
       <UsersModal />
     </>
   );
