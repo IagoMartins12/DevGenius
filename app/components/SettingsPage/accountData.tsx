@@ -62,6 +62,7 @@ export const AccountData: React.FC<SettingsData> = ({ user }) => {
             icon={<GrMailOption className='absolute top-3 left-3' size={18} />}
             value={fields.email}
             onChange={handleFieldsChange}
+            disabled
           />
         </div>
       </div>

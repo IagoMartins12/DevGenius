@@ -32,82 +32,32 @@ export async function PATCH(request: Request) {
 
   const body = await request.json();
 
-  const {
-    username,
-    firstName,
-    secondName,
-    birthday,
-    image,
-    email,
-    bio,
-    gender,
-    website,
-    github,
-    instagram,
-    facebook,
-    twitter,
-    youtube,
-    uf,
-    state,
-    city,
-  } = body;
+  const allowedProperties: (keyof IParams)[] = [
+    'username',
+    'firstName',
+    'secondName',
+    'birthday',
+    'image',
+    'email',
+    'bio',
+    'gender',
+    'website',
+    'github',
+    'instagram',
+    'facebook',
+    'twitter',
+    'youtube',
+    'uf',
+    'state',
+    'city',
+  ];
 
   const dataToUpdate: Partial<IParams> = {};
 
-  // Verifica se cada campo existe no corpo da solicitação e adiciona ao objeto de atualização
-  if (username) {
-    dataToUpdate.username = username;
-  }
-  if (firstName) {
-    dataToUpdate.firstName = firstName;
-  }
-  if (secondName) {
-    dataToUpdate.secondName = secondName;
-  }
-  if (birthday) {
-    dataToUpdate.birthday = birthday;
-  }
-  if (image) {
-    dataToUpdate.image = image;
-  }
-  if (email) {
-    dataToUpdate.email = email;
-  }
-  if (bio) {
-    dataToUpdate.bio = bio;
-  }
-  if (gender) {
-    dataToUpdate.gender = gender;
-  }
-  if (website) {
-    dataToUpdate.website = website;
-  }
-  if (github) {
-    dataToUpdate.github = github;
-  }
-  if (instagram) {
-    dataToUpdate.instagram = instagram;
-  }
-  if (facebook) {
-    dataToUpdate.facebook = facebook;
-  }
-  if (twitter) {
-    dataToUpdate.twitter = twitter;
-  }
-  if (youtube) {
-    dataToUpdate.youtube = youtube;
-  }
-
-  if (state) {
-    dataToUpdate.state = state;
-  }
-
-  if (city) {
-    dataToUpdate.city = city;
-  }
-
-  if (uf) {
-    dataToUpdate.uf = uf;
+  for (const property of allowedProperties) {
+    if (body[property] !== undefined) {
+      dataToUpdate[property] = body[property];
+    }
   }
 
   const userUpdated = await prisma.user.update({

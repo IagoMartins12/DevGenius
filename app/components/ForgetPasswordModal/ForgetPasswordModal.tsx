@@ -30,27 +30,59 @@ export const ForgetPasswordModal = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async data => {
-    const response = await axios.get('/api/forgetPassword', {
-      params: {
-        email: data.email,
-      },
-    });
+    try {
+      const response = await axios.get('/api/forgetPassword', {
+        params: {
+          email: data.email,
+        },
+      });
 
-    if (!response.data) return toast.error('Email não encontrado!');
-    else {
-      reset();
-      return setStep(STEPS.SENDED_EMAIL);
+      if (!response.data) {
+        toast.error('Email não encontrado!');
+        return;
+      }
+
+      const myToken = Math.random().toString(32);
+
+      const object = {
+        to: data.email as string,
+        subject: 'DevGenius teste',
+        text: `
+            Olá ${response.data.username}, este é um email de redefinição de senha. 
+            Clique no link abaixo para redefinir sua senha: 
+            <a href="http://localhost:3000/?&token=${myToken}&useremail=${response.data.email}">www.Devgenius-blog.vercel.app</a>
+          `,
+      };
+
+      const objectToken = {
+        token: myToken,
+        email: response.data.email,
+      };
+
+      await axios.post('/api/forgetPassword', objectToken);
+
+      const sendEmailResponse = await axios.post('/api/sendEmail', object);
+
+      if (sendEmailResponse.status === 200) {
+        reset();
+        setStep(STEPS.SENDED_EMAIL);
+      } else {
+        toast.error('Erro ao enviar o email!');
+      }
+    } catch (error) {
+      toast.error('Erro ao buscar o email');
     }
   };
 
   const handleOpenLoginModal = () => {
+    console.log('clucou');
     setStep(STEPS.RECEIVE_EMAIL);
     forgetPasswordModal.onClose();
     loginModal.onOpen();
   };
 
   let bodyContent = (
-    <div className='flex flex-col w-11/12 mx-auto  p-4'>
+    <div className='flex flex-col w-11/12 mx-auto p-4  h-[50%] sm:h-auto'>
       <div className='flex flex-col py-4 gap-y-3'>
         <h1 className='font-bold text-3xl'>Esqueceu sua senha?</h1>
         <p className='font-semibold text-xl'>
@@ -76,7 +108,7 @@ export const ForgetPasswordModal = () => {
           </button>
           <button
             className='modalButton bg-inherit flex items-center justify-center'
-            onClick={handleSubmit(onSubmit)}
+            onClick={handleOpenLoginModal}
           >
             Voltar
           </button>
@@ -87,7 +119,7 @@ export const ForgetPasswordModal = () => {
 
   if (step === STEPS.SENDED_EMAIL) {
     bodyContent = (
-      <div className='flex flex-col w-11/12 mx-auto  p-4'>
+      <div className='flex flex-col w-11/12 mx-auto p-4 h-[50%] sm:h-auto'>
         <div className='flex flex-col py-4 gap-y-3'>
           <h1 className='font-bold text-3xl'>Email enviado! </h1>
           <p className='font-semibold text-xl'>
@@ -98,7 +130,7 @@ export const ForgetPasswordModal = () => {
         <div className='flex flex-col w-full gap-y-4'>
           <button
             className='modalButton bg-inherit flex items-center justify-center'
-            onClick={handleSubmit(handleOpenLoginModal)}
+            onClick={handleOpenLoginModal}
           >
             Voltar
           </button>
@@ -109,7 +141,7 @@ export const ForgetPasswordModal = () => {
 
   return (
     <div
-      className={`ForgetModalPosition flex-col z-50 ${
+      className={`ForgetModalPosition justify-evenly flex-col z-50 ${
         isOpen ? 'flex' : 'hidden'
       }
 ${theme === 'light' ? 'modal-white' : 'modal-dark'}
@@ -126,10 +158,10 @@ ${theme === 'light' ? 'modal-white' : 'modal-dark'}
         />
       </div>
 
-      <div className='flex flex-col-reverse justify-around items-center'>
+      <div className='flex flex-col-reverse justify-center items-center h-[100%]'>
         {bodyContent}
-        <div className='w-full sm:w-5/12 lg:w-6/12'>
-          <div className='aspect-video w-full h-48 sm:h-4/5 mt-4 sm:mt-10 relative overflow-hidden rounded-xl m-1'>
+        <div className='w-full sm:w-5/12 lg:w-6/12  h-[30%] sm:h-auto'>
+          <div className='aspect-video w-full h-60 sm:h-4/5 mt-4 sm:mt-10 relative overflow-hidden rounded-xl m-1'>
             <Image
               fill
               className='sm:object-cover h-1 w-full group-hover:scale-110 transition'

@@ -33,6 +33,7 @@ model User {
   facebook       String?
   twitter        String?
   youtube        String?
+  token          String?
 
   Post      Post[]
   Account   Account[]

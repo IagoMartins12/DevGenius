@@ -540,12 +540,36 @@ figcaption {
 pre {
   display: flex;
   justify-content: center;
-  align-items: center;
+  line-height: 1.4;
+  margin: 0 0 25px;
+  overflow-x: auto;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+  -moz-tab-size: 2;
+  -o-tab-size: 2;
+  tab-size: 2;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
 }
 
 code {
-  margin: 0 auto;
-  padding: 5rem 0;
+  padding: 20px 40px;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+  color: #133467;
+  background-color: #f4f8fd;
+}
+
+[data-theme='dark'] code {
+  color: #b6b7f6;
+  background-color: #141920;
 }
 @media (max-width: 920px) {
   .carousel-inner {
@@ -560,12 +584,12 @@ code {
     width: 45%;
   }
 
-  .modalPosition,
-  .ForgetModalPosition {
+  .modalPosition {
     width: 90%;
   }
 
-  .usersModal {
+  .usersModal,
+  .ForgetModalPosition {
     width: 60%;
   }
 

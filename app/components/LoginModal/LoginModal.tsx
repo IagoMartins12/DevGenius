@@ -69,26 +69,28 @@ ${theme === 'light' ? 'modal-white' : 'modal-dark'}
 
       <div className='flex flex-col-reverse sm:flex-row justify-around'>
         <div className='flex flex-col w-full sm:w-7/12 lg:w-5/12 p-4'>
-          <div>
-            <span className='font-bold text-2xl'>Dev</span>
-            <span className=' text-violet-500	text-2xl'>Genius</span>
-          </div>
-          <div className='flex flex-col py-4'>
-            <h1 className='font-bold text-xl'>Bem vindo de volta</h1>
-            <p className='font-medium text-xl'>
-              Não é inscrito? {''}
-              <span
-                className='text-violet-500 text-xl cursor-pointer underline'
-                onClick={() => {
-                  handleOpenRegisterModal();
-                }}
-              >
-                Crie sua conta
-              </span>
-            </p>
+          <div className='w-11/12 mx-auto sm:mx-0 sm:w-auto'>
+            <div>
+              <span className='font-bold text-2xl'>Dev</span>
+              <span className=' text-violet-500	text-2xl'>Genius</span>
+            </div>
+            <div className='flex flex-col py-4'>
+              <h1 className='font-bold text-xl'>Bem vindo de volta</h1>
+              <p className='font-medium text-xl'>
+                Não é inscrito? {''}
+                <span
+                  className='text-violet-500 text-xl cursor-pointer underline'
+                  onClick={() => {
+                    handleOpenRegisterModal();
+                  }}
+                >
+                  Crie sua conta
+                </span>
+              </p>
+            </div>
           </div>
 
-          <div className='flex flex-col gap-y-3 w-11/12'>
+          <div className='flex flex-col gap-y-3 mx-auto w-11/12 '>
             <StyledInput
               id='email'
               required

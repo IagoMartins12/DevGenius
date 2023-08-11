@@ -14,6 +14,7 @@ interface SettingsInputProps {
   onChange?: (
     ev: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
   ) => void;
+  disabled?: boolean;
 }
 
 export const SettingsInput: React.FC<SettingsInputProps> = ({
@@ -26,6 +27,7 @@ export const SettingsInput: React.FC<SettingsInputProps> = ({
   icon,
   value,
   onChange,
+  disabled,
 }) => {
   return (
     <>
@@ -38,6 +40,7 @@ export const SettingsInput: React.FC<SettingsInputProps> = ({
           {...register(id, { required })}
           value={value}
           onChange={onChange}
+          disabled={disabled}
         />
         {icon}
       </div>
