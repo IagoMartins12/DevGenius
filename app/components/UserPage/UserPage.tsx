@@ -150,21 +150,19 @@ export const UserPage: React.FC<UserProps> = ({ userAccount, allUsers }) => {
             )}
           </div>
         </div>
-        <div className='hidden flex-row sm:flex sm:!flex-col w-full sm:w-4/5 gap-3 sm:gap-4 justify-center sm:justify-normal'>
+        <div className='hidden flex-row sm:flex sm:!flex-col w-full sm:w-4/5 gap-3 sm:gap-4 justify-evenly sm:justify-normal'>
           <AccountMenu isActive={isActive} setIsActive={setIsActive} />
         </div>
       </div>
       <div className='flex flex-col-reverse justify-start gap-y-12 lg:flex-row w-11/12 mx-auto sm:w-4/6 lg:w-9/12 sm:gap-x-2'>
-        <div className='w-full lg:w-9/12 '>
+        <div className='w-full lg:w-9/12 py-5 sm:py-0 '>
           {isActive === 0 && (
             <Profile currentUser={userAccount} isMyAccount={false} />
           )}
           {isActive === 1 && (
             <LikedPosts currentUser={userAccount} isMyAccount={false} />
           )}
-          {isActive === 2 && (
-            <DeslikedPosts currentUser={userAccount} isMyAccount={false} />
-          )}
+
           {isActive === 3 && (
             <SavedPosts currentUser={userAccount} isMyAccount={false} />
           )}
@@ -172,7 +170,7 @@ export const UserPage: React.FC<UserProps> = ({ userAccount, allUsers }) => {
             <Comments currentUser={userAccount} isMyAccount={false} />
           )}
         </div>
-        <div className='flex flex-col w-full sm:w-11/12 lg:w-3/12 gap-8 sm:gap-0'>
+        <div className='flex flex-col w-full sm:w-11/12 lg:w-3/12 gap-8 sm:gap-0 '>
           <div className='flex flex-col gap-y-6'>
             <div className='flex flex-col justify-start items-start'>
               <span className='text-lg font-extraligh text-violet-600'>
@@ -203,7 +201,7 @@ export const UserPage: React.FC<UserProps> = ({ userAccount, allUsers }) => {
               )}
             </div>
           </div>
-          <div className='sm:hidden flex flex-row sm:!flex-col w-full sm:w-4/5 gap-3 sm:gap-4 justify-center sm:justify-normal'>
+          <div className='sm:hidden flex flex-row sm:!flex-col w-full sm:w-4/5 gap-3 sm:gap-4 justify-evenly sm:justify-normal'>
             <AccountMenu isActive={isActive} setIsActive={setIsActive} />
           </div>
         </div>

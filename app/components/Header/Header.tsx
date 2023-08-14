@@ -166,20 +166,16 @@ export const Header: React.FC<NavbarProps> = () => {
               display={menuIsOpen}
               setDisplay={setMenuIsOpen}
             />
-            <HorizontalMenuModal
-              isOpen={menuIsOpenHorizontal}
-              setIsOpen={setMenuIsOpenHorizontal}
-            />
           </>
         ) : (
           <>
             <AiOutlineUser size={28} onClick={() => loginModal.onOpen()} />
-            <HorizontalMenuModal
-              isOpen={menuIsOpenHorizontal}
-              setIsOpen={setMenuIsOpenHorizontal}
-            />
           </>
         )}
+        <HorizontalMenuModal
+          isOpen={menuIsOpenHorizontal}
+          setIsOpen={setMenuIsOpenHorizontal}
+        />
 
         <ThemeSwitch />
 

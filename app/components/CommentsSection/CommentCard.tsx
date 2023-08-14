@@ -9,10 +9,12 @@ export const CommentCard = ({
   comment,
   user,
   currentUser,
+  isMyAccount = true,
 }: {
   comment: Comment;
   user: User | undefined;
   currentUser: User | null;
+  isMyAccount?: boolean;
 }) => {
   const deleteModal = useDeleteCommentModal();
   const { theme } = useTheme();
@@ -84,7 +86,7 @@ export const CommentCard = ({
                 {formatDate(comment.createdAt)}
               </span>
             </div>
-            {user?.id === currentUser?.id && (
+            {user?.id === currentUser?.id && isMyAccount && (
               <div className='flex'>
                 <IoMdCloseCircle
                   size={20}

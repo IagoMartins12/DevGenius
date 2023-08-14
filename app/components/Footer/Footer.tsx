@@ -1,9 +1,5 @@
 import { lightSocialIcons } from '@/app/utils/SocialIcons';
 
-interface Menu {
-  name: string;
-  action: () => void;
-}
 export const Footer = () => {
   const year = new Date().getFullYear();
 

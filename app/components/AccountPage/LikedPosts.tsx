@@ -25,11 +25,7 @@ export const LikedPosts: React.FC<UserProps> = ({
           <h1 className='text-2xl font-bold text-center '>Posts Curtidos:</h1>
           {likedPostsByUserId.length > 0 ? (
             likekPostsByUser.map(post => {
-              return (
-                <div className='flex flex-col gap-y-3'>
-                  <HorizontalCard post={post} />
-                </div>
-              );
+              return <HorizontalCard post={post} />;
             })
           ) : (
             <div className='w-full flex items-center justify-center'>

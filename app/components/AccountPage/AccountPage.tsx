@@ -110,7 +110,7 @@ export const AccountPage: React.FC<AccountProps> = ({ allUsers }) => {
             </span>
           </div>
         </div>
-        <div className='hidden flex-row sm:flex sm:!flex-col w-full sm:w-4/5 gap-3 sm:gap-4 justify-center sm:justify-normal'>
+        <div className='hidden flex-row sm:flex sm:!flex-col w-full sm:w-4/5 gap-3 sm:gap-4 justify-evenly sm:justify-normal'>
           <AccountMenu isActive={isActive} setIsActive={setIsActive} />
         </div>
       </div>
@@ -118,7 +118,6 @@ export const AccountPage: React.FC<AccountProps> = ({ allUsers }) => {
         <div className='w-full lg:w-9/12 '>
           {isActive === 0 && <Profile currentUser={currentUserState} />}
           {isActive === 1 && <LikedPosts currentUser={currentUserState} />}
-          {isActive === 2 && <DeslikedPosts currentUser={currentUserState} />}
           {isActive === 3 && <SavedPosts currentUser={currentUserState} />}
           {isActive === 4 && <Comments currentUser={currentUserState} />}
         </div>
@@ -153,7 +152,7 @@ export const AccountPage: React.FC<AccountProps> = ({ allUsers }) => {
               )}
             </div>
           </div>
-          <div className='sm:hidden flex flex-row sm:!flex-col w-full sm:w-4/5 gap-3 sm:gap-4 justify-center sm:justify-normal'>
+          <div className='sm:hidden flex flex-row sm:!flex-col w-full sm:w-4/5 gap-3 sm:gap-4 justify-evenly sm:justify-normal'>
             <AccountMenu isActive={isActive} setIsActive={setIsActive} />
           </div>
         </div>

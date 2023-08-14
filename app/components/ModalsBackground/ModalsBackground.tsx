@@ -7,6 +7,7 @@ import useDeletePostModal from '@/app/hooks/modals/useDeletePostModal';
 import useForgetPasswordModal from '@/app/hooks/modals/useForgetPassword';
 import useLoginModal from '@/app/hooks/modals/useLoginModal';
 import useRegisterModal from '@/app/hooks/modals/useRegisterModal';
+import useUsersModal from '@/app/hooks/modals/useUsersModal';
 
 export const ModalsBackground = () => {
   const modals = [
@@ -16,6 +17,7 @@ export const ModalsBackground = () => {
     useDeleteCommentModal(),
     useForgetPasswordModal(),
     useChangePasswordModal(),
+    useUsersModal(),
   ];
 
   useEffect(() => {

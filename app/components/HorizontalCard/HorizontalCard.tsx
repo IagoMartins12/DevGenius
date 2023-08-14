@@ -35,7 +35,7 @@ export const HorizontalCard: React.FC<HorizontalCardProps> = ({ post }) => {
 
   return (
     <div
-      className='w-full flex shadow-lg p-3 gap-3 cursor-pointer'
+      className='w-full flex shadow-lg p-3 gap-3 cursor-pointer h-52 sm:h-auto overflow-hidden'
       onClick={() => navigateToUrl('post', post.id)}
     >
       <div className='w-4/12 lg:w-2/12'>
@@ -52,7 +52,10 @@ export const HorizontalCard: React.FC<HorizontalCardProps> = ({ post }) => {
         <span className='text-base lg:text-xl font-bold lg:font-semibold'>
           {post.title}
         </span>
-        <span className='text-sm font-medium'> {truncatedResume}</span>
+        <span className='text-sm font-medium overflow-hidden'>
+          {' '}
+          {truncatedResume}
+        </span>
       </div>
     </div>
   );

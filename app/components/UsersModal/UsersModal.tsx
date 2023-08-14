@@ -16,7 +16,7 @@ export const UsersModal = () => {
   };
   return (
     <div
-      className={`usersModal flex-col z-10 px-4 py-3 h-96 mt-9 relative gap-y-8 overflow-auto
+      className={`usersModal flex-col z-50 px-4 py-3 h-96 sm:mt-9 relative gap-y-8 overflow-auto
         ${isOpen ? 'flex' : 'hidden'} bg-color`}
     >
       <div className='mt-10 sm:pt-0'>

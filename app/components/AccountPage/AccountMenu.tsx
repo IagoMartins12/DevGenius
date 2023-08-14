@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { BiComment } from 'react-icons/bi';
 import { BsBookmarkStar } from 'react-icons/bs';
 import { CgProfile } from 'react-icons/cg';
-import { TbFileDislike, TbFileLike } from 'react-icons/tb';
+import { TbFileLike } from 'react-icons/tb';
 
 interface AccountMenuProps {
   isActive: number;
@@ -40,19 +40,7 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({
         </span>
         <TbFileLike size={22} />
       </div>
-      <div
-        className='flex flex-col sm:flex-row items-center gap-1 sm:gap-0 justify-center sm:justify-between cursor-pointer'
-        onClick={() => setIsActive(2)}
-      >
-        <span
-          className={`text-sm sm:text-xl ${
-            isActive === 2 ? 'font-extrabold' : 'font-medium '
-          }`}
-        >
-          Deslikes
-        </span>
-        <TbFileDislike size={22} />
-      </div>
+
       <div
         className='flex flex-col sm:flex-row items-center gap-1 sm:gap-0 justify-center sm:justify-between cursor-pointer'
         onClick={() => setIsActive(3)}

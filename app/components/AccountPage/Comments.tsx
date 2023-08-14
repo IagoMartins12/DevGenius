@@ -30,6 +30,7 @@ export const Comments: React.FC<UserProps> = ({
                     comment={comment}
                     currentUser={currentUser}
                     user={currentUser}
+                    isMyAccount={isMyAccount}
                   />
                 </div>
               );

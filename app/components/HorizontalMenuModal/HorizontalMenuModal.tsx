@@ -21,15 +21,12 @@ export const HorizontalMenuModal: React.FC<HorizontalMenuProps> = ({
       z-20 
       w-52
       left-0 
-      top-16
+      top-14
       flex-col 
       bg-color
       border-radius-16 `}
     >
-      <span className='m-0 text-lg font-semibold px-5 py-2 '>
-        {' '}
-        Categorias:{' '}
-      </span>
+      <span className='m-0 text-lg font-semibold px-5 py-2 '>Categorias: </span>
       <div className='flex flex-col'>
         {categoriesState.map((category: Category) => {
           return (

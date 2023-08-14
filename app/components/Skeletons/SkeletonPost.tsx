@@ -7,7 +7,7 @@ import styles from './style.module.scss';
 
 export const SkeletonPost = () => {
   const { theme } = useTheme();
-  const numberOfIcons = [1, 2, 3, 4];
+  const numberOfIcons = [1, 2, 3];
   const numberOfCards = [1, 2, 3];
 
   return (

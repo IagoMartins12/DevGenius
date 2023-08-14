@@ -4,7 +4,6 @@ import { FaRegComments } from 'react-icons/fa';
 import { Tooltip } from 'react-tooltip';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import LikedButton from './LikedButton';
-import DeslikedButton from './DeslikedButton';
 import FavoritedButton from './FavoriteButton';
 import { useGlobalContext } from '@/app/context/store';
 import useShareLinks from '@/app/hooks/modals/useShareLinks';
@@ -57,20 +56,6 @@ export const ReactionsComponent: React.FC<IReactionsComponent> = ({
           currentUser={currentUserState}
         />
         <span>{likedLenght}</span>
-      </a>
-
-      <a
-        data-tooltip-id='my-tooltip'
-        data-tooltip-content='Deslike!'
-        data-tooltip-place='right'
-        className='flex cursor-pointer flex-col items-center justify-center gap-y-2'
-      >
-        <DeslikedButton
-          desLiked={deslikeState}
-          postId={postId}
-          currentUser={currentUserState}
-        />
-        <span>{desLikedLenght}</span>
       </a>
 
       <a

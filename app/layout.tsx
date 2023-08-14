@@ -17,6 +17,7 @@ import getComments from './actions/getComments';
 import ThemeProv from './providers/ThemeProvider';
 import { getAllFollowers } from './actions/getFollowers';
 import { ModalsBackground } from './components/ModalsBackground/ModalsBackground';
+import Head from 'next/head';
 
 const font = Nunito({ subsets: ['latin'] });
 export const metadata = {
@@ -41,6 +42,9 @@ export default async function RootLayout({
 
   return (
     <html lang='pt-br'>
+      <Head>
+        <link rel='icon' href='/favicon.ico' sizes='any' />
+      </Head>
       <body className={`${font.className} m-o p-0 box-content`}>
         <ThemeProv>
           <GlobalContextProvider>

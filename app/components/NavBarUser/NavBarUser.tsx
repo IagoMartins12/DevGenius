@@ -87,7 +87,7 @@ export const NavBarUser: React.FC<navBarProps> = ({
       z-20 
       w-52
       right-0 
-      top-16
+      top-14
       flex-col 
       bg-color
       border-radius-16 `}

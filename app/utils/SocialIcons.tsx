@@ -3,22 +3,27 @@ import {
   AiFillGithub,
   AiFillInstagram,
   AiFillLinkedin,
-  AiOutlineFacebook,
-  AiOutlineGithub,
-  AiOutlineInstagram,
-  AiOutlineLinkedin,
 } from 'react-icons/ai';
 
 export const lightSocialIcons = [
-  <AiFillInstagram size={28} className='cursor-pointer' />,
-  <AiFillGithub size={28} className='cursor-pointer' />,
-  <AiFillFacebook size={28} className='cursor-pointer' />,
-  <AiFillLinkedin size={28} className='cursor-pointer' />,
-];
-
-export const darkSocialIcons = [
-  <AiOutlineInstagram size={28} className='cursor-pointer' />,
-  <AiOutlineGithub size={28} className='cursor-pointer' />,
-  <AiOutlineFacebook size={28} className='cursor-pointer' />,
-  <AiOutlineLinkedin size={28} className='cursor-pointer' />,
+  <>
+    <a href='https://www.instagram.com/iago_martins1/' target='blank'>
+      <AiFillInstagram size={28} className='cursor-pointer' />
+    </a>
+    <a href='https://github.com/IagoMartins12' target='blank'>
+      <AiFillGithub size={28} className='cursor-pointer' />
+    </a>
+    <a
+      href='https://www.facebook.com/profile.php?id=100002150451949'
+      target='blank'
+    >
+      <AiFillFacebook size={28} className='cursor-pointer' />
+    </a>
+    <a
+      href='https://www.linkedin.com/in/iago-martins-313838213/'
+      target='blank'
+    >
+      <AiFillLinkedin size={28} className='cursor-pointer' />
+    </a>
+  </>,
 ];
