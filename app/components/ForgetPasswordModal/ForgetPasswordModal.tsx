@@ -75,7 +75,6 @@ export const ForgetPasswordModal = () => {
   };
 
   const handleOpenLoginModal = () => {
-    console.log('clucou');
     setStep(STEPS.RECEIVE_EMAIL);
     forgetPasswordModal.onClose();
     loginModal.onOpen();

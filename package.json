@@ -9,9 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.7.1",
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.1.1",
     "@mui/icons-material": "^5.14.1",
     "@mui/material": "^5.14.1",
@@ -30,7 +27,6 @@
     "next": "13.4.5",
     "next-auth": "^4.22.1",
     "next-cloudinary": "^4.12.0",
-    "next-swagger-doc": "^0.4.0",
     "next-themes": "^0.2.1",
     "nodemailer": "^6.9.4",
     "postcss": "^8.4.24",
@@ -43,8 +39,6 @@
     "react-loading-skeleton": "^3.3.1",
     "react-select": "^5.7.3",
     "react-spinners": "^0.13.8",
-    "react-syntax-highlighter": "^15.5.0",
-    "react-table": "^7.8.0",
     "react-tooltip": "^5.18.1",
     "sass": "^1.63.3",
     "tailwindcss": "^3.3.2",

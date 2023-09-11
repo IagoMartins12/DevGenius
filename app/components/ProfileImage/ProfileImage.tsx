@@ -4,7 +4,6 @@ import { CldUploadWidget } from 'next-cloudinary';
 import Image from 'next/image';
 import { useCallback } from 'react';
 import { FcPlus } from 'react-icons/fc';
-import { TiPlus } from 'react-icons/ti';
 
 declare global {
   var cloudinary: any;

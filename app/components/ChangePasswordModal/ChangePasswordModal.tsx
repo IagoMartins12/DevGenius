@@ -77,7 +77,6 @@ export const ChangePasswordModal = () => {
       const urlParams = new URLSearchParams(currentUrl);
       const token = urlParams.get('token');
       const usermail = urlParams.get('useremail');
-      console.log(usermail);
       if (!usermail) return;
 
       getUser(usermail).then(user => {
